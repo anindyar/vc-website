@@ -147,22 +147,54 @@ const demoScenarios = [
         summary: " All 3 production servers are healthy. Load average is very low (0.00-0.05), memory usage at 44%, disk at 36%. No action needed."
     },
     {
-        command: "install nginx and configure it for my app",
-        execCommand: "apt update && apt install -y nginx && systemctl enable nginx",
-        output: `<p>Reading package lists... Done</p>
-<p>Building dependency tree... Done</p>
-<p>nginx is already the newest version (1.24.0-1).</p>
-<p>Created symlink /etc/systemd/system/multi-user.target.wants/nginx.service</p>`,
-        summary: " Nginx installed and enabled on all selected servers. Service is now running and will start automatically on boot."
+        command: "show me all pods in the production namespace",
+        execCommand: "kubectl get pods -n production -o wide",
+        output: `<p>NAME                        READY   STATUS    RESTARTS   AGE</p>
+<p>api-server-7d9f8b6c4-x2k9m   1/1    Running   0          2d</p>
+<p>api-server-7d9f8b6c4-p8n3q   1/1    Running   0          2d</p>
+<p>redis-master-0               1/1    Running   0          5d</p>
+<p>worker-5f7b8d9c6-j4h2k       1/1    Running   0          1d</p>`,
+        summary: " All 4 pods in production namespace are running healthy. API server has 2 replicas, Redis master is up for 5 days. No restarts detected."
     },
     {
-        command: "show me which processes are using the most memory",
-        execCommand: "ps aux --sort=-%mem | head -10",
-        output: `<p>USER  PID  %CPU  %MEM  COMMAND</p>
-<p>mysql 1234  2.1  15.3  /usr/sbin/mysqld</p>
-<p>node  5678  1.8   8.2  node /app/server.js</p>
-<p>redis 9012  0.5   4.1  redis-server *:6379</p>`,
-        summary: " MySQL is the top memory consumer at 15.3%, followed by your Node.js app at 8.2%. All processes are running normally."
+        command: "scale the api deployment to 5 replicas",
+        execCommand: "kubectl scale deployment api-server -n production --replicas=5",
+        output: `<p>deployment.apps/api-server scaled</p>
+<p>Waiting for rollout...</p>
+<p>deployment "api-server" successfully rolled out</p>
+<p>5/5 replicas available</p>`,
+        summary: " API server scaled from 2 to 5 replicas successfully. All new pods are running and ready to receive traffic. Load balancer updated."
+    },
+    {
+        command: "spin up a new t3.medium instance on AWS",
+        execCommand: "aws ec2 run-instances --instance-type t3.medium --image-id ami-0c55b159cbfafe1f0",
+        output: `<p>Creating EC2 instance...</p>
+<p>Instance ID: i-0a1b2c3d4e5f67890</p>
+<p>Private IP: 10.0.1.45</p>
+<p>Status: running</p>
+<p>Installing VC agent...</p>`,
+        summary: " New t3.medium instance launched in us-east-1. VC agent installed and connected. Server 'aws-prod-04' is now available in your dashboard."
+    },
+    {
+        command: "show me AWS costs for this month",
+        execCommand: "aws ce get-cost-and-usage --time-period Start=2025-12-01,End=2025-12-10",
+        output: `<p>Service              Cost (USD)</p>
+<p>EC2-Instances        $234.56</p>
+<p>RDS                  $89.12</p>
+<p>S3                   $12.34</p>
+<p>Data Transfer        $45.67</p>
+<p>Total MTD:           $381.69</p>`,
+        summary: " Your AWS spend this month is $381.69. EC2 is the biggest cost driver at $234. You're tracking 15% under last month's pace."
+    },
+    {
+        command: "restart all pods that are in CrashLoopBackOff",
+        execCommand: "kubectl delete pods --field-selector=status.phase=Failed -A",
+        output: `<p>Scanning all namespaces...</p>
+<p>Found 2 pods in CrashLoopBackOff</p>
+<p>pod "worker-5f7b8d9c6-err01" deleted</p>
+<p>pod "cron-job-failed-x9z" deleted</p>
+<p>Replacement pods starting...</p>`,
+        summary: " Found and restarted 2 failing pods. New pods are initializing normally. Root cause appears to be OOM - consider increasing memory limits."
     }
 ];
 
