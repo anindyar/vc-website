@@ -28,7 +28,8 @@ async function animateTagline() {
     // Initial delay
     await new Promise(r => setTimeout(r, 800));
 
-    // Type "Code"
+    // Type "Code" in muted white (old way)
+    taglineText.className = 'text-gray-400';
     await typeWord("Code");
     await new Promise(r => setTimeout(r, pauseDuration));
 
@@ -36,7 +37,8 @@ async function animateTagline() {
     await deleteWord("Code");
     await new Promise(r => setTimeout(r, 300));
 
-    // Type "Thought"
+    // Type "Thought" in brand color (new way)
+    taglineText.className = 'text-brand-400';
     await typeWord("Thought");
 
     // Keep cursor blinking for a moment, then hide it
