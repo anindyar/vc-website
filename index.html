@@ -171,28 +171,71 @@
                             <div class="w-3 h-3 rounded-full bg-green-500"></div>
                         </div>
                         <span class="text-gray-500 text-sm ml-2 font-mono">vibe-computing</span>
+                        <div class="ml-auto flex items-center gap-2">
+                            <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+                            <span class="text-green-400 text-xs">3 systems connected</span>
+                        </div>
                     </div>
                     <!-- Terminal Content -->
-                    <div class="p-6 font-mono text-sm md:text-base">
-                        <div class="space-y-4">
-                            <div class="flex items-start gap-3">
+                    <div class="p-6 font-mono text-sm md:text-base min-h-[320px]">
+                        <div id="terminal-content">
+                            <!-- User Input Line -->
+                            <div class="flex items-start gap-3 mb-4">
                                 <span class="text-brand-400 shrink-0">You:</span>
-                                <span class="text-gray-300 typing-animation" id="demo-input">check system load on my production servers</span>
+                                <div class="flex-1">
+                                    <span class="text-gray-300" id="typed-command"></span>
+                                    <span class="inline-block w-2 h-5 bg-brand-400 ml-1 animate-pulse" id="cursor"></span>
+                                </div>
                             </div>
-                            <div class="flex items-start gap-3 opacity-0" id="demo-output">
-                                <span class="text-purple-400 shrink-0">AI:</span>
-                                <div class="text-gray-400">
-                                    <p class="text-green-400 mb-2">Executing: uptime && free -h && df -h</p>
-                                    <div class="bg-black/30 rounded-lg p-4 mb-3 text-gray-500">
-                                        <p>19:40:23 up 1 day, 26 min, load average: 0.00, 0.05, 0.03</p>
-                                        <p>Mem: 914Mi total, 404Mi used, 509Mi available</p>
-                                        <p>/dev/root: 36% used</p>
+
+                            <!-- AI Response -->
+                            <div id="ai-response" class="hidden">
+                                <div class="flex items-start gap-3">
+                                    <span class="text-purple-400 shrink-0">AI:</span>
+                                    <div class="flex-1">
+                                        <!-- Thinking indicator -->
+                                        <div id="ai-thinking" class="flex items-center gap-2 text-gray-500">
+                                            <svg class="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
+                                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                            </svg>
+                                            <span>Analyzing request...</span>
+                                        </div>
+
+                                        <!-- Command execution -->
+                                        <div id="ai-command" class="hidden">
+                                            <p class="text-green-400 mb-2 flex items-center gap-2">
+                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                                                </svg>
+                                                <span>Executing: <span id="command-text"></span></span>
+                                            </p>
+                                        </div>
+
+                                        <!-- Output -->
+                                        <div id="ai-output" class="hidden bg-black/30 rounded-lg p-4 mb-3 text-gray-500 overflow-hidden">
+                                            <div id="output-text"></div>
+                                        </div>
+
+                                        <!-- Summary -->
+                                        <div id="ai-summary" class="hidden">
+                                            <p class="text-gray-300">
+                                                <span class="text-brand-400 font-semibold">Summary:</span>
+                                                <span id="summary-text"></span>
+                                            </p>
+                                        </div>
                                     </div>
-                                    <p class="text-gray-300"><span class="text-brand-400">Summary:</span> All 3 production servers are healthy. Load average is very low (0.00-0.05), memory usage at 44%, disk at 36%. No action needed.</p>
                                 </div>
                             </div>
                         </div>
                     </div>
+                </div>
+
+                <!-- Demo scenarios indicator -->
+                <div class="flex justify-center mt-6 gap-2">
+                    <button class="demo-dot w-2 h-2 rounded-full bg-brand-500 transition-all" data-index="0"></button>
+                    <button class="demo-dot w-2 h-2 rounded-full bg-gray-600 hover:bg-gray-500 transition-all" data-index="1"></button>
+                    <button class="demo-dot w-2 h-2 rounded-full bg-gray-600 hover:bg-gray-500 transition-all" data-index="2"></button>
                 </div>
             </div>
         </div>

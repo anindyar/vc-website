@@ -137,18 +137,169 @@ if (mobileMenuBtn && mobileMenu) {
 }
 
 // Demo Terminal Animation
-function animateDemo() {
-    if (demoOutput) {
-        setTimeout(() => {
-            demoOutput.classList.remove('opacity-0');
-            demoOutput.style.animation = 'fade-in-up 0.5s ease-out forwards';
-        }, 2500);
+const demoScenarios = [
+    {
+        command: "check system load on my production servers",
+        execCommand: "uptime && free -h && df -h",
+        output: `<p>19:40:23 up 1 day, 26 min, load average: 0.00, 0.05, 0.03</p>
+<p>Mem: 914Mi total, 404Mi used, 509Mi available</p>
+<p>/dev/root: 36% used</p>`,
+        summary: " All 3 production servers are healthy. Load average is very low (0.00-0.05), memory usage at 44%, disk at 36%. No action needed."
+    },
+    {
+        command: "install nginx and configure it for my app",
+        execCommand: "apt update && apt install -y nginx && systemctl enable nginx",
+        output: `<p>Reading package lists... Done</p>
+<p>Building dependency tree... Done</p>
+<p>nginx is already the newest version (1.24.0-1).</p>
+<p>Created symlink /etc/systemd/system/multi-user.target.wants/nginx.service</p>`,
+        summary: " Nginx installed and enabled on all selected servers. Service is now running and will start automatically on boot."
+    },
+    {
+        command: "show me which processes are using the most memory",
+        execCommand: "ps aux --sort=-%mem | head -10",
+        output: `<p>USER  PID  %CPU  %MEM  COMMAND</p>
+<p>mysql 1234  2.1  15.3  /usr/sbin/mysqld</p>
+<p>node  5678  1.8   8.2  node /app/server.js</p>
+<p>redis 9012  0.5   4.1  redis-server *:6379</p>`,
+        summary: " MySQL is the top memory consumer at 15.3%, followed by your Node.js app at 8.2%. All processes are running normally."
+    }
+];
+
+let currentScenarioIndex = 0;
+let isAnimating = false;
+
+const typedCommand = document.getElementById('typed-command');
+const cursor = document.getElementById('cursor');
+const aiResponse = document.getElementById('ai-response');
+const aiThinking = document.getElementById('ai-thinking');
+const aiCommand = document.getElementById('ai-command');
+const commandText = document.getElementById('command-text');
+const aiOutput = document.getElementById('ai-output');
+const outputText = document.getElementById('output-text');
+const aiSummary = document.getElementById('ai-summary');
+const summaryText = document.getElementById('summary-text');
+const demoDots = document.querySelectorAll('.demo-dot');
+
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function typeText(element, text, speed = 50) {
+    element.textContent = '';
+    for (let i = 0; i < text.length; i++) {
+        element.textContent += text[i];
+        await sleep(speed + Math.random() * 30);
     }
 }
 
+function resetDemo() {
+    if (typedCommand) typedCommand.textContent = '';
+    if (aiResponse) aiResponse.classList.add('hidden');
+    if (aiThinking) aiThinking.classList.remove('hidden');
+    if (aiCommand) aiCommand.classList.add('hidden');
+    if (aiOutput) aiOutput.classList.add('hidden');
+    if (aiSummary) aiSummary.classList.add('hidden');
+    if (cursor) cursor.classList.remove('hidden');
+}
+
+function updateDots(index) {
+    demoDots.forEach((dot, i) => {
+        if (i === index) {
+            dot.classList.remove('bg-gray-600');
+            dot.classList.add('bg-brand-500');
+        } else {
+            dot.classList.remove('bg-brand-500');
+            dot.classList.add('bg-gray-600');
+        }
+    });
+}
+
+async function runDemoScenario(index) {
+    if (isAnimating) return;
+    isAnimating = true;
+
+    const scenario = demoScenarios[index];
+    resetDemo();
+    updateDots(index);
+
+    // Type the command
+    await typeText(typedCommand, scenario.command, 40);
+    if (cursor) cursor.classList.add('hidden');
+
+    await sleep(500);
+
+    // Show AI response with thinking
+    if (aiResponse) aiResponse.classList.remove('hidden');
+    await sleep(1200);
+
+    // Show command being executed
+    if (aiThinking) aiThinking.classList.add('hidden');
+    if (aiCommand) aiCommand.classList.remove('hidden');
+    if (commandText) commandText.textContent = scenario.execCommand;
+
+    await sleep(800);
+
+    // Show output with typing effect
+    if (aiOutput) {
+        aiOutput.classList.remove('hidden');
+        if (outputText) {
+            outputText.innerHTML = '';
+            const lines = scenario.output.split('</p>').filter(l => l.trim());
+            for (const line of lines) {
+                const cleanLine = line.replace('<p>', '');
+                const p = document.createElement('p');
+                outputText.appendChild(p);
+                await typeText(p, cleanLine, 15);
+            }
+        }
+    }
+
+    await sleep(600);
+
+    // Show summary
+    if (aiSummary) aiSummary.classList.remove('hidden');
+    if (summaryText) summaryText.textContent = scenario.summary;
+
+    isAnimating = false;
+}
+
+async function startDemoLoop() {
+    if (!typedCommand) return;
+
+    while (true) {
+        await runDemoScenario(currentScenarioIndex);
+        await sleep(5000); // Wait before next scenario
+        currentScenarioIndex = (currentScenarioIndex + 1) % demoScenarios.length;
+    }
+}
+
+// Handle dot clicks
+demoDots.forEach(dot => {
+    dot.addEventListener('click', () => {
+        const index = parseInt(dot.dataset.index);
+        if (!isAnimating && index !== currentScenarioIndex) {
+            currentScenarioIndex = index;
+            runDemoScenario(index);
+        }
+    });
+});
+
 // Run demo animation after page load
 window.addEventListener('load', () => {
-    animateDemo();
+    // Start demo when terminal is in view
+    const terminalSection = document.querySelector('#terminal-content');
+    if (terminalSection) {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    startDemoLoop();
+                    observer.disconnect();
+                }
+            });
+        }, { threshold: 0.3 });
+        observer.observe(terminalSection);
+    }
 });
 
 // Smooth scroll for anchor links
