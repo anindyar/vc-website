@@ -69,7 +69,7 @@ export async function onRequestPost(context) {
       const errorData = await airtableResponse.json();
       console.error('Airtable error:', errorData);
       return new Response(
-        JSON.stringify({ success: false, error: 'Failed to save request' }),
+        JSON.stringify({ success: false, error: 'Failed to save request', details: errorData }),
         { status: 500, headers: corsHeaders }
       );
     }

@@ -58,7 +58,7 @@ export async function onRequestPost(context) {
       const errorData = await airtableResponse.json();
       console.error('Airtable error:', errorData);
       return new Response(
-        JSON.stringify({ success: false, error: 'Failed to save signup' }),
+        JSON.stringify({ success: false, error: 'Failed to save signup', details: errorData }),
         { status: 500, headers: corsHeaders }
       );
     }
