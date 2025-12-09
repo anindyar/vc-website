@@ -1,0 +1,6 @@
+name = "vc-website"
+compatibility_date = "2025-12-09"
+pages_build_output_dir = "./"
+
+[vars]
+# Environment variables are set in Cloudflare Dashboard
