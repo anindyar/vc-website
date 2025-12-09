@@ -289,11 +289,11 @@ function resetDemo() {
 function updateDots(index) {
     demoDots.forEach((dot, i) => {
         if (i === index) {
-            dot.classList.remove('bg-gray-600');
-            dot.classList.add('bg-brand-500');
+            dot.classList.remove('bg-white/20');
+            dot.classList.add('bg-white/50');
         } else {
-            dot.classList.remove('bg-brand-500');
-            dot.classList.add('bg-gray-600');
+            dot.classList.remove('bg-white/50');
+            dot.classList.add('bg-white/20');
         }
     });
 }
