@@ -1,0 +1,15 @@
+# Local files
+beta_signups.csv
+.env
+
+# Python
+__pycache__/
+*.pyc
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
