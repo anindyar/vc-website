@@ -1,5 +1,56 @@
 // Vibe Computing Landing Page Scripts
 
+// Tagline Animation - "Infrastructure as Code" -> "Infrastructure as Thought"
+const taglineText = document.getElementById('tagline-text');
+const taglineCursor = document.getElementById('tagline-cursor');
+
+async function animateTagline() {
+    if (!taglineText) return;
+
+    const typeSpeed = 100;
+    const deleteSpeed = 80;
+    const pauseDuration = 2000;
+
+    async function typeWord(word) {
+        for (let i = 0; i < word.length; i++) {
+            taglineText.textContent += word[i];
+            await new Promise(r => setTimeout(r, typeSpeed + Math.random() * 50));
+        }
+    }
+
+    async function deleteWord(word) {
+        for (let i = word.length; i > 0; i--) {
+            taglineText.textContent = taglineText.textContent.slice(0, -1);
+            await new Promise(r => setTimeout(r, deleteSpeed));
+        }
+    }
+
+    // Initial delay
+    await new Promise(r => setTimeout(r, 800));
+
+    // Type "Code"
+    await typeWord("Code");
+    await new Promise(r => setTimeout(r, pauseDuration));
+
+    // Delete "Code"
+    await deleteWord("Code");
+    await new Promise(r => setTimeout(r, 300));
+
+    // Type "Thought"
+    await typeWord("Thought");
+
+    // Keep cursor blinking for a moment, then hide it
+    await new Promise(r => setTimeout(r, 2000));
+    if (taglineCursor) {
+        taglineCursor.classList.add('opacity-0');
+    }
+}
+
+// Start tagline animation on load
+window.addEventListener('load', () => {
+    animateTagline();
+});
+
 // Beta launch date - 7 days from now
 const BETA_LAUNCH_DATE = new Date();
 BETA_LAUNCH_DATE.setDate(BETA_LAUNCH_DATE.getDate() + 7);
