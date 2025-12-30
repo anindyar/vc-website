@@ -167,6 +167,13 @@ button:focus {
     color: white;
 }
 
+/* Glass panel effect (matching console design) */
+.glass-panel {
+    background: rgba(255, 255, 255, 0.02);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
 /* Glow effects */
 .glow-brand {
     box-shadow: 0 0 40px rgba(20, 184, 166, 0.15);

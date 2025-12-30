@@ -53,10 +53,24 @@ window.addEventListener('load', () => {
     animateTagline();
 });
 
-// Beta launch date - 7 days from now
-const BETA_LAUNCH_DATE = new Date();
-BETA_LAUNCH_DATE.setDate(BETA_LAUNCH_DATE.getDate() + 7);
-BETA_LAUNCH_DATE.setHours(9, 0, 0, 0); // 9 AM launch
+// Beta launch date - 7 days from first visit (persisted in localStorage)
+function getBetaLaunchDate() {
+    const STORAGE_KEY = 'vc_beta_launch_date';
+    let storedDate = localStorage.getItem(STORAGE_KEY);
+
+    if (storedDate) {
+        return new Date(parseInt(storedDate, 10));
+    }
+
+    // First visit: set launch date to 7 days from now at 9 AM
+    const launchDate = new Date();
+    launchDate.setDate(launchDate.getDate() + 7);
+    launchDate.setHours(9, 0, 0, 0);
+    localStorage.setItem(STORAGE_KEY, launchDate.getTime().toString());
+    return launchDate;
+}
+
+const BETA_LAUNCH_DATE = getBetaLaunchDate();
 
 // DOM Elements
 const daysEl = document.getElementById('days');
@@ -189,65 +203,97 @@ if (mobileMenuBtn && mobileMenu) {
     });
 }
 
-// Demo Terminal Animation
+// Demo Console Animation
 const demoScenarios = [
     {
         command: "check system load on my production servers",
-        execCommand: "uptime && free -h && df -h",
-        output: `<p>19:40:23 up 1 day, 26 min, load average: 0.00, 0.05, 0.03</p>
-<p>Mem: 914Mi total, 404Mi used, 509Mi available</p>
-<p>/dev/root: 36% used</p>`,
-        summary: " All 3 production servers are healthy. Load average is very low (0.00-0.05), memory usage at 44%, disk at 36%. No action needed."
+        steps: [
+            { name: "Connecting to prod-web-01", status: "complete" },
+            { name: "Connecting to prod-web-02", status: "complete" },
+            { name: "Connecting to prod-api-01", status: "complete" },
+            { name: "Running uptime && free -h", status: "complete" }
+        ],
+        output: [
+            "prod-web-01: load avg 0.05, mem 44% used",
+            "prod-web-02: load avg 0.03, mem 38% used",
+            "prod-api-01: load avg 0.12, mem 52% used"
+        ],
+        summary: "All 3 production servers are healthy. Load average is very low (0.03-0.12), memory usage under 55%. No action needed."
     },
     {
         command: "show me all pods in the production namespace",
-        execCommand: "kubectl get pods -n production -o wide",
-        output: `<p>NAME                        READY   STATUS    RESTARTS   AGE</p>
-<p>api-server-7d9f8b6c4-x2k9m   1/1    Running   0          2d</p>
-<p>api-server-7d9f8b6c4-p8n3q   1/1    Running   0          2d</p>
-<p>redis-master-0               1/1    Running   0          5d</p>
-<p>worker-5f7b8d9c6-j4h2k       1/1    Running   0          1d</p>`,
-        summary: " All 4 pods in production namespace are running healthy. API server has 2 replicas, Redis master is up for 5 days. No restarts detected."
+        steps: [
+            { name: "Authenticating with cluster", status: "complete" },
+            { name: "Fetching pods in production", status: "complete" },
+            { name: "Analyzing pod health", status: "complete" }
+        ],
+        output: [
+            "api-server-7d9f8b6c4-x2k9m   Running   2d",
+            "api-server-7d9f8b6c4-p8n3q   Running   2d",
+            "redis-master-0               Running   5d",
+            "worker-5f7b8d9c6-j4h2k       Running   1d"
+        ],
+        summary: "All 4 pods in production namespace are running healthy. API server has 2 replicas, Redis master up for 5 days. No restarts detected."
     },
     {
         command: "scale the api deployment to 5 replicas",
-        execCommand: "kubectl scale deployment api-server -n production --replicas=5",
-        output: `<p>deployment.apps/api-server scaled</p>
-<p>Waiting for rollout...</p>
-<p>deployment "api-server" successfully rolled out</p>
-<p>5/5 replicas available</p>`,
-        summary: " API server scaled from 2 to 5 replicas successfully. All new pods are running and ready to receive traffic. Load balancer updated."
+        steps: [
+            { name: "Validating deployment exists", status: "complete" },
+            { name: "Scaling api-server to 5 replicas", status: "complete" },
+            { name: "Waiting for pods to be ready", status: "complete" },
+            { name: "Updating load balancer", status: "complete" }
+        ],
+        output: [
+            "deployment.apps/api-server scaled",
+            "5/5 replicas now available"
+        ],
+        summary: "API server scaled from 2 to 5 replicas successfully. All new pods are running and receiving traffic."
     },
     {
         command: "spin up a new t3.medium instance on AWS",
-        execCommand: "aws ec2 run-instances --instance-type t3.medium --image-id ami-0c55b159cbfafe1f0",
-        output: `<p>Creating EC2 instance...</p>
-<p>Instance ID: i-0a1b2c3d4e5f67890</p>
-<p>Private IP: 10.0.1.45</p>
-<p>Status: running</p>
-<p>Installing VC agent...</p>`,
-        summary: " New t3.medium instance launched in us-east-1. VC agent installed and connected. Server 'aws-prod-04' is now available in your dashboard."
+        steps: [
+            { name: "Creating EC2 instance", status: "complete" },
+            { name: "Waiting for instance to start", status: "complete" },
+            { name: "Installing VC agent", status: "complete" },
+            { name: "Connecting to dashboard", status: "complete" }
+        ],
+        output: [
+            "Instance ID: i-0a1b2c3d4e5f67890",
+            "Private IP: 10.0.1.45",
+            "Status: running"
+        ],
+        summary: "New t3.medium instance launched in us-east-1. VC agent installed. Server 'aws-prod-04' is now available in your dashboard."
     },
     {
         command: "show me AWS costs for this month",
-        execCommand: "aws ce get-cost-and-usage --time-period Start=2025-12-01,End=2025-12-10",
-        output: `<p>Service              Cost (USD)</p>
-<p>EC2-Instances        $234.56</p>
-<p>RDS                  $89.12</p>
-<p>S3                   $12.34</p>
-<p>Data Transfer        $45.67</p>
-<p>Total MTD:           $381.69</p>`,
-        summary: " Your AWS spend this month is $381.69. EC2 is the biggest cost driver at $234. You're tracking 15% under last month's pace."
+        steps: [
+            { name: "Fetching AWS Cost Explorer data", status: "complete" },
+            { name: "Aggregating by service", status: "complete" },
+            { name: "Comparing with last month", status: "complete" }
+        ],
+        output: [
+            "EC2-Instances        $234.56",
+            "RDS                   $89.12",
+            "S3                    $12.34",
+            "Data Transfer         $45.67",
+            "Total MTD:           $381.69"
+        ],
+        summary: "Your AWS spend this month is $381.69. EC2 is the biggest cost driver at $234. You're tracking 15% under last month's pace."
     },
     {
         command: "restart all pods that are in CrashLoopBackOff",
-        execCommand: "kubectl delete pods --field-selector=status.phase=Failed -A",
-        output: `<p>Scanning all namespaces...</p>
-<p>Found 2 pods in CrashLoopBackOff</p>
-<p>pod "worker-5f7b8d9c6-err01" deleted</p>
-<p>pod "cron-job-failed-x9z" deleted</p>
-<p>Replacement pods starting...</p>`,
-        summary: " Found and restarted 2 failing pods. New pods are initializing normally. Root cause appears to be OOM - consider increasing memory limits."
+        steps: [
+            { name: "Scanning all namespaces", status: "complete" },
+            { name: "Found 2 failing pods", status: "complete" },
+            { name: "Deleting worker-5f7b8d9c6-err01", status: "complete" },
+            { name: "Deleting cron-job-failed-x9z", status: "complete" },
+            { name: "Waiting for replacements", status: "complete" }
+        ],
+        output: [
+            "2 pods deleted and replaced",
+            "New pods initializing normally"
+        ],
+        summary: "Found and restarted 2 failing pods. New pods are running. Root cause appears to be OOM - consider increasing memory limits."
     }
 ];
 
@@ -258,8 +304,8 @@ const typedCommand = document.getElementById('typed-command');
 const cursor = document.getElementById('cursor');
 const aiResponse = document.getElementById('ai-response');
 const aiThinking = document.getElementById('ai-thinking');
-const aiCommand = document.getElementById('ai-command');
-const commandText = document.getElementById('command-text');
+const aiTimeline = document.getElementById('ai-timeline');
+const timelineSteps = document.getElementById('timeline-steps');
 const aiOutput = document.getElementById('ai-output');
 const outputText = document.getElementById('output-text');
 const aiSummary = document.getElementById('ai-summary');
@@ -282,7 +328,8 @@ function resetDemo() {
     if (typedCommand) typedCommand.textContent = '';
     if (aiResponse) aiResponse.classList.add('hidden');
     if (aiThinking) aiThinking.classList.remove('hidden');
-    if (aiCommand) aiCommand.classList.add('hidden');
+    if (aiTimeline) aiTimeline.classList.add('hidden');
+    if (timelineSteps) timelineSteps.innerHTML = '';
     if (aiOutput) aiOutput.classList.add('hidden');
     if (aiSummary) aiSummary.classList.add('hidden');
     if (cursor) cursor.classList.remove('hidden');
@@ -300,6 +347,48 @@ function updateDots(index) {
     });
 }
 
+function createStepElement(step, isLast) {
+    const stepDiv = document.createElement('div');
+    stepDiv.className = 'flex items-start gap-3 relative';
+
+    // Vertical connector line (except for last step)
+    const connectorLine = !isLast ? `<div class="absolute left-[7px] top-5 w-px h-full bg-white/10"></div>` : '';
+
+    stepDiv.innerHTML = `
+        ${connectorLine}
+        <div class="step-indicator w-4 h-4 rounded-full border-2 border-gray-700 bg-gray-900 flex items-center justify-center shrink-0 mt-0.5 relative z-10">
+            <div class="step-dot w-1.5 h-1.5 rounded-full bg-gray-600"></div>
+        </div>
+        <span class="step-text text-gray-600 text-sm pb-3">${step.name}</span>
+    `;
+
+    return stepDiv;
+}
+
+async function animateStep(stepElement, status) {
+    const indicator = stepElement.querySelector('.step-indicator');
+    const dot = stepElement.querySelector('.step-dot');
+    const text = stepElement.querySelector('.step-text');
+
+    // Show as in-progress first
+    indicator.classList.remove('border-gray-700');
+    indicator.classList.add('border-yellow-500');
+    dot.classList.remove('bg-gray-600');
+    dot.classList.add('bg-yellow-500', 'animate-pulse');
+    text.classList.remove('text-gray-600');
+    text.classList.add('text-gray-400');
+
+    await sleep(400 + Math.random() * 300);
+
+    // Complete the step
+    indicator.classList.remove('border-yellow-500');
+    indicator.classList.add('border-emerald-500');
+    dot.classList.remove('bg-yellow-500', 'animate-pulse');
+    dot.classList.add('bg-emerald-500');
+    text.classList.remove('text-gray-400');
+    text.classList.add('text-gray-300');
+}
+
 async function runDemoScenario(index) {
     if (isAnimating) return;
     isAnimating = true;
@@ -309,38 +398,50 @@ async function runDemoScenario(index) {
     updateDots(index);
 
     // Type the command
-    await typeText(typedCommand, scenario.command, 40);
+    await typeText(typedCommand, scenario.command, 35);
     if (cursor) cursor.classList.add('hidden');
 
-    await sleep(500);
+    await sleep(400);
 
     // Show AI response with thinking
     if (aiResponse) aiResponse.classList.remove('hidden');
-    await sleep(1200);
+    await sleep(1000);
 
-    // Show command being executed
+    // Hide thinking, show timeline
     if (aiThinking) aiThinking.classList.add('hidden');
-    if (aiCommand) aiCommand.classList.remove('hidden');
-    if (commandText) commandText.textContent = scenario.execCommand;
+    if (aiTimeline) aiTimeline.classList.remove('hidden');
 
-    await sleep(800);
+    // Create and animate steps
+    if (timelineSteps && scenario.steps) {
+        // First, add all steps as pending
+        scenario.steps.forEach((step, i) => {
+            const stepEl = createStepElement(step, i === scenario.steps.length - 1);
+            timelineSteps.appendChild(stepEl);
+        });
 
-    // Show output with typing effect
-    if (aiOutput) {
+        // Then animate each step sequentially
+        const stepElements = timelineSteps.querySelectorAll('.flex.items-start');
+        for (const stepEl of stepElements) {
+            await animateStep(stepEl, 'complete');
+        }
+    }
+
+    await sleep(400);
+
+    // Show output
+    if (aiOutput && scenario.output) {
         aiOutput.classList.remove('hidden');
         if (outputText) {
             outputText.innerHTML = '';
-            const lines = scenario.output.split('</p>').filter(l => l.trim());
-            for (const line of lines) {
-                const cleanLine = line.replace('<p>', '');
+            for (const line of scenario.output) {
                 const p = document.createElement('p');
                 outputText.appendChild(p);
-                await typeText(p, cleanLine, 15);
+                await typeText(p, line, 12);
             }
         }
     }
 
-    await sleep(600);
+    await sleep(400);
 
     // Show summary
     if (aiSummary) aiSummary.classList.remove('hidden');
