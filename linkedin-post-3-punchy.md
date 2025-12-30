@@ -1,15 +1,17 @@
 # LinkedIn Post - Short & Punchy (Best for Paid Ads)
 
-**What if managing 100 servers was as easy as sending a text?**
+**Vibe coding → build apps by describing them.**
 
-Vibe Computing: Natural language infrastructure management.
+**Vibe computing → manage servers by describing what you want.**
 
-→ "Deploy the app to staging"
-→ "Restart all pods in CrashLoopBackOff"
-→ "Spin up a new t3.medium on AWS"
+"Deploy to prod"
+"Check why the API is slow"
+"Scale up the database cluster"
 
-Cloud + On-Prem + Bare Metal. One console.
+100 servers. One natural language console.
 
-**Beta open until Jan 7th** → [vibecomputing.io]
+Cloud. On-prem. Bare metal. All of it.
 
-#DevOps #CloudComputing #AI #Infrastructure #Automation
+**Beta: Jan 1-7** → [vibecomputing.io]
+
+#VibeCoding #VibeComputing #DevOps #AI #Infrastructure
