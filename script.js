@@ -549,7 +549,38 @@ document.querySelectorAll('.fade-on-scroll').forEach(el => {
     observer.observe(el);
 });
 
-// Parallax effect removed - was causing scroll overlap issues
+// Parallax fade effect for hero section (fade out as you scroll)
+let ticking = false;
+const heroContent = document.querySelector('.relative.z-10.max-w-7xl');
+const heroBlobs = document.querySelectorAll('.animate-pulse-slow');
+
+window.addEventListener('scroll', () => {
+    if (!ticking) {
+        window.requestAnimationFrame(() => {
+            const scrolled = window.pageYOffset;
+            const heroHeight = window.innerHeight;
+
+            if (scrolled < heroHeight) {
+                const progress = scrolled / heroHeight;
+                const opacity = 1 - (progress * 1.2);
+                const scale = 1 - (progress * 0.1);
+
+                if (heroContent) {
+                    heroContent.style.opacity = Math.max(0, opacity);
+                    heroContent.style.transform = `scale(${Math.max(0.9, scale)})`;
+                }
+
+                // Move blobs slightly for depth
+                heroBlobs.forEach((blob, i) => {
+                    const direction = i % 2 === 0 ? 1 : -1;
+                    blob.style.transform = `translateY(${scrolled * 0.2 * direction}px)`;
+                });
+            }
+            ticking = false;
+        });
+        ticking = true;
+    }
+});
 
 // Keyboard navigation for accessibility
 document.addEventListener('keydown', (e) => {
