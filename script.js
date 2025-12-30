@@ -301,7 +301,11 @@ let currentScenarioIndex = 0;
 let isAnimating = false;
 
 const typedCommand = document.getElementById('typed-command');
-const cursor = document.getElementById('cursor');
+const userMessage = document.getElementById('user-message');
+const inputTyping = document.getElementById('input-typing');
+const inputPlaceholder = document.getElementById('input-placeholder');
+const inputCursor = document.getElementById('input-cursor');
+const sendBtn = document.getElementById('send-btn');
 const aiResponse = document.getElementById('ai-response');
 const aiThinking = document.getElementById('ai-thinking');
 const aiTimeline = document.getElementById('ai-timeline');
@@ -325,14 +329,22 @@ async function typeText(element, text, speed = 50) {
 }
 
 function resetDemo() {
+    // Reset user message
     if (typedCommand) typedCommand.textContent = '';
+    if (userMessage) userMessage.classList.add('hidden');
+
+    // Reset input field
+    if (inputTyping) inputTyping.textContent = '';
+    if (inputPlaceholder) inputPlaceholder.classList.remove('hidden');
+    if (inputCursor) inputCursor.classList.add('hidden');
+
+    // Reset AI response
     if (aiResponse) aiResponse.classList.add('hidden');
     if (aiThinking) aiThinking.classList.remove('hidden');
     if (aiTimeline) aiTimeline.classList.add('hidden');
     if (timelineSteps) timelineSteps.innerHTML = '';
     if (aiOutput) aiOutput.classList.add('hidden');
     if (aiSummary) aiSummary.classList.add('hidden');
-    if (cursor) cursor.classList.remove('hidden');
 }
 
 function updateDots(index) {
@@ -397,9 +409,21 @@ async function runDemoScenario(index) {
     resetDemo();
     updateDots(index);
 
-    // Type the command
-    await typeText(typedCommand, scenario.command, 35);
-    if (cursor) cursor.classList.add('hidden');
+    // Show cursor and hide placeholder in input field
+    if (inputPlaceholder) inputPlaceholder.classList.add('hidden');
+    if (inputCursor) inputCursor.classList.remove('hidden');
+
+    // Type in the input field
+    await typeText(inputTyping, scenario.command, 35);
+
+    await sleep(300);
+
+    // "Send" the message - move to chat bubble instantly
+    if (inputCursor) inputCursor.classList.add('hidden');
+    if (typedCommand) typedCommand.textContent = scenario.command;
+    if (userMessage) userMessage.classList.remove('hidden');
+    if (inputTyping) inputTyping.textContent = '';
+    if (inputPlaceholder) inputPlaceholder.classList.remove('hidden');
 
     await sleep(400);
 
@@ -525,21 +549,7 @@ document.querySelectorAll('.fade-on-scroll').forEach(el => {
     observer.observe(el);
 });
 
-// Add subtle parallax effect to hero
-let ticking = false;
-window.addEventListener('scroll', () => {
-    if (!ticking) {
-        window.requestAnimationFrame(() => {
-            const scrolled = window.pageYOffset;
-            const heroSection = document.querySelector('section');
-            if (heroSection && scrolled < window.innerHeight) {
-                heroSection.style.transform = `translateY(${scrolled * 0.3}px)`;
-            }
-            ticking = false;
-        });
-        ticking = true;
-    }
-});
+// Parallax effect removed - was causing scroll overlap issues
 
 // Keyboard navigation for accessibility
 document.addEventListener('keydown', (e) => {
