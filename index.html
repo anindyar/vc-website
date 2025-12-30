@@ -115,10 +115,28 @@
                 </span>
             </h1>
 
-            <p class="text-xl md:text-2xl text-gray-500 max-w-3xl mx-auto mb-12 animate-fade-in-up animation-delay-200">
-                The AI-native cloud platform where you manage infrastructure through
-                <span class="text-gray-300">natural language</span>. Just describe what you want.
+            <p class="text-xl md:text-2xl text-gray-500 max-w-3xl mx-auto mb-6 animate-fade-in-up animation-delay-200">
+                Manage your entire server fleet through <span class="text-gray-300">natural language</span>.<br class="hidden md:block">
+                Cloud, on-prem, bare metal — all from one AI-powered console.
             </p>
+
+            <!-- Platform badges -->
+            <div class="flex flex-wrap items-center justify-center gap-3 mb-12 animate-fade-in-up animation-delay-300">
+                <span class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-sm">
+                    <svg class="w-4 h-4 text-gray-400" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
+                    </svg>
+                    <span class="text-gray-400">Linux</span>
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                </span>
+                <span class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-accent-500/10 border border-accent-500/20 text-sm">
+                    <svg class="w-4 h-4 text-accent-400" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M3 5.557L11.684 4.3v8.016H3V5.557zm0 13.112l8.684 1.257V12.61H3v6.059zM12.316 19.8L21 21V12.61h-8.684v7.19zM12.316 4.2v8.108H21V3L12.316 4.2z"/>
+                    </svg>
+                    <span class="text-accent-400">Windows</span>
+                    <span class="text-[10px] text-accent-400/80 font-medium uppercase tracking-wider">Coming Soon</span>
+                </span>
+            </div>
 
             <!-- CTA Buttons -->
             <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16 animate-fade-in-up animation-delay-400">
@@ -319,8 +337,8 @@
         <div class="max-w-7xl mx-auto px-6">
             <div class="text-center mb-16">
                 <span class="text-gray-500 text-sm font-medium uppercase tracking-wider">Features</span>
-                <h2 class="text-4xl md:text-5xl font-medium mt-4 mb-6 text-white/90">Cloud Management, <span class="text-brand-400">Reimagined</span></h2>
-                <p class="text-gray-500 text-lg max-w-2xl mx-auto">No more clicking through consoles or memorizing CLI commands. Just describe your intent.</p>
+                <h2 class="text-4xl md:text-5xl font-medium mt-4 mb-6 text-white/90">Fleet Management, <span class="text-brand-400">Reimagined</span></h2>
+                <p class="text-gray-500 text-lg max-w-2xl mx-auto">One interface for all your servers. Cloud VMs, on-prem racks, or bare metal — just describe what you want.</p>
             </div>
 
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -342,8 +360,8 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"></path>
                         </svg>
                     </div>
-                    <h3 class="text-lg font-medium mb-2 text-white/90">Multi-System Control</h3>
-                    <p class="text-gray-500 text-sm">Select multiple servers and run commands across all of them simultaneously. Use @mentions for quick targeting.</p>
+                    <h3 class="text-lg font-medium mb-2 text-white/90">Fleet-Wide Control</h3>
+                    <p class="text-gray-500 text-sm">Run commands across your entire fleet — cloud and on-prem servers together. Group by tags, regions, or custom filters.</p>
                 </div>
 
                 <!-- Feature 3 -->
@@ -353,8 +371,8 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
                         </svg>
                     </div>
-                    <h3 class="text-lg font-medium mb-2 text-white/90">Instant Provisioning</h3>
-                    <p class="text-gray-500 text-sm">Spin up new servers on AWS or Hetzner with a simple request. No more clicking through cloud consoles.</p>
+                    <h3 class="text-lg font-medium mb-2 text-white/90">Easy Onboarding</h3>
+                    <p class="text-gray-500 text-sm">Connect existing servers with a one-liner, or provision new cloud VMs instantly. Your entire fleet in minutes.</p>
                 </div>
 
                 <!-- Feature 4 -->
@@ -412,8 +430,8 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
                             </svg>
                         </div>
-                        <h3 class="text-xl font-medium mb-3 text-white/90">Connect Your Systems</h3>
-                        <p class="text-gray-500 text-sm">Install our lightweight agent on your servers, or let us provision new ones on AWS/Hetzner for you.</p>
+                        <h3 class="text-xl font-medium mb-3 text-white/90">Connect Your Fleet</h3>
+                        <p class="text-gray-500 text-sm">Run a one-liner to install our agent on any Linux server — cloud VMs, on-prem racks, or bare metal machines.</p>
                     </div>
                     <div class="hidden md:block absolute top-1/2 -right-6 w-12 h-px bg-white/10"></div>
                 </div>
