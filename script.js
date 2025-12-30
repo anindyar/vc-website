@@ -53,24 +53,8 @@ window.addEventListener('load', () => {
     animateTagline();
 });
 
-// Beta launch date - 7 days from first visit (persisted in localStorage)
-function getBetaLaunchDate() {
-    const STORAGE_KEY = 'vc_beta_launch_date';
-    let storedDate = localStorage.getItem(STORAGE_KEY);
-
-    if (storedDate) {
-        return new Date(parseInt(storedDate, 10));
-    }
-
-    // First visit: set launch date to 7 days from now at 9 AM
-    const launchDate = new Date();
-    launchDate.setDate(launchDate.getDate() + 7);
-    launchDate.setHours(9, 0, 0, 0);
-    localStorage.setItem(STORAGE_KEY, launchDate.getTime().toString());
-    return launchDate;
-}
-
-const BETA_LAUNCH_DATE = getBetaLaunchDate();
+// Beta program end date - January 7th, 2026 at 11:59 PM
+const BETA_LAUNCH_DATE = new Date('2026-01-07T23:59:59');
 
 // DOM Elements
 const daysEl = document.getElementById('days');
@@ -111,11 +95,11 @@ function updateCountdown() {
 
     // Update mini countdown
     if (days > 0) {
-        countdownMiniEl.textContent = `${days} day${days > 1 ? 's' : ''}`;
+        countdownMiniEl.textContent = `${days} day${days > 1 ? 's' : ''} left`;
     } else if (hours > 0) {
-        countdownMiniEl.textContent = `${hours} hour${hours > 1 ? 's' : ''}`;
+        countdownMiniEl.textContent = `${hours} hour${hours > 1 ? 's' : ''} left`;
     } else {
-        countdownMiniEl.textContent = `${minutes} min`;
+        countdownMiniEl.textContent = `${minutes} min left`;
     }
 }
 
