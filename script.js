@@ -205,6 +205,23 @@ const demoScenarios = [
         summary: "All 3 production servers are healthy. Load average is very low (0.03-0.12), memory usage under 55%. No action needed."
     },
     {
+        command: "SSH into db-master and check replication status",
+        steps: [
+            { name: "Obfuscating sensitive data...", status: "complete" },
+            { name: "192.168.1.50 → [HOST_1]", status: "complete" },
+            { name: "db-master.internal → [HOST_2]", status: "complete" },
+            { name: "Sending to LLM (data masked)", status: "complete" },
+            { name: "Restoring real values in command", status: "complete" },
+            { name: "Executing on db-master", status: "complete" }
+        ],
+        output: [
+            "LLM sees: ssh [HOST_2] 'show replica status'",
+            "Executed:  ssh db-master.internal '...'",
+            "Replication lag: 0.3s | Status: OK"
+        ],
+        summary: "Your IPs and hostnames never left your network. LLM only saw anonymized placeholders. Replication is healthy with 0.3s lag."
+    },
+    {
         command: "show me all pods in the production namespace",
         steps: [
             { name: "Authenticating with cluster", status: "complete" },

@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is the marketing/landing page website for Vibe Computing, a static site deployed to Cloudflare Pages. It features a beta signup form, countdown timer, and animated demos showcasing the platform's capabilities.
+Marketing/landing page for Vibe Computing, a static site deployed to Cloudflare Pages. Features beta signup, countdown timer, and animated terminal demos.
 
 ## Development Commands
 
@@ -20,31 +20,49 @@ wrangler pages deploy ./
 
 ### Static Site Structure
 - `index.html` - Main landing page with inline Tailwind config
-- `styles.css` - Custom animations and styles
-- `script.js` - Countdown timer, tagline animation, form handling, demo simulation
-- `theme-*.html` - 6 alternative color theme variations
+- `styles.css` - Custom animations (particles, parallax fade, shimmer effects)
+- `script.js` - Countdown timer, tagline typewriter animation, form handling, demo console simulation
+- `theme-*.html` - 6 alternative color theme variations (not actively used)
+
+### Key JavaScript Features (script.js)
+- **Tagline animation**: Types "Infrastructure as Code" then replaces with "Infrastructure as Thought"
+- **Countdown timer**: Counts down to `BETA_LAUNCH_DATE` (currently Jan 7, 2026)
+- **Demo console**: 6 scenarios cycling automatically with typing simulation, timeline steps, and AI responses
+- **Parallax fade**: Hero content fades/scales on scroll
 
 ### Cloudflare Pages Functions
 Serverless API endpoints in `functions/api/`:
-- `signup.js` - Beta signup form → Airtable
-- `enterprise.js` - Enterprise contact form → Airtable
+- `signup.js` - Beta signup form → Airtable (table `tbl31rbJHeIOgDwYM`)
+- `enterprise.js` - Enterprise contact form → Airtable (requires `AIRTABLE_ENTERPRISE_TABLE_ID` env var)
 
-Both functions follow the same pattern: validate input, POST to Airtable API, return JSON response.
+Both export `onRequestPost` and `onRequestOptions` handlers, validate input, POST to Airtable API, return JSON.
 
-### Key Integration
-- **Airtable**: Beta signups stored in base `app1lloN9OOQTi7cJ`
-- **Cloudflare**: Environment variable `AIRTABLE_API_KEY` must be set in dashboard
+### Local Development Server (server.py)
+Python HTTP server that mirrors production behavior:
+- Serves static files
+- Handles `/api/signup` POST requests
+- Routes to Airtable via `urllib`
 
 ### Tailwind Configuration
-Tailwind is loaded via CDN with inline config in `index.html`. Custom colors:
-- `brand-*` - Teal color palette (primary)
-- `accent-*` - Purple color palette (secondary)
+Loaded via CDN with inline config in `index.html`:
+- `brand-*` - Teal color palette (primary) - #14b8a6 base
+- `accent-*` - Purple color palette (secondary) - #8b5cf6 base
+- `font-sans: Inter`, `font-mono: JetBrains Mono`
 
 ## Environment Variables
 
-For local development, set:
 ```bash
-export AIRTABLE_API_KEY=your-airtable-api-key
+# Required
+AIRTABLE_API_KEY=your-airtable-api-key
+
+# Optional (for enterprise form in production)
+AIRTABLE_ENTERPRISE_TABLE_ID=tblXXX
 ```
 
-For production, configure in Cloudflare Pages dashboard under Settings → Environment variables.
+Production env vars: Cloudflare Pages dashboard → Settings → Environment variables
+
+## Airtable Integration
+
+- Base ID: `app1lloN9OOQTi7cJ`
+- Beta signups table: `tbl31rbJHeIOgDwYM` (field: `Name` stores email)
+- Enterprise table: configurable via `AIRTABLE_ENTERPRISE_TABLE_ID`
