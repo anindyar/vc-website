@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vibe Computing - Theme Preview</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .theme-card {
+            transition: all 0.3s ease;
+        }
+        .theme-card:hover {
+            transform: translateY(-8px);
+        }
+        .theme-card:hover .preview-overlay {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body class="bg-gray-950 text-white min-h-screen">
+    <div class="max-w-6xl mx-auto px-6 py-16">
+        <!-- Header -->
+        <div class="text-center mb-16">
+            <h1 class="text-4xl md:text-5xl font-bold mb-4">Theme Preview</h1>
+            <p class="text-gray-400 text-lg max-w-2xl mx-auto">
+                Select a theme to preview. Each theme represents a completely different design direction for the Vibe Computing landing page.
+            </p>
+        </div>
+
+        <!-- Theme Grid -->
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Current Theme -->
+            <a href="index.html" class="theme-card group block">
+                <div class="relative rounded-2xl overflow-hidden border-2 border-teal-500/50 bg-gray-900">
+                    <div class="aspect-[4/3] bg-gradient-to-br from-gray-900 via-gray-900 to-teal-900/30 p-6 flex flex-col justify-between">
+                        <div>
+                            <div class="w-8 h-8 bg-teal-500/20 rounded-lg flex items-center justify-center mb-4">
+                                <span class="text-teal-400 font-bold text-sm">V</span>
+                            </div>
+                            <div class="h-3 w-32 bg-white/20 rounded mb-2"></div>
+                            <div class="h-2 w-48 bg-white/10 rounded mb-1"></div>
+                            <div class="h-2 w-40 bg-white/10 rounded"></div>
+                        </div>
+                        <div class="flex gap-2">
+                            <div class="h-8 w-24 bg-teal-500/30 rounded-lg"></div>
+                            <div class="h-8 w-20 bg-white/10 rounded-lg border border-white/10"></div>
+                        </div>
+                    </div>
+                    <div class="preview-overlay absolute inset-0 bg-black/60 opacity-0 flex items-center justify-center transition-opacity">
+                        <span class="px-6 py-3 bg-white text-gray-900 rounded-lg font-semibold">View Theme</span>
+                    </div>
+                </div>
+                <div class="mt-4">
+                    <div class="flex items-center gap-2 mb-1">
+                        <h3 class="text-lg font-semibold">Current (Dark Teal)</h3>
+                        <span class="px-2 py-0.5 bg-teal-500/20 text-teal-400 text-xs font-medium rounded">ACTIVE</span>
+                    </div>
+                    <p class="text-gray-500 text-sm">Dark theme with teal/purple accents. The current production design.</p>
+                </div>
+            </a>
+
+            <!-- Minimal Light -->
+            <a href="theme-minimal-light.html" class="theme-card group block">
+                <div class="relative rounded-2xl overflow-hidden border border-gray-700 bg-gray-900">
+                    <div class="aspect-[4/3] bg-gradient-to-br from-white to-gray-100 p-6 flex flex-col justify-between">
+                        <div>
+                            <div class="w-8 h-8 bg-gray-900 rounded-lg flex items-center justify-center mb-4">
+                                <span class="text-white font-bold text-sm">V</span>
+                            </div>
+                            <div class="h-3 w-32 bg-gray-900 rounded mb-2"></div>
+                            <div class="h-2 w-48 bg-gray-300 rounded mb-1"></div>
+                            <div class="h-2 w-40 bg-gray-300 rounded"></div>
+                        </div>
+                        <div class="flex gap-2">
+                            <div class="h-8 w-24 bg-gray-900 rounded-lg"></div>
+                            <div class="h-8 w-20 bg-white rounded-lg border border-gray-200"></div>
+                        </div>
+                    </div>
+                    <div class="preview-overlay absolute inset-0 bg-black/60 opacity-0 flex items-center justify-center transition-opacity">
+                        <span class="px-6 py-3 bg-white text-gray-900 rounded-lg font-semibold">View Theme</span>
+                    </div>
+                </div>
+                <div class="mt-4">
+                    <h3 class="text-lg font-semibold mb-1">Minimal Light</h3>
+                    <p class="text-gray-500 text-sm">Clean, Apple-inspired. Whitespace, subtle shadows, violet accents.</p>
+                </div>
+            </a>
+
+            <!-- Cyberpunk -->
+            <a href="theme-cyberpunk.html" class="theme-card group block">
+                <div class="relative rounded-2xl overflow-hidden border border-gray-700 bg-gray-900">
+                    <div class="aspect-[4/3] bg-gradient-to-br from-[#0a0a0f] to-[#1a1a25] p-6 flex flex-col justify-between relative">
+                        <!-- Scanlines effect -->
+                        <div class="absolute inset-0 opacity-10" style="background: repeating-linear-gradient(0deg, rgba(255,255,255,0.03) 0px, rgba(255,255,255,0.03) 1px, transparent 1px, transparent 2px);"></div>
+                        <div class="relative">
+                            <div class="w-8 h-8 border border-[#05d9e8] flex items-center justify-center mb-4">
+                                <span class="text-[#05d9e8] font-bold text-sm">VC</span>
+                            </div>
+                            <div class="h-3 w-32 bg-[#ff2a6d] rounded mb-2"></div>
+                            <div class="h-2 w-48 bg-[#05d9e8]/30 rounded mb-1"></div>
+                            <div class="h-2 w-40 bg-[#05d9e8]/30 rounded"></div>
+                        </div>
+                        <div class="relative flex gap-2">
+                            <div class="h-8 w-24 bg-[#ff2a6d] rounded-none"></div>
+                            <div class="h-8 w-20 border border-[#05d9e8] rounded-none"></div>
+                        </div>
+                    </div>
+                    <div class="preview-overlay absolute inset-0 bg-black/60 opacity-0 flex items-center justify-center transition-opacity">
+                        <span class="px-6 py-3 bg-[#ff2a6d] text-black rounded-none font-semibold">View Theme</span>
+                    </div>
+                </div>
+                <div class="mt-4">
+                    <h3 class="text-lg font-semibold mb-1">Cyberpunk</h3>
+                    <p class="text-gray-500 text-sm">Neon pink/cyan, scanlines, glitch effects. Futuristic terminal aesthetic.</p>
+                </div>
+            </a>
+
+            <!-- Brutalist -->
+            <a href="theme-brutalist.html" class="theme-card group block">
+                <div class="relative rounded-2xl overflow-hidden border border-gray-700 bg-gray-900">
+                    <div class="aspect-[4/3] bg-white p-6 flex flex-col justify-between">
+                        <div>
+                            <div class="text-black font-bold text-xl mb-4" style="font-family: monospace;">Vibe_</div>
+                            <div class="h-4 w-40 bg-black mb-2"></div>
+                            <div class="h-4 w-32 bg-black mb-2"></div>
+                            <div class="h-3 w-48 bg-gray-400 mb-1"></div>
+                        </div>
+                        <div class="flex gap-2">
+                            <div class="h-10 w-28 bg-black"></div>
+                            <div class="h-10 w-24 bg-white border-3 border-black" style="border-width: 3px;"></div>
+                        </div>
+                    </div>
+                    <div class="preview-overlay absolute inset-0 bg-black/60 opacity-0 flex items-center justify-center transition-opacity">
+                        <span class="px-6 py-3 bg-white text-black font-semibold" style="font-family: monospace;">VIEW →</span>
+                    </div>
+                </div>
+                <div class="mt-4">
+                    <h3 class="text-lg font-semibold mb-1">Brutalist</h3>
+                    <p class="text-gray-500 text-sm">Raw, stark black & white. Heavy typography, no rounded corners.</p>
+                </div>
+            </a>
+
+            <!-- Warm Gradient -->
+            <a href="theme-warm-gradient.html" class="theme-card group block">
+                <div class="relative rounded-2xl overflow-hidden border border-gray-700 bg-gray-900">
+                    <div class="aspect-[4/3] bg-gradient-to-br from-[#fffbf5] to-[#fff4e6] p-6 flex flex-col justify-between">
+                        <div>
+                            <div class="w-8 h-8 bg-gradient-to-br from-[#ff9500] to-[#ff7a5c] rounded-xl flex items-center justify-center mb-4">
+                                <span class="text-white font-bold text-sm">V</span>
+                            </div>
+                            <div class="h-3 w-32 bg-gradient-to-r from-[#ff9500] to-[#ff6b6b] rounded-full mb-2"></div>
+                            <div class="h-2 w-48 bg-gray-300 rounded-full mb-1"></div>
+                            <div class="h-2 w-40 bg-gray-300 rounded-full"></div>
+                        </div>
+                        <div class="flex gap-2">
+                            <div class="h-8 w-24 bg-gradient-to-r from-[#ff9500] to-[#ff7a5c] rounded-xl"></div>
+                            <div class="h-8 w-20 bg-white rounded-xl border border-gray-200"></div>
+                        </div>
+                    </div>
+                    <div class="preview-overlay absolute inset-0 bg-black/60 opacity-0 flex items-center justify-center transition-opacity">
+                        <span class="px-6 py-3 bg-gradient-to-r from-[#ff9500] to-[#ff7a5c] text-white rounded-xl font-semibold">View Theme</span>
+                    </div>
+                </div>
+                <div class="mt-4">
+                    <h3 class="text-lg font-semibold mb-1">Warm Gradient</h3>
+                    <p class="text-gray-500 text-sm">Friendly oranges & peaches. Soft, approachable, welcoming feel.</p>
+                </div>
+            </a>
+
+            <!-- Enterprise -->
+            <a href="theme-enterprise.html" class="theme-card group block">
+                <div class="relative rounded-2xl overflow-hidden border border-gray-700 bg-gray-900">
+                    <div class="aspect-[4/3] bg-gradient-to-br from-white to-[#f0f4f8] p-6 flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center gap-2 mb-4">
+                                <div class="w-8 h-8 bg-[#102a43] rounded-lg flex items-center justify-center">
+                                    <span class="text-white font-bold text-sm">V</span>
+                                </div>
+                                <div class="h-2 w-16 bg-[#102a43]/20 rounded"></div>
+                            </div>
+                            <div class="h-3 w-40 bg-[#102a43] rounded mb-2"></div>
+                            <div class="h-2 w-48 bg-[#627d98] rounded mb-1"></div>
+                            <div class="h-2 w-40 bg-[#627d98] rounded"></div>
+                        </div>
+                        <div class="flex gap-2">
+                            <div class="h-8 w-28 bg-[#102a43] rounded-lg"></div>
+                            <div class="h-8 w-24 bg-white rounded-lg border-2 border-[#bcccdc]"></div>
+                        </div>
+                    </div>
+                    <div class="preview-overlay absolute inset-0 bg-black/60 opacity-0 flex items-center justify-center transition-opacity">
+                        <span class="px-6 py-3 bg-[#102a43] text-white rounded-lg font-semibold">View Theme</span>
+                    </div>
+                </div>
+                <div class="mt-4">
+                    <h3 class="text-lg font-semibold mb-1">Enterprise</h3>
+                    <p class="text-gray-500 text-sm">Professional navy blue. Trust badges, stats, compliance-focused.</p>
+                </div>
+            </a>
+        </div>
+
+        <!-- Comparison Table -->
+        <div class="mt-20">
+            <h2 class="text-2xl font-bold mb-8 text-center">Theme Comparison</h2>
+            <div class="overflow-x-auto">
+                <table class="w-full text-sm">
+                    <thead>
+                        <tr class="border-b border-gray-800">
+                            <th class="text-left py-4 px-4 font-semibold text-gray-400">Theme</th>
+                            <th class="text-left py-4 px-4 font-semibold text-gray-400">Style</th>
+                            <th class="text-left py-4 px-4 font-semibold text-gray-400">Colors</th>
+                            <th class="text-left py-4 px-4 font-semibold text-gray-400">Best For</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-gray-300">
+                        <tr class="border-b border-gray-800/50">
+                            <td class="py-4 px-4 font-medium">Current</td>
+                            <td class="py-4 px-4">Modern Dark</td>
+                            <td class="py-4 px-4"><span class="inline-block w-4 h-4 rounded bg-teal-500 mr-1"></span><span class="inline-block w-4 h-4 rounded bg-purple-500"></span></td>
+                            <td class="py-4 px-4">Developer-focused, technical audience</td>
+                        </tr>
+                        <tr class="border-b border-gray-800/50">
+                            <td class="py-4 px-4 font-medium">Minimal Light</td>
+                            <td class="py-4 px-4">Clean & Premium</td>
+                            <td class="py-4 px-4"><span class="inline-block w-4 h-4 rounded bg-white border border-gray-600 mr-1"></span><span class="inline-block w-4 h-4 rounded bg-violet-500"></span></td>
+                            <td class="py-4 px-4">Premium positioning, design-conscious</td>
+                        </tr>
+                        <tr class="border-b border-gray-800/50">
+                            <td class="py-4 px-4 font-medium">Cyberpunk</td>
+                            <td class="py-4 px-4">Neon Futuristic</td>
+                            <td class="py-4 px-4"><span class="inline-block w-4 h-4 rounded bg-[#ff2a6d] mr-1"></span><span class="inline-block w-4 h-4 rounded bg-[#05d9e8]"></span></td>
+                            <td class="py-4 px-4">Edgy branding, gaming/tech culture</td>
+                        </tr>
+                        <tr class="border-b border-gray-800/50">
+                            <td class="py-4 px-4 font-medium">Brutalist</td>
+                            <td class="py-4 px-4">Raw & Stark</td>
+                            <td class="py-4 px-4"><span class="inline-block w-4 h-4 rounded bg-black mr-1"></span><span class="inline-block w-4 h-4 rounded bg-white border border-gray-600"></span></td>
+                            <td class="py-4 px-4">Developer credibility, no-nonsense</td>
+                        </tr>
+                        <tr class="border-b border-gray-800/50">
+                            <td class="py-4 px-4 font-medium">Warm Gradient</td>
+                            <td class="py-4 px-4">Friendly & Soft</td>
+                            <td class="py-4 px-4"><span class="inline-block w-4 h-4 rounded bg-[#ff9500] mr-1"></span><span class="inline-block w-4 h-4 rounded bg-[#ff6b6b]"></span></td>
+                            <td class="py-4 px-4">Approachable, reducing intimidation</td>
+                        </tr>
+                        <tr class="border-b border-gray-800/50">
+                            <td class="py-4 px-4 font-medium">Enterprise</td>
+                            <td class="py-4 px-4">Corporate Trust</td>
+                            <td class="py-4 px-4"><span class="inline-block w-4 h-4 rounded bg-[#102a43] mr-1"></span><span class="inline-block w-4 h-4 rounded bg-[#38b2ac]"></span></td>
+                            <td class="py-4 px-4">B2B sales, enterprise buyers</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="mt-16 pt-8 border-t border-gray-800 text-center text-gray-500 text-sm">
+            <p>Vibe Computing Theme Preview &middot; For internal review only</p>
+        </div>
+    </div>
+</body>
+</html>

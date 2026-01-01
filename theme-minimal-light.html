@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vibe Computing - Theme: Minimal Light</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        gray: {
+                            50: '#fafafa',
+                            100: '#f5f5f5',
+                            200: '#e5e5e5',
+                            300: '#d4d4d4',
+                            400: '#a3a3a3',
+                            500: '#737373',
+                            600: '#525252',
+                            700: '#404040',
+                            800: '#262626',
+                            900: '#171717',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        * { -webkit-font-smoothing: antialiased; }
+        .gradient-blur {
+            background: radial-gradient(ellipse at 50% -20%, rgba(120, 119, 198, 0.1) 0%, transparent 60%);
+        }
+        .card-shadow {
+            box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.04);
+        }
+        .card-shadow:hover {
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06), 0 8px 24px rgba(0,0,0,0.06);
+        }
+    </style>
+</head>
+<body class="bg-white text-gray-900">
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-xl border-b border-gray-100">
+        <div class="max-w-6xl mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <a href="#" class="flex items-center gap-2">
+                    <div class="w-8 h-8 bg-gray-900 rounded-lg flex items-center justify-center">
+                        <span class="text-white font-bold text-sm">V</span>
+                    </div>
+                    <span class="text-lg font-semibold">Vibe Computing</span>
+                </a>
+                <div class="flex items-center gap-8">
+                    <a href="#features" class="text-gray-500 hover:text-gray-900 transition-colors text-sm">Features</a>
+                    <a href="#how-it-works" class="text-gray-500 hover:text-gray-900 transition-colors text-sm">How it Works</a>
+                    <a href="#" class="px-4 py-2 bg-gray-900 text-white rounded-lg text-sm font-medium hover:bg-gray-800 transition-colors">Join Beta</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative min-h-screen flex items-center justify-center pt-20 gradient-blur">
+        <div class="max-w-4xl mx-auto px-6 text-center">
+            <!-- Badge -->
+            <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-gray-100 text-gray-600 text-sm mb-8">
+                <span class="w-2 h-2 bg-green-500 rounded-full"></span>
+                Beta Now Open
+            </div>
+
+            <!-- Main Headline -->
+            <h1 class="text-5xl md:text-7xl font-semibold mb-6 tracking-tight leading-tight">
+                Infrastructure as
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-violet-600 to-indigo-600">Thought</span>
+            </h1>
+
+            <p class="text-xl text-gray-500 max-w-2xl mx-auto mb-8 leading-relaxed">
+                Manage your entire server fleet through natural language.
+                Cloud, on-prem, bare metal — all from one AI-powered console.
+            </p>
+
+            <!-- Security Badge -->
+            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-violet-50 text-violet-700 text-sm mb-10">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                </svg>
+                LLM Data Obfuscation — Your data stays private
+            </div>
+
+            <!-- CTA Buttons -->
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-20">
+                <a href="#" class="px-8 py-4 bg-gray-900 text-white rounded-xl font-medium hover:bg-gray-800 transition-all hover:shadow-lg">
+                    Get Early Access
+                    <svg class="inline-block w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                    </svg>
+                </a>
+                <a href="#" class="px-8 py-4 text-gray-600 hover:text-gray-900 font-medium transition-colors">
+                    Enterprise / On-Prem
+                </a>
+            </div>
+
+            <!-- Demo Window -->
+            <div class="relative max-w-3xl mx-auto">
+                <div class="card-shadow rounded-2xl border border-gray-200 overflow-hidden bg-white transition-all duration-300">
+                    <!-- Window Header -->
+                    <div class="flex items-center gap-2 px-4 py-3 bg-gray-50 border-b border-gray-100">
+                        <div class="flex gap-1.5">
+                            <div class="w-3 h-3 rounded-full bg-gray-300"></div>
+                            <div class="w-3 h-3 rounded-full bg-gray-300"></div>
+                            <div class="w-3 h-3 rounded-full bg-gray-300"></div>
+                        </div>
+                        <span class="text-gray-400 text-xs ml-2">Vibe Console</span>
+                    </div>
+
+                    <!-- Console Content -->
+                    <div class="p-6 bg-white min-h-[300px]">
+                        <div class="space-y-4">
+                            <!-- User Message -->
+                            <div class="flex justify-end">
+                                <div class="bg-gray-900 text-white px-4 py-2 rounded-2xl rounded-br-md max-w-[80%]">
+                                    <p class="text-sm">check memory usage on all production servers</p>
+                                </div>
+                            </div>
+
+                            <!-- AI Response -->
+                            <div class="flex gap-3">
+                                <div class="w-8 h-8 rounded-full bg-gradient-to-br from-violet-500 to-indigo-500 flex items-center justify-center shrink-0">
+                                    <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                                    </svg>
+                                </div>
+                                <div class="space-y-3 flex-1">
+                                    <div class="bg-gray-50 rounded-xl p-4 border border-gray-100">
+                                        <p class="text-xs text-gray-400 uppercase tracking-wider mb-2">Results</p>
+                                        <div class="font-mono text-sm text-gray-600 space-y-1">
+                                            <p>prod-web-01: 4.2GB / 8GB (52%)</p>
+                                            <p>prod-web-02: 3.8GB / 8GB (47%)</p>
+                                            <p>prod-api-01: 6.1GB / 16GB (38%)</p>
+                                        </div>
+                                    </div>
+                                    <p class="text-sm text-gray-600">All servers are healthy. Memory usage is within normal range.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-24 bg-gray-50">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-semibold mb-4">Everything you need</h2>
+                <p class="text-gray-500 text-lg">Simple, powerful, secure infrastructure management.</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-6">
+                <!-- Feature 1 -->
+                <div class="bg-white rounded-2xl p-8 card-shadow transition-all duration-300">
+                    <div class="w-12 h-12 bg-gray-100 rounded-xl flex items-center justify-center mb-6">
+                        <svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-semibold mb-2">Natural Language</h3>
+                    <p class="text-gray-500 text-sm leading-relaxed">Just describe what you want. AI understands your intent and executes the right commands.</p>
+                </div>
+
+                <!-- Feature 2 -->
+                <div class="bg-white rounded-2xl p-8 card-shadow transition-all duration-300">
+                    <div class="w-12 h-12 bg-gray-100 rounded-xl flex items-center justify-center mb-6">
+                        <svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-semibold mb-2">Fleet-Wide Control</h3>
+                    <p class="text-gray-500 text-sm leading-relaxed">Run commands across your entire fleet. Group by tags, regions, or custom filters.</p>
+                </div>
+
+                <!-- Feature 3 -->
+                <div class="bg-white rounded-2xl p-8 card-shadow transition-all duration-300">
+                    <div class="w-12 h-12 bg-violet-100 rounded-xl flex items-center justify-center mb-6">
+                        <svg class="w-6 h-6 text-violet-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-semibold mb-2">LLM Obfuscation</h3>
+                    <p class="text-gray-500 text-sm leading-relaxed">Use public LLMs safely. IPs and hostnames are masked automatically.</p>
+                </div>
+
+                <!-- Feature 4 -->
+                <div class="bg-white rounded-2xl p-8 card-shadow transition-all duration-300">
+                    <div class="w-12 h-12 bg-gray-100 rounded-xl flex items-center justify-center mb-6">
+                        <svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-semibold mb-2">Instant Setup</h3>
+                    <p class="text-gray-500 text-sm leading-relaxed">One-liner agent install. Connect existing servers or provision new ones instantly.</p>
+                </div>
+
+                <!-- Feature 5 -->
+                <div class="bg-white rounded-2xl p-8 card-shadow transition-all duration-300">
+                    <div class="w-12 h-12 bg-gray-100 rounded-xl flex items-center justify-center mb-6">
+                        <svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-semibold mb-2">Zero Trust</h3>
+                    <p class="text-gray-500 text-sm leading-relaxed">Outbound-only connections. No inbound ports, no SSH keys to manage.</p>
+                </div>
+
+                <!-- Feature 6 -->
+                <div class="bg-white rounded-2xl p-8 card-shadow transition-all duration-300">
+                    <div class="w-12 h-12 bg-gray-100 rounded-xl flex items-center justify-center mb-6">
+                        <svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-semibold mb-2">Real-Time</h3>
+                    <p class="text-gray-500 text-sm leading-relaxed">Watch command execution live. See output as it happens, not after.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-24">
+        <div class="max-w-2xl mx-auto px-6 text-center">
+            <h2 class="text-3xl md:text-4xl font-semibold mb-4">Ready to simplify your infrastructure?</h2>
+            <p class="text-gray-500 text-lg mb-8">Join the beta and be among the first to experience AI-native server management.</p>
+
+            <form class="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+                <input type="email" placeholder="Enter your email" class="flex-1 px-5 py-3 bg-gray-100 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-900">
+                <button type="submit" class="px-6 py-3 bg-gray-900 text-white rounded-xl font-medium hover:bg-gray-800 transition-colors whitespace-nowrap">
+                    Join Beta
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-8 border-t border-gray-100">
+        <div class="max-w-6xl mx-auto px-6 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <div class="w-6 h-6 bg-gray-900 rounded flex items-center justify-center">
+                    <span class="text-white font-bold text-xs">V</span>
+                </div>
+                <span class="text-sm text-gray-400">Vibe Computing</span>
+            </div>
+            <p class="text-gray-400 text-sm">&copy; 2025 TechImbue</p>
+        </div>
+    </footer>
+</body>
+</html>
