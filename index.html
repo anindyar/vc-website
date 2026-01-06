@@ -3,61 +3,105 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vibe Computing - AI-Native Cloud Platform</title>
-    <meta name="description" content="Describe it. We build it. You run it. Manage cloud infrastructure through natural language. Beta launching soon.">
+    <title>Vibe Computing - AI-Native Infrastructure Management</title>
+    <meta name="description" content="Manage your entire server fleet through natural language. Cloud, on-prem, bare metal — all from one AI-powered console with enterprise-grade security.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="icon" type="image/svg+xml" href="logo.svg">
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                        mono: ['JetBrains Mono', 'monospace'],
+                        sans: ['IBM Plex Sans', 'sans-serif'],
+                        mono: ['IBM Plex Mono', 'monospace'],
                     },
                     colors: {
-                        brand: {
-                            50: '#f0fdfa',
-                            100: '#ccfbf1',
-                            200: '#99f6e4',
-                            300: '#5eead4',
-                            400: '#2dd4bf',
-                            500: '#14b8a6',
-                            600: '#0d9488',
-                            700: '#0f766e',
-                            800: '#115e59',
-                            900: '#134e4a',
+                        navy: {
+                            50: '#f0f4f8',
+                            100: '#d9e2ec',
+                            200: '#bcccdc',
+                            300: '#9fb3c8',
+                            400: '#829ab1',
+                            500: '#627d98',
+                            600: '#486581',
+                            700: '#334e68',
+                            800: '#243b53',
+                            900: '#102a43',
+                            950: '#0a1929',
                         },
                         accent: {
-                            400: '#a78bfa',
-                            500: '#8b5cf6',
-                            600: '#7c3aed',
+                            400: '#4fd1c5',
+                            500: '#38b2ac',
+                            600: '#319795',
                         }
                     }
                 }
             }
         }
     </script>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="icon" type="image/svg+xml" href="logo.svg">
+    <style>
+        .pattern-grid {
+            background-image: linear-gradient(rgba(16, 42, 67, 0.03) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(16, 42, 67, 0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+        .cursor-blink {
+            animation: blink 1s infinite;
+        }
+        @keyframes fade-in {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in {
+            animation: fade-in 0.5s ease-out forwards;
+        }
+    </style>
 </head>
-<body class="bg-gray-950 text-white antialiased">
+<body class="bg-white text-navy-900 antialiased">
+    <!-- Top Bar -->
+    <div class="bg-navy-900 text-white text-sm py-2 hidden md:block">
+        <div class="max-w-7xl mx-auto px-6 flex items-center justify-between">
+            <div class="flex items-center gap-4">
+                <div class="flex items-center gap-2">
+                    <span class="w-2 h-2 bg-accent-500 rounded-full animate-pulse"></span>
+                    <span class="text-accent-400 font-medium">Beta Now Open</span>
+                </div>
+                <span class="text-navy-500">|</span>
+                <span class="text-navy-300" id="countdown-mini">Loading...</span>
+            </div>
+            <div class="flex items-center gap-6">
+                <a href="#" class="text-navy-300 hover:text-white transition-colors">Documentation</a>
+                <a href="#" class="text-navy-300 hover:text-white transition-colors">Contact Sales</a>
+            </div>
+        </div>
+    </div>
+
     <!-- Navigation -->
-    <nav class="fixed top-0 left-0 right-0 z-50 bg-gray-950/80 backdrop-blur-xl border-b border-white/5">
+    <nav class="sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-navy-100">
         <div class="max-w-7xl mx-auto px-6 py-4">
             <div class="flex items-center justify-between">
-                <a href="#" class="flex items-center gap-2">
+                <a href="#" class="flex items-center gap-3">
                     <img src="logo.svg" alt="Vibe Computing" class="w-10 h-10">
-                    <span class="text-xl font-bold text-white">Vibe Computing</span>
+                    <span class="text-xl font-bold text-navy-900">Vibe Computing</span>
                 </a>
                 <div class="hidden md:flex items-center gap-8">
-                    <a href="#features" class="text-gray-500 hover:text-gray-300 transition-colors">Features</a>
-                    <a href="#how-it-works" class="text-gray-500 hover:text-gray-300 transition-colors">How it Works</a>
-                    <a href="#beta" class="px-4 py-2 bg-white/10 hover:bg-white/15 border border-white/10 rounded-lg font-medium transition-all">Join Beta</a>
+                    <a href="#features" class="text-navy-600 hover:text-navy-900 transition-colors font-medium">Platform</a>
+                    <a href="#how-it-works" class="text-navy-600 hover:text-navy-900 transition-colors font-medium">How it Works</a>
+                    <a href="#beta" class="text-navy-600 hover:text-navy-900 transition-colors font-medium">Join Beta</a>
+                    <div class="flex items-center gap-3">
+                        <a href="#beta" class="px-5 py-2.5 bg-navy-900 text-white rounded-lg font-medium hover:bg-navy-800 transition-colors">
+                            Get Early Access
+                        </a>
+                    </div>
                 </div>
-                <button class="md:hidden text-gray-400" id="mobile-menu-btn">
+                <button class="md:hidden text-navy-600" id="mobile-menu-btn">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
                     </svg>
@@ -67,546 +111,353 @@
     </nav>
 
     <!-- Mobile Menu -->
-    <div class="fixed inset-0 z-40 bg-gray-950/95 backdrop-blur-xl hidden" id="mobile-menu">
+    <div class="fixed inset-0 z-40 bg-white hidden" id="mobile-menu">
         <div class="flex flex-col items-center justify-center h-full gap-8 text-xl">
-            <a href="#features" class="text-gray-500 hover:text-gray-300 transition-colors">Features</a>
-            <a href="#how-it-works" class="text-gray-500 hover:text-gray-300 transition-colors">How it Works</a>
-            <a href="#beta" class="px-6 py-3 bg-white/10 hover:bg-white/15 border border-white/10 rounded-lg font-medium transition-all">Join Beta</a>
+            <a href="#features" class="text-navy-600 hover:text-navy-900 transition-colors font-medium">Platform</a>
+            <a href="#how-it-works" class="text-navy-600 hover:text-navy-900 transition-colors font-medium">How it Works</a>
+            <a href="#beta" class="px-8 py-3 bg-navy-900 text-white rounded-lg font-medium">Get Early Access</a>
         </div>
     </div>
 
     <!-- Hero Section -->
-    <section class="relative min-h-screen flex items-center justify-center overflow-hidden pt-20" id="hero-section">
-        <!-- Background Effects -->
-        <div class="absolute inset-0 hero-gradient"></div>
-        <div class="absolute inset-0 grid-pattern opacity-10"></div>
-        <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-brand-600/10 rounded-full blur-3xl animate-pulse-slow"></div>
-        <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-accent-500/10 rounded-full blur-3xl animate-pulse-slow animation-delay-2000"></div>
+    <section class="relative py-16 lg:py-24 pattern-grid">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div>
+                    <h1 class="text-4xl lg:text-5xl xl:text-6xl font-bold mb-6 leading-tight text-navy-900">
+                        Infrastructure as <span class="text-accent-500">Thought</span>
+                    </h1>
 
-        <!-- Floating Particles -->
-        <div class="absolute inset-0 overflow-hidden pointer-events-none" id="particles-container">
-            <div class="particle particle-1"></div>
-            <div class="particle particle-2"></div>
-            <div class="particle particle-3"></div>
-            <div class="particle particle-4"></div>
-            <div class="particle particle-5"></div>
-            <div class="particle particle-6"></div>
-            <div class="particle particle-7"></div>
-            <div class="particle particle-8"></div>
-        </div>
+                    <p class="text-xl text-navy-600 mb-6 leading-relaxed">
+                        Manage your entire server fleet through natural language.
+                        Cloud, on-prem, bare metal — all from one AI-powered console.
+                    </p>
 
-        <div class="relative z-10 max-w-7xl mx-auto px-6 text-center">
-            <!-- Beta Badge -->
-            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-500/10 border border-emerald-500/20 mb-8 animate-fade-in">
-                <span class="relative flex h-2 w-2">
-                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                    <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-                </span>
-                <span class="text-emerald-400 text-sm font-medium">Beta Now Open</span>
-                <span class="text-white/60 text-sm">•</span>
-                <span class="text-white font-mono font-medium" id="countdown-mini">7 days left</span>
-            </div>
-
-            <!-- Main Headline -->
-            <h1 class="text-5xl md:text-7xl lg:text-8xl font-bold mb-6 animate-fade-in-up tracking-tight">
-                <span class="block text-white/90">Infrastructure as</span>
-                <span class="block h-[1.2em] relative">
-                    <span id="tagline-text" class="text-brand-400"></span>
-                    <span id="tagline-cursor" class="inline-block w-1 md:w-2 h-[0.9em] bg-brand-400/80 ml-1 animate-pulse align-middle"></span>
-                </span>
-            </h1>
-
-            <p class="text-xl md:text-2xl text-gray-500 max-w-3xl mx-auto mb-6 animate-fade-in-up animation-delay-200">
-                Manage your entire server fleet through <span class="text-gray-300">natural language</span>.<br class="hidden md:block">
-                Cloud, on-prem, bare metal — all from one AI-powered console.
-            </p>
-
-            <!-- Platform badges -->
-            <div class="flex flex-wrap items-center justify-center gap-3 mb-6 animate-fade-in-up animation-delay-300">
-                <span class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-sm">
-                    <svg class="w-4 h-4 text-gray-400" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
-                    </svg>
-                    <span class="text-gray-400">Linux</span>
-                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
-                </span>
-                <span class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-accent-500/10 border border-accent-500/20 text-sm">
-                    <svg class="w-4 h-4 text-accent-400" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M3 5.557L11.684 4.3v8.016H3V5.557zm0 13.112l8.684 1.257V12.61H3v6.059zM12.316 19.8L21 21V12.61h-8.684v7.19zM12.316 4.2v8.108H21V3L12.316 4.2z"/>
-                    </svg>
-                    <span class="text-accent-400">Windows</span>
-                    <span class="text-[10px] text-accent-400/80 font-medium uppercase tracking-wider">Coming Soon</span>
-                </span>
-            </div>
-
-            <!-- Security callout -->
-            <div class="flex items-center justify-center gap-2 mb-12 animate-fade-in-up animation-delay-300">
-                <div class="flex items-center gap-2 px-4 py-2 rounded-full bg-brand-500/10 border border-brand-500/20">
-                    <svg class="w-4 h-4 text-brand-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"></path>
-                    </svg>
-                    <span class="text-brand-300 text-sm font-medium">LLM Data Obfuscation</span>
-                    <span class="text-gray-500 text-sm">— Your IPs & hostnames never reach the cloud</span>
-                </div>
-            </div>
-
-            <!-- CTA Buttons -->
-            <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16 animate-fade-in-up animation-delay-400">
-                <a href="#beta" class="group relative px-8 py-4 bg-gradient-to-r from-brand-500 to-brand-400 text-gray-900 hover:from-brand-400 hover:to-brand-300 rounded-xl font-semibold text-lg transition-all hover:scale-[1.02] hover:shadow-lg hover:shadow-brand-500/25 overflow-hidden">
-                    <span class="relative z-10">Join the Beta Waitlist</span>
-                    <svg class="inline-block w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
-                    </svg>
-                    <div class="absolute inset-0 btn-shimmer"></div>
-                </a>
-                <button id="enterprise-btn" class="group px-8 py-4 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 rounded-xl font-semibold text-lg transition-all hover:scale-[1.02] backdrop-blur-sm">
-                    Enterprise / On-Prem
-                    <svg class="inline-block w-5 h-5 ml-2 text-gray-400 group-hover:text-gray-300 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
-                    </svg>
-                </button>
-            </div>
-
-            <!-- Countdown Timer -->
-            <div class="animate-fade-in-up animation-delay-600">
-                <p class="text-gray-600 text-sm uppercase tracking-wider mb-4">Beta Signup Closes In</p>
-                <div class="flex items-center justify-center gap-4 md:gap-6">
-                    <div class="countdown-block">
-                        <span class="text-4xl md:text-6xl font-medium font-mono text-brand-300 countdown-glow" id="days">07</span>
-                        <span class="text-xs md:text-sm text-gray-600 uppercase tracking-wider">Days</span>
-                    </div>
-                    <span class="text-3xl md:text-5xl text-gray-700 font-light">:</span>
-                    <div class="countdown-block">
-                        <span class="text-4xl md:text-6xl font-medium font-mono text-brand-300 countdown-glow" id="hours">00</span>
-                        <span class="text-xs md:text-sm text-gray-600 uppercase tracking-wider">Hours</span>
-                    </div>
-                    <span class="text-3xl md:text-5xl text-gray-700 font-light">:</span>
-                    <div class="countdown-block">
-                        <span class="text-4xl md:text-6xl font-medium font-mono text-brand-300 countdown-glow" id="minutes">00</span>
-                        <span class="text-xs md:text-sm text-gray-600 uppercase tracking-wider">Minutes</span>
-                    </div>
-                    <span class="text-3xl md:text-5xl text-gray-700 font-light">:</span>
-                    <div class="countdown-block">
-                        <span class="text-4xl md:text-6xl font-medium font-mono text-brand-300 countdown-glow" id="seconds">00</span>
-                        <span class="text-xs md:text-sm text-gray-600 uppercase tracking-wider">Seconds</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Scroll Indicator -->
-        <div class="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
-            <svg class="w-6 h-6 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
-            </svg>
-        </div>
-    </section>
-
-    <!-- Demo Console Section -->
-    <section class="relative py-24 overflow-hidden" id="demo-section">
-        <!-- Section background accent -->
-        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-brand-600/5 rounded-full blur-3xl"></div>
-
-        <div class="max-w-7xl mx-auto px-6 relative">
-            <div class="text-center mb-16">
-                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-500/10 border border-brand-500/20 mb-4">
-                    <span class="w-1.5 h-1.5 rounded-full bg-brand-400 animate-pulse"></span>
-                    <span class="text-brand-400 text-xs font-medium uppercase tracking-wider">Live Demo</span>
-                </div>
-                <h2 class="text-3xl md:text-4xl font-medium mb-4 text-white/90">See it in Action</h2>
-                <p class="text-gray-500 text-lg">Just type what you want. AI handles the rest.</p>
-            </div>
-
-            <div class="relative max-w-4xl mx-auto">
-                <div class="absolute inset-0 bg-gradient-to-r from-brand-600/10 to-accent-500/10 blur-3xl"></div>
-                <div class="relative glass-panel rounded-2xl border border-white/5 shadow-2xl overflow-hidden console-glow animate-border-glow">
-                    <!-- Console Header -->
-                    <div class="flex items-center gap-2 px-4 py-3 bg-white/[0.02] border-b border-white/5">
-                        <div class="flex gap-2">
-                            <div class="w-3 h-3 rounded-full bg-red-500/60"></div>
-                            <div class="w-3 h-3 rounded-full bg-yellow-500/60"></div>
-                            <div class="w-3 h-3 rounded-full bg-green-500/60"></div>
+                    <!-- Security Highlight -->
+                    <div class="flex items-start gap-4 p-5 bg-accent-500/10 border border-accent-500/20 rounded-lg mb-8">
+                        <div class="w-10 h-10 bg-accent-500 rounded-lg flex items-center justify-center shrink-0">
+                            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"></path>
+                            </svg>
                         </div>
-                        <span class="text-gray-500 text-sm ml-2 font-medium">Vibe Console</span>
-                        <div class="ml-auto flex items-center gap-2">
-                            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                            <span class="text-gray-500 text-xs">3 servers online</span>
+                        <div>
+                            <h3 class="font-semibold text-navy-900 mb-1">LLM Data Obfuscation</h3>
+                            <p class="text-navy-600 text-sm">Your IPs, hostnames, and secrets are automatically masked before reaching any AI model — then restored when commands execute.</p>
                         </div>
                     </div>
 
-                    <!-- Console Content -->
-                    <div class="p-6 min-h-[380px]" id="terminal-content">
-                        <!-- Chat Messages Area -->
-                        <div id="chat-messages" class="space-y-4">
-                            <!-- User Message -->
-                            <div id="user-message" class="flex justify-end hidden">
-                                <div class="max-w-[80%] bg-white/10 rounded-2xl rounded-br-md px-4 py-3 border border-white/10">
-                                    <p class="text-gray-200 text-sm" id="typed-command"></p>
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <a href="#beta" class="inline-flex items-center justify-center px-8 py-4 bg-navy-900 text-white rounded-lg font-semibold hover:bg-navy-800 transition-colors">
+                            Join the Beta
+                            <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                            </svg>
+                        </a>
+                        <button id="enterprise-btn" class="inline-flex items-center justify-center px-8 py-4 bg-white text-navy-900 rounded-lg font-semibold border-2 border-navy-200 hover:border-navy-300 transition-colors">
+                            Enterprise / On-Prem
+                        </button>
+                    </div>
+
+                    <!-- Platform Support -->
+                    <div class="flex items-center gap-4 mt-8">
+                        <span class="text-navy-500 text-sm">Supports:</span>
+                        <div class="flex items-center gap-3">
+                            <span class="flex items-center gap-1.5 text-sm text-navy-600">
+                                <span class="w-2 h-2 bg-green-500 rounded-full"></span>
+                                Linux
+                            </span>
+                            <span class="flex items-center gap-1.5 text-sm text-navy-400">
+                                <span class="w-2 h-2 bg-navy-300 rounded-full"></span>
+                                Windows (Coming Soon)
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Demo Console -->
+                <div class="relative" id="demo-section">
+                    <div class="absolute -inset-4 bg-gradient-to-r from-navy-900/5 to-accent-500/5 rounded-2xl"></div>
+                    <div class="relative bg-navy-950 rounded-xl shadow-2xl overflow-hidden border border-navy-800">
+                        <!-- Console Header -->
+                        <div class="flex items-center justify-between px-4 py-3 bg-navy-900 border-b border-navy-800">
+                            <div class="flex items-center gap-3">
+                                <div class="flex gap-1.5">
+                                    <div class="w-3 h-3 rounded-full bg-red-500/60"></div>
+                                    <div class="w-3 h-3 rounded-full bg-yellow-500/60"></div>
+                                    <div class="w-3 h-3 rounded-full bg-green-500/60"></div>
+                                </div>
+                                <span class="text-navy-400 text-sm font-mono">vibe-console</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <span class="w-2 h-2 bg-accent-500 rounded-full animate-pulse"></span>
+                                <span class="text-navy-400 text-xs" id="server-count">3 servers online</span>
+                            </div>
+                        </div>
+
+                        <!-- Console Content -->
+                        <div class="p-5 font-mono text-sm min-h-[320px]" id="terminal-content">
+                            <!-- User Command -->
+                            <div id="user-command" class="hidden mb-4">
+                                <div class="flex items-start gap-2">
+                                    <span class="text-accent-400">$</span>
+                                    <span class="text-white" id="typed-command"></span>
+                                    <span class="cursor-blink text-accent-400" id="typing-cursor">|</span>
                                 </div>
                             </div>
 
                             <!-- AI Response -->
-                            <div id="ai-response" class="hidden">
-                                <div class="flex gap-3">
-                                    <!-- AI Avatar -->
-                                    <div class="w-8 h-8 rounded-full bg-gradient-to-br from-brand-500 to-accent-500 flex items-center justify-center shrink-0">
-                                        <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-                                        </svg>
-                                    </div>
+                            <div id="ai-response" class="hidden space-y-3">
+                                <!-- Execution Steps -->
+                                <div id="execution-steps" class="text-navy-400 space-y-1"></div>
 
-                                    <div class="flex-1 space-y-3">
-                                        <!-- Thinking indicator with bouncing dots -->
-                                        <div id="ai-thinking" class="flex items-center gap-1 text-gray-500 text-sm">
-                                            <span>Thinking</span>
-                                            <span class="flex gap-0.5">
-                                                <span class="w-1 h-1 rounded-full bg-brand-400 animate-bounce" style="animation-delay: 0ms"></span>
-                                                <span class="w-1 h-1 rounded-full bg-brand-400 animate-bounce" style="animation-delay: 150ms"></span>
-                                                <span class="w-1 h-1 rounded-full bg-brand-400 animate-bounce" style="animation-delay: 300ms"></span>
-                                            </span>
-                                        </div>
+                                <!-- Output Box -->
+                                <div id="output-box" class="hidden bg-navy-900/50 rounded p-3 mt-3">
+                                    <p class="text-navy-300 text-xs uppercase tracking-wider mb-2">Output</p>
+                                    <div id="output-content" class="text-white space-y-0.5"></div>
+                                </div>
 
-                                        <!-- Execution Timeline -->
-                                        <div id="ai-timeline" class="hidden">
-                                            <div class="bg-white/[0.03] rounded-xl border border-white/5 p-4">
-                                                <div class="flex items-center gap-2 mb-3">
-                                                    <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path>
-                                                    </svg>
-                                                    <span class="text-gray-400 text-xs font-medium uppercase tracking-wider">Execution Plan</span>
-                                                </div>
-
-                                                <!-- Timeline Steps -->
-                                                <div id="timeline-steps" class="space-y-0">
-                                                    <!-- Steps will be inserted here -->
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <!-- Output Panel -->
-                                        <div id="ai-output" class="hidden">
-                                            <div class="bg-gray-950/50 rounded-lg border border-white/5 p-3 font-mono text-xs">
-                                                <div class="flex items-center gap-2 mb-2 text-gray-600">
-                                                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-                                                    </svg>
-                                                    <span>Output</span>
-                                                </div>
-                                                <div id="output-text" class="text-gray-400 space-y-0.5"></div>
-                                            </div>
-                                        </div>
-
-                                        <!-- Summary -->
-                                        <div id="ai-summary" class="hidden">
-                                            <div class="flex items-start gap-2 text-sm">
-                                                <svg class="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                                </svg>
-                                                <p class="text-gray-300" id="summary-text"></p>
-                                            </div>
-                                        </div>
-                                    </div>
+                                <!-- Summary -->
+                                <div id="summary" class="hidden flex items-start gap-2 mt-3">
+                                    <svg class="w-4 h-4 text-accent-500 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                    </svg>
+                                    <p class="text-navy-300" id="summary-text"></p>
                                 </div>
                             </div>
-                        </div>
-                    </div>
 
-                    <!-- Input Bar -->
-                    <div class="px-4 py-3 border-t border-white/5 bg-white/[0.02]">
-                        <div class="flex items-center gap-3">
-                            <div class="flex-1 flex items-center gap-2 px-4 py-2.5 bg-white/5 rounded-xl border border-white/10">
-                                <svg class="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
-                                </svg>
-                                <span class="text-gray-200 text-sm flex-1" id="input-typing"></span>
-                                <span class="text-gray-600 text-sm" id="input-placeholder">Ask anything about your infrastructure...</span>
-                                <span class="hidden w-0.5 h-4 bg-brand-400 animate-pulse" id="input-cursor"></span>
+                            <!-- Initial State -->
+                            <div id="initial-state" class="flex items-center gap-2 text-navy-500">
+                                <span class="text-accent-400">$</span>
+                                <span class="cursor-blink text-accent-400">|</span>
                             </div>
-                            <button class="p-2.5 bg-brand-600 hover:bg-brand-500 rounded-xl transition-colors" id="send-btn">
-                                <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
-                                </svg>
-                            </button>
+                        </div>
+
+                        <!-- Demo Dots -->
+                        <div class="px-4 py-3 border-t border-navy-800 bg-navy-900/50">
+                            <div class="flex justify-center gap-2">
+                                <button class="demo-dot w-2 h-2 rounded-full bg-accent-500 transition-all" data-index="0"></button>
+                                <button class="demo-dot w-2 h-2 rounded-full bg-navy-600 hover:bg-navy-500 transition-all" data-index="1"></button>
+                                <button class="demo-dot w-2 h-2 rounded-full bg-navy-600 hover:bg-navy-500 transition-all" data-index="2"></button>
+                                <button class="demo-dot w-2 h-2 rounded-full bg-navy-600 hover:bg-navy-500 transition-all" data-index="3"></button>
+                                <button class="demo-dot w-2 h-2 rounded-full bg-navy-600 hover:bg-navy-500 transition-all" data-index="4"></button>
+                            </div>
                         </div>
                     </div>
-                </div>
-
-                <!-- Demo scenarios indicator -->
-                <div class="flex justify-center mt-6 gap-2">
-                    <button class="demo-dot w-2 h-2 rounded-full bg-white/50 transition-all" data-index="0" title="System Health"></button>
-                    <button class="demo-dot w-2 h-2 rounded-full bg-white/20 hover:bg-white/30 transition-all" data-index="1" title="Data Obfuscation"></button>
-                    <button class="demo-dot w-2 h-2 rounded-full bg-white/20 hover:bg-white/30 transition-all" data-index="2" title="K8s Pods"></button>
-                    <button class="demo-dot w-2 h-2 rounded-full bg-white/20 hover:bg-white/30 transition-all" data-index="3" title="K8s Scale"></button>
-                    <button class="demo-dot w-2 h-2 rounded-full bg-white/20 hover:bg-white/30 transition-all" data-index="4" title="AWS Provision"></button>
-                    <button class="demo-dot w-2 h-2 rounded-full bg-white/20 hover:bg-white/30 transition-all" data-index="5" title="AWS Costs"></button>
-                    <button class="demo-dot w-2 h-2 rounded-full bg-white/20 hover:bg-white/30 transition-all" data-index="6" title="K8s Recovery"></button>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Features Section -->
-    <section id="features" class="relative py-24">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="text-center mb-16">
-                <span class="text-gray-500 text-sm font-medium uppercase tracking-wider">Features</span>
-                <h2 class="text-4xl md:text-5xl font-medium mt-4 mb-6 text-white/90">Fleet Management, <span class="text-brand-400">Reimagined</span></h2>
-                <p class="text-gray-500 text-lg max-w-2xl mx-auto">One interface for all your servers. Cloud VMs, on-prem racks, or bare metal — just describe what you want.</p>
-            </div>
-
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <!-- Feature 1 -->
-                <div class="feature-card group">
-                    <div class="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center mb-4 group-hover:bg-white/10 transition-all">
-                        <svg class="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
-                        </svg>
-                    </div>
-                    <h3 class="text-lg font-medium mb-2 text-white/90">Natural Language Commands</h3>
-                    <p class="text-gray-500 text-sm">Just type "install nginx" or "check disk space" - the AI understands your intent and executes the right commands.</p>
-                </div>
-
-                <!-- Feature 2 -->
-                <div class="feature-card group">
-                    <div class="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center mb-4 group-hover:bg-white/10 transition-all">
-                        <svg class="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"></path>
-                        </svg>
-                    </div>
-                    <h3 class="text-lg font-medium mb-2 text-white/90">Fleet-Wide Control</h3>
-                    <p class="text-gray-500 text-sm">Run commands across your entire fleet — cloud and on-prem servers together. Group by tags, regions, or custom filters.</p>
-                </div>
-
-                <!-- Feature 3 -->
-                <div class="feature-card group">
-                    <div class="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center mb-4 group-hover:bg-white/10 transition-all">
-                        <svg class="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-                        </svg>
-                    </div>
-                    <h3 class="text-lg font-medium mb-2 text-white/90">Easy Onboarding</h3>
-                    <p class="text-gray-500 text-sm">Connect existing servers with a one-liner, or provision new cloud VMs instantly. Your entire fleet in minutes.</p>
-                </div>
-
-                <!-- Feature 4 - LLM Data Obfuscation (Highlighted) -->
-                <div class="feature-card group relative border-brand-500/30 bg-gradient-to-br from-brand-500/10 to-transparent">
-                    <div class="absolute -top-2 -right-2">
-                        <span class="px-2 py-1 text-[10px] font-semibold uppercase tracking-wider bg-brand-500 text-gray-900 rounded-full">New</span>
-                    </div>
-                    <div class="w-12 h-12 rounded-xl bg-brand-500/20 flex items-center justify-center mb-4 group-hover:bg-brand-500/30 transition-all">
-                        <svg class="w-6 h-6 text-brand-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"></path>
-                        </svg>
-                    </div>
-                    <h3 class="text-lg font-medium mb-2 text-brand-300">LLM Data Obfuscation</h3>
-                    <p class="text-gray-400 text-sm">Use powerful public LLMs safely. IPs, hostnames, and secrets are automatically masked before leaving your network — then restored in executed commands.</p>
-                </div>
-
-                <!-- Feature 5 -->
-                <div class="feature-card group">
-                    <div class="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center mb-4 group-hover:bg-white/10 transition-all">
-                        <svg class="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
-                        </svg>
-                    </div>
-                    <h3 class="text-lg font-medium mb-2 text-white/90">Zero-Trust Architecture</h3>
-                    <p class="text-gray-500 text-sm">Outbound-only agent connections. No inbound ports, no SSH keys to manage. Credentials never leave your servers.</p>
-                </div>
-
-                <!-- Feature 6 -->
-                <div class="feature-card group">
-                    <div class="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center mb-4 group-hover:bg-white/10 transition-all">
-                        <svg class="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
-                        </svg>
-                    </div>
-                    <h3 class="text-lg font-medium mb-2 text-white/90">Real-Time Updates</h3>
-                    <p class="text-gray-500 text-sm">Watch command execution in real-time. See output as it happens, not after it's done.</p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- How It Works Section -->
-    <section id="how-it-works" class="relative py-24 bg-gray-900/30">
+    <section id="how-it-works" class="py-20 bg-navy-50">
         <div class="max-w-7xl mx-auto px-6">
             <div class="text-center mb-16">
-                <span class="text-gray-500 text-sm font-medium uppercase tracking-wider">How It Works</span>
-                <h2 class="text-4xl md:text-5xl font-medium mt-4 mb-6 text-white/90">Three Simple Steps</h2>
-                <p class="text-gray-500 text-lg max-w-2xl mx-auto">From natural language to executed commands in seconds.</p>
+                <span class="text-accent-600 font-semibold text-sm uppercase tracking-wider">How It Works</span>
+                <h2 class="text-3xl md:text-4xl font-bold mt-3 mb-4 text-navy-900">Three Simple Steps</h2>
+                <p class="text-navy-600 text-lg max-w-2xl mx-auto">From natural language to executed commands in seconds.</p>
             </div>
 
-            <div class="grid md:grid-cols-3 gap-8 md:gap-12">
-                <!-- Step 1 -->
-                <div class="relative">
-                    <div class="step-number">1</div>
-                    <div class="bg-white/[0.02] rounded-2xl p-8 border border-white/5 h-full">
-                        <div class="w-14 h-14 rounded-xl bg-white/5 flex items-center justify-center mb-6">
-                            <svg class="w-7 h-7 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
-                            </svg>
-                        </div>
-                        <h3 class="text-xl font-medium mb-3 text-white/90">Connect Your Fleet</h3>
-                        <p class="text-gray-500 text-sm">Run a one-liner to install our agent on any Linux server — cloud VMs, on-prem racks, or bare metal machines.</p>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-white rounded-xl p-8 shadow-sm border border-navy-100 relative">
+                    <div class="absolute -top-4 left-8 w-8 h-8 bg-navy-900 text-white rounded-full flex items-center justify-center font-bold text-sm">1</div>
+                    <div class="w-12 h-12 bg-navy-100 rounded-lg flex items-center justify-center mb-6 mt-2">
+                        <svg class="w-6 h-6 text-navy-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                        </svg>
                     </div>
-                    <div class="hidden md:block absolute top-1/2 -right-6 w-12 h-px bg-white/10"></div>
+                    <h3 class="text-xl font-semibold mb-3 text-navy-900">Connect Your Fleet</h3>
+                    <p class="text-navy-600">Install our lightweight agent with a single command. Works on any Linux server — cloud, on-prem, or bare metal.</p>
                 </div>
 
-                <!-- Step 2 -->
-                <div class="relative">
-                    <div class="step-number">2</div>
-                    <div class="bg-white/[0.02] rounded-2xl p-8 border border-white/5 h-full">
-                        <div class="w-14 h-14 rounded-xl bg-white/5 flex items-center justify-center mb-6">
-                            <svg class="w-7 h-7 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path>
-                            </svg>
-                        </div>
-                        <h3 class="text-xl font-medium mb-3 text-white/90">Describe Your Intent</h3>
-                        <p class="text-gray-500 text-sm">Type what you want in plain English. "Deploy the app", "Check memory usage", "Install Docker".</p>
+                <div class="bg-white rounded-xl p-8 shadow-sm border border-navy-100 relative">
+                    <div class="absolute -top-4 left-8 w-8 h-8 bg-navy-900 text-white rounded-full flex items-center justify-center font-bold text-sm">2</div>
+                    <div class="w-12 h-12 bg-navy-100 rounded-lg flex items-center justify-center mb-6 mt-2">
+                        <svg class="w-6 h-6 text-navy-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
+                        </svg>
                     </div>
-                    <div class="hidden md:block absolute top-1/2 -right-6 w-12 h-px bg-white/10"></div>
+                    <h3 class="text-xl font-semibold mb-3 text-navy-900">Describe Your Intent</h3>
+                    <p class="text-navy-600">Type what you want in plain English. "Check disk space", "Deploy nginx", "Show me what's using CPU".</p>
                 </div>
 
-                <!-- Step 3 -->
-                <div class="relative">
-                    <div class="step-number">3</div>
-                    <div class="bg-white/[0.02] rounded-2xl p-8 border border-white/5 h-full">
-                        <div class="w-14 h-14 rounded-xl bg-white/5 flex items-center justify-center mb-6">
-                            <svg class="w-7 h-7 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                            </svg>
-                        </div>
-                        <h3 class="text-xl font-medium mb-3 text-white/90">AI Executes & Explains</h3>
-                        <p class="text-gray-500 text-sm">AI figures out the right commands, runs them, and gives you a clear summary of what happened.</p>
+                <div class="bg-white rounded-xl p-8 shadow-sm border border-navy-100 relative">
+                    <div class="absolute -top-4 left-8 w-8 h-8 bg-navy-900 text-white rounded-full flex items-center justify-center font-bold text-sm">3</div>
+                    <div class="w-12 h-12 bg-navy-100 rounded-lg flex items-center justify-center mb-6 mt-2">
+                        <svg class="w-6 h-6 text-navy-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
                     </div>
+                    <h3 class="text-xl font-semibold mb-3 text-navy-900">AI Executes & Explains</h3>
+                    <p class="text-navy-600">AI figures out the right commands, runs them securely, and gives you a clear summary of what happened.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-20">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <span class="text-accent-600 font-semibold text-sm uppercase tracking-wider">Platform</span>
+                <h2 class="text-3xl md:text-4xl font-bold mt-3 mb-4 text-navy-900">Built for Real Infrastructure</h2>
+                <p class="text-navy-600 text-lg max-w-2xl mx-auto">Enterprise-grade security and reliability without the complexity.</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Feature 1 -->
+                <div class="bg-white rounded-xl p-8 shadow-sm border border-navy-100 hover:shadow-md transition-shadow">
+                    <div class="w-12 h-12 bg-navy-100 rounded-lg flex items-center justify-center mb-6">
+                        <svg class="w-6 h-6 text-navy-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3 text-navy-900">Natural Language Commands</h3>
+                    <p class="text-navy-600">Just describe what you want. AI understands context and executes the right commands across your fleet.</p>
+                </div>
+
+                <!-- Feature 2 -->
+                <div class="bg-white rounded-xl p-8 shadow-sm border border-navy-100 hover:shadow-md transition-shadow">
+                    <div class="w-12 h-12 bg-navy-100 rounded-lg flex items-center justify-center mb-6">
+                        <svg class="w-6 h-6 text-navy-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3 text-navy-900">Fleet-Wide Control</h3>
+                    <p class="text-navy-600">Run commands across your entire fleet. Group by tags, regions, or custom filters. Cloud and on-prem together.</p>
+                </div>
+
+                <!-- Feature 3 - Highlighted -->
+                <div class="bg-navy-900 rounded-xl p-8 shadow-lg text-white">
+                    <div class="w-12 h-12 bg-accent-500 rounded-lg flex items-center justify-center mb-6">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">LLM Data Obfuscation</h3>
+                    <p class="text-navy-300">Use powerful public LLMs safely. IPs, hostnames, and secrets are masked before leaving your network.</p>
+                </div>
+
+                <!-- Feature 4 -->
+                <div class="bg-white rounded-xl p-8 shadow-sm border border-navy-100 hover:shadow-md transition-shadow">
+                    <div class="w-12 h-12 bg-navy-100 rounded-lg flex items-center justify-center mb-6">
+                        <svg class="w-6 h-6 text-navy-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3 text-navy-900">Easy Onboarding</h3>
+                    <p class="text-navy-600">Connect servers with a one-liner agent install. No complex setup, no configuration files.</p>
+                </div>
+
+                <!-- Feature 5 -->
+                <div class="bg-white rounded-xl p-8 shadow-sm border border-navy-100 hover:shadow-md transition-shadow">
+                    <div class="w-12 h-12 bg-navy-100 rounded-lg flex items-center justify-center mb-6">
+                        <svg class="w-6 h-6 text-navy-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3 text-navy-900">Zero-Trust Architecture</h3>
+                    <p class="text-navy-600">Outbound-only agent connections. No inbound ports, no SSH keys to manage. Credentials never leave your servers.</p>
+                </div>
+
+                <!-- Feature 6 -->
+                <div class="bg-white rounded-xl p-8 shadow-sm border border-navy-100 hover:shadow-md transition-shadow">
+                    <div class="w-12 h-12 bg-navy-100 rounded-lg flex items-center justify-center mb-6">
+                        <svg class="w-6 h-6 text-navy-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3 text-navy-900">Real-Time Output</h3>
+                    <p class="text-navy-600">Watch command execution live. Stream output as it happens, not after it's done.</p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Beta Signup Section -->
-    <section id="beta" class="relative py-24 overflow-hidden">
-        <div class="absolute inset-0 bg-white/[0.02]"></div>
-        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full h-px bg-gradient-to-r from-transparent via-white/10 to-transparent"></div>
-
-        <div class="relative max-w-4xl mx-auto px-6 text-center">
-            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-8">
-                <span class="relative flex h-2 w-2">
-                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                    <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-                </span>
-                <span class="text-gray-400 text-sm font-medium">Limited Beta Access</span>
+    <section id="beta" class="py-20 bg-navy-900">
+        <div class="max-w-4xl mx-auto px-6 text-center">
+            <div class="inline-flex items-center gap-2 px-4 py-2 bg-accent-500/20 rounded-full mb-8">
+                <span class="w-2 h-2 bg-accent-400 rounded-full animate-pulse"></span>
+                <span class="text-accent-400 font-medium text-sm">Limited Beta Access</span>
             </div>
 
-            <h2 class="text-4xl md:text-5xl font-medium mb-6 text-white/90">Be Among the First</h2>
-            <p class="text-xl text-gray-500 mb-12 max-w-2xl mx-auto">
-                Join our exclusive beta program and help shape the future of cloud management.
-                Limited spots available.
-            </p>
+            <h2 class="text-3xl md:text-4xl font-bold mb-4 text-white">Be Among the First</h2>
+            <p class="text-navy-300 text-lg mb-6 max-w-2xl mx-auto">Join our beta program and help shape the future of infrastructure management.</p>
+
+            <!-- Countdown -->
+            <div class="flex items-center justify-center gap-4 mb-10">
+                <div class="text-center">
+                    <div class="text-3xl md:text-4xl font-bold text-white font-mono" id="days">00</div>
+                    <div class="text-navy-400 text-xs uppercase tracking-wider">Days</div>
+                </div>
+                <span class="text-2xl text-navy-600">:</span>
+                <div class="text-center">
+                    <div class="text-3xl md:text-4xl font-bold text-white font-mono" id="hours">00</div>
+                    <div class="text-navy-400 text-xs uppercase tracking-wider">Hours</div>
+                </div>
+                <span class="text-2xl text-navy-600">:</span>
+                <div class="text-center">
+                    <div class="text-3xl md:text-4xl font-bold text-white font-mono" id="minutes">00</div>
+                    <div class="text-navy-400 text-xs uppercase tracking-wider">Minutes</div>
+                </div>
+                <span class="text-2xl text-navy-600">:</span>
+                <div class="text-center">
+                    <div class="text-3xl md:text-4xl font-bold text-white font-mono" id="seconds">00</div>
+                    <div class="text-navy-400 text-xs uppercase tracking-wider">Seconds</div>
+                </div>
+            </div>
 
             <!-- Signup Form -->
-            <form class="max-w-md mx-auto" id="beta-form">
-                <div class="flex flex-col sm:flex-row gap-3">
-                    <input
-                        type="email"
-                        placeholder="Enter your email"
-                        required
-                        class="flex-1 px-6 py-4 bg-white/5 border border-white/10 rounded-lg text-white placeholder-gray-600 focus:outline-none focus:border-white/20 focus:bg-white/[0.07] transition-all"
-                    >
-                    <button
-                        type="submit"
-                        class="px-8 py-4 bg-white text-gray-900 hover:bg-gray-100 rounded-lg font-semibold transition-all whitespace-nowrap"
-                    >
-                        Get Early Access
-                    </button>
-                </div>
-                <p class="text-gray-600 text-sm mt-4">No spam, ever. We'll only email you about the beta launch.</p>
+            <form class="flex flex-col sm:flex-row gap-3 max-w-md mx-auto" id="beta-form">
+                <input type="email" placeholder="Enter your email" required class="flex-1 px-5 py-4 bg-navy-800 border border-navy-700 rounded-lg text-white placeholder-navy-400 focus:outline-none focus:border-accent-500 transition-colors">
+                <button type="submit" class="px-8 py-4 bg-white text-navy-900 rounded-lg font-semibold hover:bg-navy-100 transition-colors whitespace-nowrap">
+                    Get Early Access
+                </button>
             </form>
 
             <!-- Success Message -->
-            <div class="hidden mt-8 p-6 bg-emerald-500/10 border border-emerald-500/20 rounded-xl" id="success-message">
-                <svg class="w-12 h-12 text-emerald-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div class="hidden mt-8 p-6 bg-accent-500/20 border border-accent-500/30 rounded-xl" id="success-message">
+                <svg class="w-12 h-12 text-accent-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                 </svg>
-                <h3 class="text-xl font-medium text-emerald-400 mb-2">You're on the list!</h3>
-                <p class="text-gray-500">We'll reach out when it's your turn to join the beta.</p>
+                <h3 class="text-xl font-medium text-accent-400 mb-2">You're on the list!</h3>
+                <p class="text-navy-300">We'll reach out when it's your turn to join the beta.</p>
             </div>
 
+            <p class="text-navy-500 text-sm mt-6">No spam, ever. We'll only email you about the beta launch.</p>
+
             <!-- Cloud Providers -->
-            <div class="mt-16 pt-16 border-t border-white/5">
-                <p class="text-gray-600 text-sm mb-6">Works with all major cloud providers</p>
-                <div class="flex flex-wrap items-center justify-center gap-8 md:gap-12">
-                    <!-- AWS -->
-                    <div class="flex items-center gap-2 text-gray-500 hover:text-gray-400 transition-colors">
-                        <svg class="h-8 w-auto" viewBox="0 0 80 48" fill="currentColor">
-                            <path d="M22.8 32.2c-5.1 3.8-12.5 5.8-18.9 5.8-8.9 0-17-3.3-23.1-8.8-.5-.4 0-1 .5-.7 6.6 3.8 14.7 6.1 23.1 6.1 5.7 0 11.9-1.2 17.6-3.6.9-.4 1.6.6.8 1.2z"/>
-                            <path d="M25.2 29.4c-.7-.9-4.4-.4-6.1-.2-.5.1-.6-.4-.1-.7 3-2.1 7.9-1.5 8.4-.8.6.7-.2 5.7-2.9 8.1-.4.4-.8.2-.6-.3.6-1.5 2-4.8 1.3-6.1z"/>
-                            <path d="M19.2 10.9V8.5c0-.4.3-.6.6-.6h10.8c.4 0 .6.3.6.6v2.1c0 .4-.3.8-.8 1.5l-5.6 8c2.1-.1 4.3.3 6.2 1.3.4.2.5.6.6.9v2.6c0 .4-.4.8-.8.6-3.3-1.7-7.7-1.9-11.3.1-.4.2-.8-.2-.8-.6v-2.4c0-.4 0-1.1.4-1.7l6.5-9.3h-5.6c-.4 0-.6-.3-.6-.6z"/>
-                            <path d="M-7.5 24.7h-3.3c-.3 0-.6-.3-.6-.6V8.6c0-.4.3-.6.6-.6h3.1c.3 0 .6.3.6.6v2h.1c.8-2 2.4-2.9 4.5-2.9 2.1 0 3.5 1 4.4 2.9.8-2 2.7-2.9 4.8-2.9 1.5 0 3.1.6 4.1 2 1.1 1.5.9 3.7.9 5.6v8.4c0 .4-.3.6-.6.6h-3.3c-.3 0-.6-.3-.6-.6v-7.1c0-.8.1-2.6-.1-3.3-.3-1.2-1-1.5-2-1.5-.8 0-1.7.6-2 1.5-.4.9-.3 2.4-.3 3.3v7.1c0 .4-.3.6-.6.6h-3.3c-.3 0-.6-.3-.6-.6v-7.1c0-2 .3-4.9-2.1-4.9-2.5 0-2.4 2.8-2.4 4.9v7.1c0 .4-.3.6-.6.6z"/>
-                        </svg>
-                        <span class="text-sm font-medium">AWS</span>
-                    </div>
-                    <!-- Google Cloud -->
-                    <div class="flex items-center gap-2 text-gray-500 hover:text-gray-400 transition-colors">
-                        <svg class="h-6 w-auto" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M12.19 2.38a9.344 9.344 0 0 0-9.234 6.893c.053-.02-.055.013 0 0-3.875 2.551-3.922 8.11-.247 10.941l.006-.007-.007.03a6.717 6.717 0 0 0 4.077 1.356h5.173l.03.03h5.192c6.687.053 9.376-8.605 3.835-12.35a9.365 9.365 0 0 0-8.825-6.893zM8.073 19.39a4.387 4.387 0 0 1-2.586-.893 4.615 4.615 0 0 1-1.756-2.92 4.394 4.394 0 0 1 .49-2.967 4.467 4.467 0 0 1 2.296-1.957l.007-.006.026-.01.033-.01c.2-.063.333-.102.5-.14.437 1.156 1.216 2.12 2.2 2.797a6.477 6.477 0 0 0 4.494 1.063l.03-.007-.004.007c-.503 2.334-2.063 4.327-4.282 4.9a4.374 4.374 0 0 1-1.448.143z"/>
-                        </svg>
-                        <span class="text-sm font-medium">Google Cloud</span>
-                    </div>
-                    <!-- Azure -->
-                    <div class="flex items-center gap-2 text-gray-500 hover:text-gray-400 transition-colors">
-                        <svg class="h-6 w-auto" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M13.05 4.24L6.56 18.05L2 18l7.05-13.76zM14.78 4.24L22 17.97l-6.05.03L9.8 8l4.98-3.76z"/>
-                        </svg>
-                        <span class="text-sm font-medium">Azure</span>
-                    </div>
-                    <!-- Hetzner -->
-                    <div class="flex items-center gap-2 text-gray-500 hover:text-gray-400 transition-colors">
-                        <svg class="h-6 w-auto" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M4 4h6v6H4V4zm10 0h6v6h-6V4zM4 14h6v6H4v-6zm10 0h6v6h-6v-6z"/>
-                        </svg>
-                        <span class="text-sm font-medium">Hetzner</span>
-                    </div>
-                    <!-- DigitalOcean -->
-                    <div class="flex items-center gap-2 text-gray-500 hover:text-gray-400 transition-colors">
-                        <svg class="h-6 w-auto" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M12.04 2C6.5 2 2 6.5 2 12.04c0 4.38 2.79 8.14 6.7 9.53v-3.6h-2v-2.23h2v-1.7c0-3.3 1.5-4.83 4.73-4.83.61 0 1.67.12 2.1.24v2.02c-.23-.02-.62-.04-1.11-.04-1.58 0-2.19.6-2.19 2.15v1.15h3.14l-.54 2.23h-2.6v3.74C18.82 20.88 22 16.84 22 12.04 22 6.5 17.5 2 12.04 2z"/>
-                        </svg>
-                        <span class="text-sm font-medium">DigitalOcean</span>
-                    </div>
-                    <!-- On-Prem (Highlighted) -->
-                    <div class="flex items-center gap-2 text-white bg-white/10 px-4 py-2 rounded-full border border-white/20">
-                        <svg class="h-5 w-auto" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01"/>
-                        </svg>
-                        <span class="text-sm font-medium">On-Prem</span>
-                    </div>
+            <div class="mt-12 pt-12 border-t border-navy-800">
+                <p class="text-navy-500 text-sm mb-6">Works with all major cloud providers and on-prem</p>
+                <div class="flex flex-wrap items-center justify-center gap-8">
+                    <span class="text-navy-400 font-medium">AWS</span>
+                    <span class="text-navy-400 font-medium">Google Cloud</span>
+                    <span class="text-navy-400 font-medium">Azure</span>
+                    <span class="text-navy-400 font-medium">Hetzner</span>
+                    <span class="text-navy-400 font-medium">DigitalOcean</span>
+                    <span class="text-white font-medium px-3 py-1 bg-navy-800 rounded-full">On-Prem</span>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="relative py-12 border-t border-white/5">
+    <footer class="bg-navy-950 py-12">
         <div class="max-w-7xl mx-auto px-6">
             <div class="flex flex-col md:flex-row items-center justify-between gap-6">
-                <a href="#" class="flex items-center gap-2">
+                <div class="flex items-center gap-3">
                     <img src="logo.svg" alt="Vibe Computing" class="w-10 h-10">
-                    <span class="text-xl font-medium text-white/80">Vibe Computing</span>
-                </a>
-
-                <p class="text-gray-600 text-sm">
-                    &copy; 2025 TechImbue. All rights reserved.
-                </p>
-
+                    <span class="text-xl font-bold text-white">Vibe Computing</span>
+                </div>
+                <p class="text-navy-500 text-sm">&copy; 2025 TechImbue. All rights reserved.</p>
                 <div class="flex items-center gap-6">
-                    <a href="#" class="text-gray-600 hover:text-gray-400 transition-colors">
+                    <a href="#" class="text-navy-400 hover:text-white transition-colors">
                         <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/></svg>
                     </a>
-                    <a href="#" class="text-gray-600 hover:text-gray-400 transition-colors">
+                    <a href="#" class="text-navy-400 hover:text-white transition-colors">
                         <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
                     </a>
-                    <a href="#" class="text-gray-600 hover:text-gray-400 transition-colors">
+                    <a href="#" class="text-navy-400 hover:text-white transition-colors">
                         <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
                     </a>
                 </div>
@@ -616,146 +467,418 @@
 
     <!-- Enterprise Modal -->
     <div id="enterprise-modal" class="fixed inset-0 z-50 hidden">
-        <!-- Backdrop -->
-        <div class="absolute inset-0 bg-black/80 backdrop-blur-sm" id="enterprise-modal-backdrop"></div>
-
-        <!-- Modal Content -->
+        <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" id="enterprise-modal-backdrop"></div>
         <div class="relative min-h-screen flex items-center justify-center p-4">
-            <div class="relative bg-gray-900 rounded-2xl border border-white/10 shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-                <!-- Close Button -->
-                <button id="enterprise-modal-close" class="absolute top-4 right-4 text-gray-500 hover:text-gray-300 transition-colors z-10">
+            <div class="relative bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+                <button id="enterprise-modal-close" class="absolute top-4 right-4 text-navy-400 hover:text-navy-600 transition-colors">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                     </svg>
                 </button>
 
-                <!-- Header -->
-                <div class="p-8 pb-0">
-                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 mb-4">
-                        <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
-                        </svg>
-                        <span class="text-gray-400 text-sm font-medium">Enterprise Solution</span>
-                    </div>
-                    <h2 class="text-2xl font-medium mb-2 text-white/90">On-Premise Deployment</h2>
-                    <p class="text-gray-500">Complete control over your infrastructure management stack</p>
-                </div>
-
-                <!-- Features -->
                 <div class="p-8">
-                    <div class="grid gap-4 mb-8">
-                        <div class="flex items-start gap-4 p-4 bg-white/[0.02] rounded-xl border border-white/5">
-                            <div class="w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center shrink-0">
-                                <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <h2 class="text-2xl font-bold mb-2 text-navy-900">Enterprise & On-Premise</h2>
+                    <p class="text-navy-600 mb-8">Complete control over your infrastructure management stack.</p>
+
+                    <div class="space-y-4 mb-8">
+                        <div class="flex items-start gap-4 p-4 bg-navy-50 rounded-lg">
+                            <div class="w-10 h-10 bg-navy-100 rounded-lg flex items-center justify-center shrink-0">
+                                <svg class="w-5 h-5 text-navy-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
                                 </svg>
                             </div>
                             <div>
-                                <h3 class="font-medium mb-1 text-white/90">Fully Air-Gapped Deployment</h3>
-                                <p class="text-gray-500 text-sm">Deploy the entire stack in completely isolated environments. No external connectivity required after installation.</p>
+                                <h3 class="font-semibold text-navy-900">Air-Gapped Deployment</h3>
+                                <p class="text-navy-600 text-sm">Deploy in completely isolated environments. No external connectivity required.</p>
                             </div>
                         </div>
-
-                        <div class="flex items-start gap-4 p-4 bg-white/[0.02] rounded-xl border border-white/5">
-                            <div class="w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center shrink-0">
-                                <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01"></path>
+                        <div class="flex items-start gap-4 p-4 bg-navy-50 rounded-lg">
+                            <div class="w-10 h-10 bg-navy-100 rounded-lg flex items-center justify-center shrink-0">
+                                <svg class="w-5 h-5 text-navy-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2"></path>
                                 </svg>
                             </div>
                             <div>
-                                <h3 class="font-medium mb-1 text-white/90">Complete AI Stack On-Prem</h3>
-                                <p class="text-gray-500 text-sm">Self-hosted LLM, agentic execution system, and management portal. Your data never leaves your infrastructure.</p>
-                            </div>
-                        </div>
-
-                        <div class="flex items-start gap-4 p-4 bg-white/[0.02] rounded-xl border border-white/5">
-                            <div class="w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center shrink-0">
-                                <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"></path>
-                                </svg>
-                            </div>
-                            <div>
-                                <h3 class="font-medium mb-1 text-white/90">Linux Support (Windows Server Coming Soon)</h3>
-                                <p class="text-gray-500 text-sm">Currently supporting all major Linux distributions. Windows Server support is on our roadmap.</p>
-                            </div>
-                        </div>
-
-                        <div class="flex items-start gap-4 p-4 bg-white/[0.02] rounded-xl border border-white/5">
-                            <div class="w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center shrink-0">
-                                <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                </svg>
-                            </div>
-                            <div>
-                                <h3 class="font-medium mb-1 text-white/90">Custom Pricing & Dedicated Support</h3>
-                                <p class="text-gray-500 text-sm">Flexible licensing models with dedicated implementation support and SLAs tailored to your needs.</p>
+                                <h3 class="font-semibold text-navy-900">Self-Hosted AI</h3>
+                                <p class="text-navy-600 text-sm">Run the entire AI stack on your infrastructure. Your data never leaves your network.</p>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Contact Form -->
-                    <div class="border-t border-white/5 pt-8">
-                        <h3 class="text-lg font-medium mb-4 text-white/90">Request a Demo</h3>
-                        <form id="enterprise-form" class="space-y-4">
-                            <div class="grid sm:grid-cols-2 gap-4">
-                                <input
-                                    type="text"
-                                    name="name"
-                                    placeholder="Your Name"
-                                    required
-                                    class="px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white placeholder-gray-600 focus:outline-none focus:border-white/20 focus:bg-white/[0.07] transition-all"
-                                >
-                                <input
-                                    type="email"
-                                    name="email"
-                                    placeholder="Work Email"
-                                    required
-                                    class="px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white placeholder-gray-600 focus:outline-none focus:border-white/20 focus:bg-white/[0.07] transition-all"
-                                >
-                            </div>
-                            <div class="grid sm:grid-cols-2 gap-4">
-                                <input
-                                    type="text"
-                                    name="company"
-                                    placeholder="Company Name"
-                                    required
-                                    class="px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white placeholder-gray-600 focus:outline-none focus:border-white/20 focus:bg-white/[0.07] transition-all"
-                                >
-                                <input
-                                    type="text"
-                                    name="servers"
-                                    placeholder="Number of Servers (approx)"
-                                    class="px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white placeholder-gray-600 focus:outline-none focus:border-white/20 focus:bg-white/[0.07] transition-all"
-                                >
-                            </div>
-                            <textarea
-                                name="message"
-                                placeholder="Tell us about your requirements..."
-                                rows="3"
-                                class="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white placeholder-gray-600 focus:outline-none focus:border-white/20 focus:bg-white/[0.07] transition-all resize-none"
-                            ></textarea>
-                            <button
-                                type="submit"
-                                class="w-full px-6 py-4 bg-white text-gray-900 hover:bg-gray-100 rounded-lg font-semibold transition-all"
-                            >
-                                Request Demo & Pricing
-                            </button>
-                        </form>
-
-                        <!-- Success Message -->
-                        <div class="hidden mt-6 p-6 bg-emerald-500/10 border border-emerald-500/20 rounded-xl text-center" id="enterprise-success">
-                            <svg class="w-12 h-12 text-emerald-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                            </svg>
-                            <h3 class="text-xl font-medium text-emerald-400 mb-2">Request Received!</h3>
-                            <p class="text-gray-500">Our enterprise team will contact you within 24 hours.</p>
+                    <h3 class="text-lg font-semibold mb-4 text-navy-900">Request Information</h3>
+                    <form id="enterprise-form" class="space-y-4">
+                        <div class="grid sm:grid-cols-2 gap-4">
+                            <input type="text" name="name" placeholder="Your Name" required class="px-4 py-3 bg-navy-50 border border-navy-200 rounded-lg text-navy-900 placeholder-navy-400 focus:outline-none focus:border-accent-500">
+                            <input type="email" name="email" placeholder="Work Email" required class="px-4 py-3 bg-navy-50 border border-navy-200 rounded-lg text-navy-900 placeholder-navy-400 focus:outline-none focus:border-accent-500">
                         </div>
+                        <div class="grid sm:grid-cols-2 gap-4">
+                            <input type="text" name="company" placeholder="Company Name" required class="px-4 py-3 bg-navy-50 border border-navy-200 rounded-lg text-navy-900 placeholder-navy-400 focus:outline-none focus:border-accent-500">
+                            <input type="text" name="servers" placeholder="Number of Servers" class="px-4 py-3 bg-navy-50 border border-navy-200 rounded-lg text-navy-900 placeholder-navy-400 focus:outline-none focus:border-accent-500">
+                        </div>
+                        <textarea name="message" placeholder="Tell us about your requirements..." rows="3" class="w-full px-4 py-3 bg-navy-50 border border-navy-200 rounded-lg text-navy-900 placeholder-navy-400 focus:outline-none focus:border-accent-500 resize-none"></textarea>
+                        <button type="submit" class="w-full px-6 py-4 bg-navy-900 text-white rounded-lg font-semibold hover:bg-navy-800 transition-colors">
+                            Request Demo & Pricing
+                        </button>
+                    </form>
+
+                    <div class="hidden mt-6 p-6 bg-accent-500/10 border border-accent-500/20 rounded-xl text-center" id="enterprise-success">
+                        <svg class="w-12 h-12 text-accent-500 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        <h3 class="text-xl font-medium text-accent-600 mb-2">Request Received!</h3>
+                        <p class="text-navy-600">Our team will contact you within 24 hours.</p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <script>
+    // Demo Scenarios
+    const demoScenarios = [
+        {
+            command: "check system health on all production servers",
+            steps: [
+                { text: "[OBFUSCATING] 192.168.*.* → [MASKED]", color: "text-accent-400" },
+                { text: "[CONNECTING] prod-web-01, prod-web-02, prod-api-01", color: "text-navy-400" },
+                { text: "[EXECUTING] uptime && free -h && df -h", color: "text-navy-400" }
+            ],
+            output: [
+                "prod-web-01: load 0.05, mem 44%, disk 62%",
+                "prod-web-02: load 0.03, mem 38%, disk 58%",
+                "prod-api-01: load 0.12, mem 52%, disk 71%"
+            ],
+            summary: "All 3 servers healthy. Load average under 0.15, memory under 55%. No action needed."
+        },
+        {
+            command: "deploy nginx to the web servers",
+            steps: [
+                { text: "[OBFUSCATING] Masking host identifiers...", color: "text-accent-400" },
+                { text: "[PLANNING] apt update && apt install nginx -y", color: "text-navy-400" },
+                { text: "[EXECUTING] on web-01, web-02...", color: "text-navy-400" }
+            ],
+            output: [
+                "web-01: nginx 1.24.0 installed ✓",
+                "web-02: nginx 1.24.0 installed ✓",
+                "Service started on both servers"
+            ],
+            summary: "Nginx deployed successfully to 2 servers. Service is running and accepting connections."
+        },
+        {
+            command: "show me what's using the most CPU",
+            steps: [
+                { text: "[OBFUSCATING] Sensitive data masked", color: "text-accent-400" },
+                { text: "[QUERYING] top processes across fleet", color: "text-navy-400" }
+            ],
+            output: [
+                "prod-api-01: node (23% CPU) - api-server",
+                "prod-web-01: nginx (8% CPU) - web traffic",
+                "prod-web-02: nginx (6% CPU) - web traffic"
+            ],
+            summary: "API server using most CPU at 23%. This is normal for current traffic levels."
+        },
+        {
+            command: "restart the api service on prod-api-01",
+            steps: [
+                { text: "[OBFUSCATING] prod-api-01 → [HOST_1]", color: "text-accent-400" },
+                { text: "[EXECUTING] systemctl restart api-server", color: "text-navy-400" },
+                { text: "[VERIFYING] Service status check...", color: "text-navy-400" }
+            ],
+            output: [
+                "api-server stopped",
+                "api-server started",
+                "Status: active (running) pid 12847"
+            ],
+            summary: "API service restarted successfully. New PID 12847, health check passed."
+        },
+        {
+            command: "check disk space and alert if above 80%",
+            steps: [
+                { text: "[OBFUSCATING] Network topology masked", color: "text-accent-400" },
+                { text: "[SCANNING] All connected servers...", color: "text-navy-400" }
+            ],
+            output: [
+                "prod-web-01: /dev/sda1 62% ✓",
+                "prod-web-02: /dev/sda1 58% ✓",
+                "prod-api-01: /dev/sda1 71% ✓"
+            ],
+            summary: "All servers under 80% threshold. Highest usage is prod-api-01 at 71%."
+        }
+    ];
+
+    let currentScenario = 0;
+    let isAnimating = false;
+
+    // DOM Elements
+    const userCommand = document.getElementById('user-command');
+    const typedCommand = document.getElementById('typed-command');
+    const typingCursor = document.getElementById('typing-cursor');
+    const aiResponse = document.getElementById('ai-response');
+    const executionSteps = document.getElementById('execution-steps');
+    const outputBox = document.getElementById('output-box');
+    const outputContent = document.getElementById('output-content');
+    const summary = document.getElementById('summary');
+    const summaryText = document.getElementById('summary-text');
+    const initialState = document.getElementById('initial-state');
+    const demoDots = document.querySelectorAll('.demo-dot');
+
+    function sleep(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    async function typeText(element, text, speed = 40) {
+        element.textContent = '';
+        for (let i = 0; i < text.length; i++) {
+            element.textContent += text[i];
+            await sleep(speed + Math.random() * 20);
+        }
+    }
+
+    function resetDemo() {
+        userCommand.classList.add('hidden');
+        aiResponse.classList.add('hidden');
+        outputBox.classList.add('hidden');
+        summary.classList.add('hidden');
+        initialState.classList.remove('hidden');
+        typedCommand.textContent = '';
+        executionSteps.innerHTML = '';
+        outputContent.innerHTML = '';
+    }
+
+    function updateDots(index) {
+        demoDots.forEach((dot, i) => {
+            dot.classList.toggle('bg-accent-500', i === index);
+            dot.classList.toggle('bg-navy-600', i !== index);
+        });
+    }
+
+    async function runScenario(index) {
+        if (isAnimating) return;
+        isAnimating = true;
+
+        const scenario = demoScenarios[index];
+        resetDemo();
+        updateDots(index);
+
+        // Show user command
+        initialState.classList.add('hidden');
+        userCommand.classList.remove('hidden');
+        await typeText(typedCommand, scenario.command);
+        typingCursor.classList.add('hidden');
+
+        await sleep(500);
+
+        // Show AI response
+        aiResponse.classList.remove('hidden');
+
+        // Show steps
+        for (const step of scenario.steps) {
+            const stepEl = document.createElement('p');
+            stepEl.className = step.color + ' animate-fade-in';
+            stepEl.textContent = step.text;
+            executionSteps.appendChild(stepEl);
+            await sleep(400);
+        }
+
+        await sleep(300);
+
+        // Show output
+        outputBox.classList.remove('hidden');
+        for (const line of scenario.output) {
+            const lineEl = document.createElement('p');
+            lineEl.textContent = line;
+            outputContent.appendChild(lineEl);
+            await sleep(150);
+        }
+
+        await sleep(300);
+
+        // Show summary
+        summary.classList.remove('hidden');
+        summaryText.textContent = scenario.summary;
+
+        isAnimating = false;
+    }
+
+    async function startDemoLoop() {
+        while (true) {
+            await runScenario(currentScenario);
+            await sleep(5000);
+            currentScenario = (currentScenario + 1) % demoScenarios.length;
+        }
+    }
+
+    // Handle dot clicks
+    demoDots.forEach(dot => {
+        dot.addEventListener('click', () => {
+            const index = parseInt(dot.dataset.index);
+            if (!isAnimating && index !== currentScenario) {
+                currentScenario = index;
+                runScenario(index);
+            }
+        });
+    });
+
+    // Start demo when visible
+    const observer = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting) {
+            startDemoLoop();
+            observer.disconnect();
+        }
+    }, { threshold: 0.3 });
+    observer.observe(document.getElementById('demo-section'));
+
+    // Countdown Timer
+    const BETA_END_DATE = new Date('2026-01-07T23:59:59');
+
+    function updateCountdown() {
+        const now = new Date().getTime();
+        const distance = BETA_END_DATE.getTime() - now;
+
+        if (distance < 0) {
+            document.getElementById('days').textContent = '00';
+            document.getElementById('hours').textContent = '00';
+            document.getElementById('minutes').textContent = '00';
+            document.getElementById('seconds').textContent = '00';
+            document.getElementById('countdown-mini').textContent = 'Beta Closed';
+            return;
+        }
+
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        document.getElementById('days').textContent = String(days).padStart(2, '0');
+        document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+        document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+        document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+
+        const mini = document.getElementById('countdown-mini');
+        if (days > 0) {
+            mini.textContent = `${days} day${days > 1 ? 's' : ''} left to join`;
+        } else if (hours > 0) {
+            mini.textContent = `${hours} hour${hours > 1 ? 's' : ''} left`;
+        } else {
+            mini.textContent = `${minutes} min left`;
+        }
+    }
+
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+
+    // Beta Form
+    const betaForm = document.getElementById('beta-form');
+    const successMessage = document.getElementById('success-message');
+
+    betaForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const email = betaForm.querySelector('input[type="email"]').value.trim();
+        const submitBtn = betaForm.querySelector('button[type="submit"]');
+        const originalText = submitBtn.innerHTML;
+
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = 'Joining...';
+
+        try {
+            const response = await fetch('/api/signup', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email })
+            });
+
+            const data = await response.json();
+            if (response.ok && data.success) {
+                betaForm.classList.add('hidden');
+                successMessage.classList.remove('hidden');
+            } else {
+                throw new Error(data.error || 'Signup failed');
+            }
+        } catch (error) {
+            submitBtn.innerHTML = originalText;
+            submitBtn.disabled = false;
+            alert(error.message || 'Something went wrong. Please try again.');
+        }
+    });
+
+    // Mobile Menu
+    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    mobileMenuBtn.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+    });
+
+    mobileMenu.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+            mobileMenu.classList.add('hidden');
+        });
+    });
+
+    // Enterprise Modal
+    const enterpriseBtn = document.getElementById('enterprise-btn');
+    const enterpriseModal = document.getElementById('enterprise-modal');
+    const enterpriseClose = document.getElementById('enterprise-modal-close');
+    const enterpriseBackdrop = document.getElementById('enterprise-modal-backdrop');
+    const enterpriseForm = document.getElementById('enterprise-form');
+    const enterpriseSuccess = document.getElementById('enterprise-success');
+
+    enterpriseBtn.addEventListener('click', () => {
+        enterpriseModal.classList.remove('hidden');
+    });
+
+    [enterpriseClose, enterpriseBackdrop].forEach(el => {
+        el.addEventListener('click', () => {
+            enterpriseModal.classList.add('hidden');
+        });
+    });
+
+    enterpriseForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const formData = new FormData(enterpriseForm);
+        const data = {
+            name: formData.get('name'),
+            email: formData.get('email'),
+            company: formData.get('company'),
+            servers: formData.get('servers'),
+            message: formData.get('message')
+        };
+
+        const submitBtn = enterpriseForm.querySelector('button[type="submit"]');
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = 'Submitting...';
+
+        try {
+            const response = await fetch('/api/enterprise', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            });
+
+            const result = await response.json();
+            if (response.ok && result.success) {
+                enterpriseForm.classList.add('hidden');
+                enterpriseSuccess.classList.remove('hidden');
+            } else {
+                throw new Error(result.error || 'Submission failed');
+            }
+        } catch (error) {
+            submitBtn.innerHTML = 'Request Demo & Pricing';
+            submitBtn.disabled = false;
+            alert(error.message || 'Something went wrong. Please try again.');
+        }
+    });
+
+    // Smooth scroll
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        });
+    });
+    </script>
 </body>
 </html>
