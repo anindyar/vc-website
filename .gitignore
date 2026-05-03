@@ -13,3 +13,5 @@ Thumbs.db
 # Editor
 .vscode/
 .idea/
+.gitnexus
+AGENTS.md
