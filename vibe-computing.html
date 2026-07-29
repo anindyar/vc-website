@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>What is Vibe Computing? | Coined by Anindya Roy | TechImbue</title>
     
     <!-- SEO Meta Tags -->
@@ -103,9 +106,48 @@
         ]
     }
     </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root{--bg-base:#07090E;--bg-panel:#0B0F16;--bg-panel2:#0E131C;--bg-panel3:#111722;--brand-mint:#3DE8CF;--brand-blue:#4E8DFF;--text-primary:#E9EDF4;--text-secondary:#98A1B3;--text-tertiary:#5C6678;--border-subtle:hsla(0,0%,100%,0.055)}
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{background:var(--bg-base);color:var(--text-primary);font-family:'Inter',system-ui,sans-serif;-webkit-font-smoothing:antialiased;line-height:1.7}
+        .nav{position:sticky;top:0;z-index:100;background:rgba(7,9,14,0.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border-subtle);padding:1rem 2rem;display:flex;align-items:center;gap:1rem}
+        .nav a{color:var(--text-secondary);text-decoration:none;font-weight:500;font-size:0.9rem;transition:color 0.2s}
+        .nav a:hover{color:var(--brand-mint)}
+        .nav-brand{font-weight:800;font-size:1.1rem;color:var(--text-primary)}
+        .nav-brand span{background:linear-gradient(100deg,#3DE8CF,#4E8DFF);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+        .container{max-width:780px;margin:0 auto;padding:3rem 2rem 5rem}
+        .container h1{font-size:2.8rem;font-weight:800;margin-bottom:0.5rem;line-height:1.15;letter-spacing:-0.02em}
+        .container .subtitle{color:var(--brand-mint);font-size:1.05rem;margin-bottom:2rem;font-weight:500}
+        .container p{color:var(--text-secondary);margin-bottom:1.25rem;font-size:1.05rem}
+        .container h2{color:var(--text-primary);font-size:1.6rem;font-weight:700;margin:2.5rem 0 1rem;letter-spacing:-0.01em}
+        .container ul{margin:1rem 0 1.5rem 1.5rem}
+        .container li{color:var(--text-secondary);margin-bottom:0.5rem;font-size:1.05rem}
+        .container strong{color:var(--text-primary)}
+        .container a{color:var(--brand-mint);text-decoration:none}
+        .container a:hover{text-decoration:underline}
+        .container em{color:var(--text-secondary)}
+        .container hr{border:none;border-top:1px solid var(--border-subtle);margin:3rem 0}
+        .container blockquote{border-left:3px solid var(--brand-mint);padding-left:1.5rem;margin:1.5rem 0;color:var(--text-tertiary);font-style:italic}
+        .back-link{display:inline-flex;align-items:center;gap:0.5rem;color:var(--text-tertiary);font-size:0.9rem;margin-bottom:2rem}
+        .back-link:hover{color:var(--brand-mint)}
+    </style>
 </head>
 <body>
-    <article>
+    <nav class="nav">
+        <a href="/" class="nav-brand">Vibe<span>Computing</span></a>
+        <a href="/#features">Platform</a>
+        <a href="/#how-it-works">How it Works</a>
+        <a href="/vibe-computing">What is Vibe Computing</a>
+        <a href="https://console.vibecomputing.ai/pricing" style="margin-left:auto">Pricing</a>
+        <a href="https://console.vibecomputing.ai" style="color:var(--brand-mint)">Sign in</a>
+    </nav>
+    <div class="container">
+        <a href="/" class="back-link">← Back to home</a>
+        <article>
         <h1>What is Vibe Computing?</h1>
         <p><em>A computing paradigm coined by <strong>Anindya Roy</strong> in December 2025.</em></p>
         
@@ -187,5 +229,6 @@
         
         <p>Learn more: <a href="https://vibecomputing.ai">VibeComputing</a> | <a href="https://techimbue.com">TechImbue</a> | <a href="https://acumenlabs.io">Acumen Labs</a></p>
     </article>
+    </div>
 </body>
 </html>
