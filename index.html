@@ -389,95 +389,47 @@
         </div>
     </section>
 
-    <!-- SEO Content Sections -->
+    <!-- Use Cases -->
     <section class="relative py-20 overflow-hidden">
         <div class="section-glow"></div>
-        <div class="max-w-4xl mx-auto px-6 relative z-10 space-y-16">
-
-            <!-- Manage Infrastructure with AI -->
-            <div>
-                <h2 class="text-2xl md:text-3xl font-bold mb-4" style="color:var(--text-primary)">Manage Infrastructure with AI</h2>
-                <p style="color:var(--text-secondary)" class="leading-relaxed mb-4">
-                    VibeComputing redefines how teams manage infrastructure with AI at its core. Instead of memorizing CLI flags, writing Ansible playbooks, or switching between five different dashboards, you describe what you want in plain English. The AI translates your intent into the right commands, executes them across your fleet, and reports back with a clear summary. Whether you're running a handful of cloud VMs or hundreds of bare-metal servers across multiple data centers, the experience is the same: type it, get it done.
-                </p>
-                <p style="color:var(--text-secondary)" class="leading-relaxed mb-4">
-                    What makes this different from traditional automation tools is context. The AI understands your infrastructure topology, knows which servers are production vs. staging, remembers recent changes, and can reason about dependencies. Ask it to "roll out the new config to staging first, then production if health checks pass" and it will sequence the rollout appropriately. Security is built in — every IP address, hostname, and secret is automatically obfuscated before reaching the LLM, then restored on execution. This means you get the full power of modern AI models without exposing sensitive infrastructure details.
-                </p>
-                <p style="color:var(--text-secondary)" class="leading-relaxed">
-                    Built by engineers with over 15 years of cybersecurity experience, VibeComputing is designed for production environments. Zero-trust, outbound-only agents mean no inbound ports are ever opened on your servers. Credentials never leave your network. And for organizations with the strictest requirements — government, defense, regulated industries — an air-gapped appliance runs the entire AI stack on-premises with zero external connectivity.
-                </p>
+        <div class="max-w-5xl mx-auto px-6 relative z-10">
+            <div class="text-center mb-12">
+                <span class="font-semibold text-sm uppercase tracking-wider" style="color:#3DE8CF">Use Cases</span>
+                <h2 class="text-3xl md:text-4xl font-bold mt-3 mb-4" style="color:var(--text-primary)">Manage Everything with AI</h2>
+                <p class="text-lg max-w-2xl mx-auto" style="color:var(--text-secondary)">From bare metal to VMWare, Windows to Linux — one console, one language.</p>
             </div>
-
-            <!-- Manage VMWare with AI -->
-            <div>
-                <h2 class="text-2xl md:text-3xl font-bold mb-4" style="color:var(--text-primary)">Manage VMWare with AI</h2>
-                <p style="color:var(--text-secondary)" class="leading-relaxed mb-4">
-                    VMWare environments are powerful but complex. vCenter, ESXi hosts, vSwitches, resource pools, datastores — navigating the full stack typically requires deep expertise and constant context-switching. VibeComputing brings AI to VMWare management, letting you handle day-to-day operations through natural language. "Migrate the database VM to the other host," "show me which VMs are over-provisioned on CPU," or "take a snapshot of all VMs in the finance cluster before the patch window" — all executed through a single conversational interface.
-                </p>
-                <p style="color:var(--text-secondary)" class="leading-relaxed mb-4">
-                    The platform integrates with your existing VMWare deployment without requiring agents inside every guest VM. Connect to vCenter or ESXi hosts directly, and VibeComputing's AI maps your virtual infrastructure, understands relationships between VMs, hosts, and datastores, and can execute operations across the entire stack. Data obfuscation ensures that sensitive hostnames, internal IPs, and vCenter credentials are tokenized before any AI processing occurs, so you maintain full compliance with internal security policies.
-                </p>
-                <p style="color:var(--text-secondary)" class="leading-relaxed">
-                    For enterprises running hybrid VMWare estates — some on-prem, some in cloud-hosted VMWare like VMware Cloud on AWS — VibeComputing provides a unified view. Ask questions that span environments: "Compare resource utilization between our on-prem VMWare cluster and our cloud VMs" or "Find any VM running anywhere that hasn't been patched in 30 days." The AI handles the orchestration across providers and presents a consolidated answer.
-                </p>
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                <a href="/manage-infrastructure-with-ai" class="feature-card text-center hover:!border-[rgba(61,232,207,0.25)]">
+                    <div class="icon-box mb-4 mx-auto"><svg class="w-6 h-6" fill="none" stroke="#3DE8CF" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg></div>
+                    <h3 class="font-semibold" style="color:var(--text-primary)">Infrastructure</h3>
+                    <p class="text-sm mt-1" style="color:var(--text-tertiary)">Multi-cloud &amp; on-prem unified</p>
+                </a>
+                <a href="/manage-vmware-with-ai" class="feature-card text-center hover:!border-[rgba(61,232,207,0.25)]">
+                    <div class="icon-box mb-4 mx-auto"><svg class="w-6 h-6" fill="none" stroke="#4E8DFF" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 5a2 2 0 012-2h12a2 2 0 012 2v14a2 2 0 01-2 2H6a2 2 0 01-2-2V5z M8 7h8v4H8z M8 13h3v4H8z M13 13h3v4h-3z"></path></svg></div>
+                    <h3 class="font-semibold" style="color:var(--text-primary)">VMWare</h3>
+                    <p class="text-sm mt-1" style="color:var(--text-tertiary)">vSphere, ESXi &amp; vCenter</p>
+                </a>
+                <a href="/manage-vms-with-ai" class="feature-card text-center hover:!border-[rgba(61,232,207,0.25)]">
+                    <div class="icon-box mb-4 mx-auto"><svg class="w-6 h-6" fill="none" stroke="#34D27B" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path></svg></div>
+                    <h3 class="font-semibold" style="color:var(--text-primary)">Virtual Machines</h3>
+                    <p class="text-sm mt-1" style="color:var(--text-tertiary)">Provision, resize &amp; snapshot</p>
+                </a>
+                <a href="/manage-servers-with-ai" class="feature-card text-center hover:!border-[rgba(61,232,207,0.25)]">
+                    <div class="icon-box mb-4 mx-auto"><svg class="w-6 h-6" fill="none" stroke="#F5B341" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12H3l9-9 9 9h-2M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7M9 21V9h6v12"></path></svg></div>
+                    <h3 class="font-semibold" style="color:var(--text-primary)">Servers</h3>
+                    <p class="text-sm mt-1" style="color:var(--text-tertiary)">Physical &amp; virtual fleet</p>
+                </a>
+                <a href="/manage-windows-with-ai" class="feature-card text-center hover:!border-[rgba(61,232,207,0.25)]">
+                    <div class="icon-box mb-4 mx-auto"><svg class="w-6 h-6" fill="none" stroke="#4E8DFF" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5l8-1v8H3V5zm0 9h8v8l-8-1v-7zm9-10l9-1v11h-9V4zm0 10h9v8l-9-1v-7z"></path></svg></div>
+                    <h3 class="font-semibold" style="color:var(--text-primary)">Windows</h3>
+                    <p class="text-sm mt-1" style="color:var(--text-tertiary)">PowerShell, IIS &amp; AD</p>
+                </a>
+                <a href="/manage-linux-with-ai" class="feature-card text-center hover:!border-[rgba(61,232,207,0.25)]">
+                    <div class="icon-box mb-4 mx-auto"><svg class="w-6 h-6" fill="none" stroke="#3DE8CF" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 2C8 6 4 10 4 14a8 8 0 0016 0c0-4-4-8-8-12z M12 6c-2 2-4 4-4 6a4 4 0 008 0c0-2-2-4-4-6z"></path></svg></div>
+                    <h3 class="font-semibold" style="color:var(--text-primary)">Linux</h3>
+                    <p class="text-sm mt-1" style="color:var(--text-tertiary)">All distros, unified</p>
+                </a>
             </div>
-
-            <!-- Manage VM with AI -->
-            <div>
-                <h2 class="text-2xl md:text-3xl font-bold mb-4" style="color:var(--text-primary)">Manage VM with AI</h2>
-                <p style="color:var(--text-secondary)" class="leading-relaxed mb-4">
-                    Virtual machines are the workhorses of modern infrastructure, but managing them at scale — across AWS EC2, Azure VMs, GCP Compute Engine, KVM, Proxmox, and on-prem hypervisors — creates operational complexity. VibeComputing unifies VM management with AI, giving you a single natural language interface to provision, configure, monitor, and troubleshoot VMs regardless of where they run.
-                </p>
-                <p style="color:var(--text-secondary)" class="leading-relaxed mb-4">
-                    Common operations become effortless. "Spin up three web servers matching the production template and add them to the load balancer." "Show me all VMs that have been running for more than 200 days without a reboot." "Clone the staging database VM and reset the passwords." The AI understands VM lifecycle operations, networking, and storage, and executes commands through secure outbound-only agents that require no inbound access to your hosts.
-                </p>
-                <p style="color:var(--text-secondary)" class="leading-relaxed">
-                    VibeComputing's data obfuscation layer is especially critical for VM management. VM configurations often contain database passwords, API keys, and internal network topologies. Before any command or configuration reaches the LLM for processing, all sensitive values are replaced with tokens. The AI works with abstract representations of your infrastructure, and the real values are injected only at execution time — locally, within your network perimeter.
-                </p>
-            </div>
-
-            <!-- Manage Servers with AI -->
-            <div>
-                <h2 class="text-2xl md:text-3xl font-bold mb-4" style="color:var(--text-primary)">Manage Servers with AI</h2>
-                <p style="color:var(--text-secondary)" class="leading-relaxed mb-4">
-                    Server management at scale is where VibeComputing shines. Whether you're running a fleet of 10 servers or 10,000, the operational overhead of patching, configuring, monitoring, and troubleshooting is enormous. Traditional configuration management tools like Ansible, Chef, and Puppet require you to write and maintain detailed playbooks. VibeComputing replaces that complexity with intelligence — describe the desired state in English, and the AI determines the right commands, execution order, and rollback strategy.
-                </p>
-                <p style="color:var(--text-secondary)" class="leading-relaxed mb-4">
-                    The lightweight agent installs with a single command on any Linux or Windows server — cloud, on-prem, or bare metal. Once connected, servers appear in your unified console where you can group them by tags, environments, regions, or any custom label. Run operations across the entire fleet: "Patch all staging servers with the latest kernel security update," "Check SSL certificate expiry across all web servers," or "Find any server running an outdated version of OpenSSL."
-                </p>
-                <p style="color:var(--text-secondary)" class="leading-relaxed">
-                    Security is the foundation, not an afterthought. The zero-trust architecture means agents initiate outbound-only connections — no SSH keys to distribute, no inbound firewall rules to manage. BYOK (Bring Your Own Keys) support means you can use your own API keys for the LLM provider of your choice, maintaining full control over data access. And with over 15 years of cybersecurity expertise behind the design, every layer of the platform is built to withstand enterprise-grade threat models.
-                </p>
-            </div>
-
-            <!-- Manage Windows with AI -->
-            <div>
-                <h2 class="text-2xl md:text-3xl font-bold mb-4" style="color:var(--text-primary)">Manage Windows with AI</h2>
-                <p style="color:var(--text-secondary)" class="leading-relaxed mb-4">
-                    Windows Server administration has traditionally required deep expertise in PowerShell, Group Policy, IIS, Active Directory, and a web of Microsoft Management Consoles. VibeComputing brings AI-powered natural language management to Windows environments, letting you handle routine operations — service management, event log analysis, user administration, performance diagnostics — without switching between a dozen tools.
-                </p>
-                <p style="color:var(--text-secondary)" class="leading-relaxed mb-4">
-                    The AI agent runs natively on Windows, translating your natural language requests into the appropriate PowerShell cmdlets, WMI queries, or net commands. "Check the event log for critical errors in the last 24 hours," "Restart the IIS application pool for the billing service," or "Show me all services set to automatic that aren't currently running" — each request is executed on-target with real-time output streamed back to your console. The AI also handles Windows-specific tasks like managing scheduled tasks, checking Windows Update status, and monitoring disk health through WMI.
-                </p>
-                <p style="color:var(--text-secondary)" class="leading-relaxed">
-                    For mixed environments running both Windows and Linux, VibeComputing provides genuine unification. Manage your Windows application servers and Linux database servers from the same console, using the same natural language interface. The AI automatically selects the right tooling — PowerShell for Windows, bash for Linux — and presents results in a consistent format. Combined with data obfuscation that protects AD credentials, service account passwords, and internal hostnames, this makes Windows server management both simpler and more secure.
-                </p>
-            </div>
-
-            <!-- Manage Linux with AI -->
-            <div>
-                <h2 class="text-2xl md:text-3xl font-bold mb-4" style="color:var(--text-primary)">Manage Linux with AI</h2>
-                <p style="color:var(--text-secondary)" class="leading-relaxed mb-4">
-                    Linux is where VibeComputing was born, and it shows. Whether you're running Ubuntu, RHEL, Debian, Alpine, Amazon Linux, or Arch, the platform handles the full spectrum of Linux server management — from basic housekeeping to complex operations across distributed fleets. Stop memorizing arcane flags for <code class="font-mono text-sm" style="color:#3DE8CF">systemctl</code>, <code class="font-mono text-sm" style="color:#3DE8CF">journalctl</code>, <code class="font-mono text-sm" style="color:#3DE8CF">iptables</code>, and <code class="font-mono text-sm" style="color:#3DE8CF">ss</code>. Just describe what you want.
-                </p>
-                <p style="color:var(--text-secondary)" class="leading-relaxed mb-4">
-                    The AI agent deploys in seconds via a single install command and immediately starts understanding your Linux infrastructure. It detects the distro, package manager, service manager, and network configuration, adapting its approach accordingly. "Install nginx and configure it as a reverse proxy for the app on port 3000." "Show me all listening ports and which processes own them." "Find cron jobs running as root across all production servers." The AI handles package management differences (apt vs. dnf vs. apk), init system variations (systemd vs. OpenRC), and firewall backends (ufw vs. firewalld vs. iptables) transparently.
-                </p>
-                <p style="color:var(--text-secondary)" class="leading-relaxed">
-                    For DevOps and SRE teams, VibeComputing integrates seamlessly with existing workflows. The zero-trust outbound-only agent model means it works even in highly restricted network environments — no VPN changes, no bastion host modifications, no inbound port requirements. Combined with Kubernetes support for cluster operations, data obfuscation for compliance-heavy environments, and BYOK for organizations that need strict control over their AI provider, it's the most secure way to manage Linux infrastructure with AI.
-                </p>
-            </div>
-
         </div>
     </section>
 

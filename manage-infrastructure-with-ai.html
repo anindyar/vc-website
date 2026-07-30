@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Infrastructure with AI | VibeComputing</title>
+    <meta name="description" content="Manage your entire infrastructure with AI — servers, VMs, cloud, on-prem, and Kubernetes through natural language. Data obfuscation, zero-trust agents, and unified fleet control.">
+    <meta name="keywords" content="manage infrastructure with AI, AI infrastructure management, natural language DevOps, AI server management">
+    <link rel="canonical" href="https://vibecomputing.ai/manage-infrastructure-with-ai">
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="VibeComputing">
+    <meta name="theme-color" content="#07090E">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Manage Infrastructure with AI | VibeComputing">
+    <meta property="og:description" content="Manage your entire infrastructure through natural language. Multi-cloud, on-prem, bare metal — all from one AI-powered console.">
+    <meta property="og:url" content="https://vibecomputing.ai/manage-infrastructure-with-ai">
+    <meta property="og:site_name" content="VibeComputing">
+    <meta property="og:image" content="https://vibecomputing.ai/vibe-computing-transparent.png">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Manage Infrastructure with AI | VibeComputing">
+    <meta name="twitter:description" content="Manage your entire server fleet through natural language. Cloud, on-prem, bare metal — all from one AI-powered console.">
+    <meta name="twitter:image" content="https://vibecomputing.ai/vibe-computing-transparent.png">
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    [
+      {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "name": "Manage Infrastructure with AI",
+        "description": "AI-powered infrastructure management platform for managing servers, VMs, cloud, and on-prem through natural language.",
+        "url": "https://vibecomputing.ai/manage-infrastructure-with-ai",
+        "isPartOf": { "@type": "WebSite", "name": "VibeComputing", "url": "https://vibecomputing.ai" }
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "VibeComputing",
+        "applicationCategory": "InfrastructureManagementApplication",
+        "operatingSystem": "Linux, Windows, Cloud",
+        "description": "AI-native infrastructure management platform that lets you manage your entire infrastructure through natural language commands.",
+        "url": "https://vibecomputing.ai",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD", "description": "Free during beta" },
+        "publisher": { "@type": "Organization", "name": "TechImbue", "url": "https://techimbue.com" }
+      }
+    ]
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="icon" type="image/png" href="vibe-computing-transparent.png">
+    <script>
+        tailwind.config = { theme: { extend: {
+            fontFamily: { sans: ['Inter','system-ui','sans-serif'], mono: ['JetBrains Mono','Menlo','Monaco','monospace'] },
+            colors: { bg: { base:'#07090E', panel:'#0B0F16', panel2:'#0E131C', panel3:'#111722' },
+                brand: { mint:'#3DE8CF', blue:'#4E8DFF', green:'#34D27B', amber:'#F5B341', red:'#F0556B' },
+                text: { primary:'#E9EDF4', secondary:'#98A1B3', tertiary:'#5C6678' } }
+        } } }
+    </script>
+    <style>
+        :root{--bg-base:#07090E;--bg-panel:#0B0F16;--bg-panel2:#0E131C;--bg-panel3:#111722;--brand-mint:#3DE8CF;--brand-blue:#4E8DFF;--brand-green:#34D27B;--brand-amber:#F5B341;--brand-red:#F0556B;--text-primary:#E9EDF4;--text-secondary:#98A1B3;--text-tertiary:#5C6678;--border-subtle:hsla(0,0%,100%,0.055);--border-hover:hsla(0,0%,100%,0.1)}
+        *{box-sizing:border-box}
+        body{background:var(--bg-base);color:var(--text-primary);font-family:'Inter',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+        .pattern-grid{background-image:linear-gradient(hsla(0,0%,100%,0.018) 1px,transparent 1px),linear-gradient(90deg,hsla(0,0%,100%,0.018) 1px,transparent 1px);background-size:40px 40px}
+        .hero-glow{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:0}
+        .hero-glow::before{content:'';position:absolute;top:-10%;left:30%;width:600px;height:600px;background:radial-gradient(circle,rgba(61,232,207,0.08) 0%,transparent 60%);border-radius:50%}
+        .hero-glow::after{content:'';position:absolute;top:20%;right:5%;width:500px;height:500px;background:radial-gradient(circle,rgba(78,141,255,0.06) 0%,transparent 60%);border-radius:50%}
+        .section-glow{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:0}
+        .section-glow::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:800px;height:400px;background:radial-gradient(ellipse,rgba(61,232,207,0.04) 0%,transparent 70%);border-radius:50%}
+        .feature-card{position:relative;padding:2rem;border-radius:0.75rem;transition:all 0.3s ease;background:linear-gradient(135deg,hsla(0,0%,100%,0.025) 0%,hsla(0,0%,100%,0.008) 100%);border:1px solid var(--border-subtle)}
+        .feature-card:hover{background:linear-gradient(135deg,hsla(0,0%,100%,0.04) 0%,hsla(0,0%,100%,0.015) 100%);border-color:rgba(61,232,207,0.18);transform:translateY(-2px);box-shadow:0 8px 32px rgba(61,232,207,0.06)}
+        .btn-brand{display:inline-flex;align-items:center;justify-content:center;padding:0.75rem 1.5rem;border-radius:0.5rem;font-weight:600;color:#07090E;background:linear-gradient(100deg,#3DE8CF,#4E8DFF);transition:all 0.25s ease;border:none;cursor:pointer}
+        .btn-brand:hover{box-shadow:0 0 24px rgba(61,232,207,0.3),0 0 48px rgba(78,141,255,0.15);transform:translateY(-1px)}
+        .btn-primary{display:inline-flex;align-items:center;justify-content:center;padding:0.75rem 1.5rem;border-radius:0.5rem;font-weight:600;color:var(--text-primary);background:#111722;border:1px solid var(--border-subtle);transition:all 0.25s ease;cursor:pointer}
+        .btn-primary:hover{background:#161d2c;border-color:var(--border-hover)}
+        .icon-box{width:3rem;height:3rem;border-radius:0.625rem;display:flex;align-items:center;justify-content:center;background:hsla(0,0%,100%,0.04);border:1px solid var(--border-subtle)}
+        .brand-text{background:linear-gradient(100deg,#3DE8CF,#4E8DFF);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+        ::-webkit-scrollbar{width:8px;height:8px}
+        ::-webkit-scrollbar-track{background:#07090E}
+        ::-webkit-scrollbar-thumb{background:hsla(0,0%,100%,0.1);border-radius:4px}
+        ::selection{background:rgba(61,232,207,0.25);color:#E9EDF4}
+        .nav-link{color:var(--text-secondary);font-weight:500;transition:color 0.2s ease}
+        .nav-link:hover{color:var(--text-primary)}
+        .code-block{background:rgba(7,9,14,0.6);border:1px solid var(--border-subtle);border-radius:0.5rem;padding:0.75rem 1rem;font-family:'JetBrains Mono',monospace}
+    </style>
+</head>
+<body class="antialiased">
+    <!-- Navigation -->
+    <nav class="sticky top-0 z-50 backdrop-blur-xl border-b" style="background:rgba(7,9,14,0.8);border-color:var(--border-subtle)">
+        <div class="max-w-7xl mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <a href="/" class="flex items-center gap-3">
+                    <img src="vibe-computing-transparent.png" alt="Vibe Computing" class="w-10 h-10">
+                    <span class="text-xl font-bold" style="color:var(--text-primary)">Vibe Computing</span>
+                </a>
+                <div class="hidden md:flex items-center gap-8">
+                    <a href="/#features" class="nav-link">Platform</a>
+                    <a href="/#how-it-works" class="nav-link">How it Works</a>
+                    <a href="https://console.vibecomputing.ai/pricing" class="nav-link">Pricing</a>
+                    <div class="flex items-center gap-3">
+                        <a href="https://console.vibecomputing.ai" class="nav-link">Sign in</a>
+                        <a href="/#beta" class="btn-brand text-sm" style="padding:0.5rem 1.25rem">Get Early Access</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="relative py-16 lg:py-24 pattern-grid overflow-hidden">
+        <div class="hero-glow"></div>
+        <div class="max-w-4xl mx-auto px-6 relative z-10 text-center">
+            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-6" style="background:rgba(61,232,207,0.08);border:1px solid rgba(61,232,207,0.15)">
+                <span class="w-2 h-2 rounded-full animate-pulse" style="background:#3DE8CF;box-shadow:0 0 8px rgba(61,232,207,0.4)"></span>
+                <span class="font-medium text-sm" style="color:#3DE8CF">AI-Native Infrastructure Management</span>
+            </div>
+            <h1 class="text-4xl lg:text-5xl xl:text-6xl font-bold mb-6 leading-tight" style="color:var(--text-primary)">
+                Manage Infrastructure <span class="brand-text">with AI</span>
+            </h1>
+            <p class="text-xl mb-8 leading-relaxed max-w-2xl mx-auto" style="color:var(--text-secondary)">
+                Stop memorizing CLI flags and writing Ansible playbooks. Describe what you want in plain English, and VibeComputing's AI executes it across your entire fleet — cloud, on-prem, and bare metal.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="/#beta" class="btn-brand" style="padding:1rem 2rem;font-size:1.0625rem">
+                    Join the Beta
+                    <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path></svg>
+                </a>
+                <a href="/#features" class="btn-primary" style="padding:1rem 2rem;font-size:1.0625rem">Explore the Platform</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Content -->
+    <section class="relative py-16 overflow-hidden" style="background:#0B0F16">
+        <div class="section-glow"></div>
+        <div class="max-w-3xl mx-auto px-6 relative z-10 space-y-6">
+            <p class="text-lg leading-relaxed" style="color:var(--text-secondary)">
+                VibeComputing redefines how teams manage infrastructure with AI at its core. Instead of switching between five different dashboards, you describe what you want in plain English. The AI translates your intent into the right commands, executes them across your fleet, and reports back with a clear summary. Whether you're running a handful of cloud VMs or hundreds of bare-metal servers across multiple data centers, the experience is the same: type it, get it done.
+            </p>
+            <p class="text-lg leading-relaxed" style="color:var(--text-secondary)">
+                What makes this different from traditional automation tools is context. The AI understands your infrastructure topology, knows which servers are production vs. staging, remembers recent changes, and can reason about dependencies. Ask it to "roll out the new config to staging first, then production if health checks pass" and it will sequence the rollout appropriately. Security is built in — every IP address, hostname, and secret is automatically obfuscated before reaching the LLM, then restored on execution.
+            </p>
+            <p class="text-lg leading-relaxed" style="color:var(--text-secondary)">
+                Built by engineers with over 15 years of cybersecurity experience, VibeComputing is designed for production environments. Zero-trust, outbound-only agents mean no inbound ports are ever opened on your servers. Credentials never leave your network. And for organizations with the strictest requirements — government, defense, regulated industries — an air-gapped appliance runs the entire AI stack on-premises with zero external connectivity.
+            </p>
+            <div class="code-block my-8">
+                <p class="text-sm" style="color:var(--text-tertiary)">Example:</p>
+                <p class="mt-2" style="color:#3DE8CF">$ check system health on all production servers</p>
+                <p class="mt-1" style="color:var(--text-secondary)">→prod-web-01: load 0.05, mem 44%, disk 62% ✓</p>
+                <p style="color:var(--text-secondary)">→prod-web-02: load 0.03, mem 38%, disk 58% ✓</p>
+                <p style="color:var(--text-secondary)">→prod-api-01: load 0.12, mem 52%, disk 71% ✓</p>
+                <p class="mt-2" style="color:#3DE8CF">All 3 servers healthy. No action needed.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Key Differentiators -->
+    <section class="relative py-20 overflow-hidden">
+        <div class="section-glow"></div>
+        <div class="max-w-5xl mx-auto px-6 relative z-10">
+            <div class="text-center mb-12">
+                <span class="font-semibold text-sm uppercase tracking-wider" style="color:#3DE8CF">Why VibeComputing</span>
+                <h2 class="text-3xl font-bold mt-3 mb-4" style="color:var(--text-primary)">Built Different</h2>
+            </div>
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="feature-card">
+                    <div class="icon-box mb-4"><svg class="w-6 h-6" fill="none" stroke="#3DE8CF" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"></path></svg></div>
+                    <h3 class="text-lg font-semibold mb-2" style="color:var(--text-primary)">LLM Data Obfuscation</h3>
+                    <p class="text-sm" style="color:var(--text-secondary)">IPs, hostnames, and secrets are automatically tokenized before reaching any AI model — then restored on execution.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon-box mb-4"><svg class="w-6 h-6" fill="none" stroke="#F0556B" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg></div>
+                    <h3 class="text-lg font-semibold mb-2" style="color:var(--text-primary)">Zero-Trust Architecture</h3>
+                    <p class="text-sm" style="color:var(--text-secondary)">Outbound-only agents. No inbound ports, no SSH keys to manage. Credentials never leave your servers.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon-box mb-4"><svg class="w-6 h-6" fill="none" stroke="#4E8DFF" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg></div>
+                    <h3 class="text-lg font-semibold mb-2" style="color:var(--text-primary)">Unified Console</h3>
+                    <p class="text-sm" style="color:var(--text-secondary)">On-prem + cloud + Kubernetes from one interface. No more switching between five different tools.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon-box mb-4"><svg class="w-6 h-6" fill="none" stroke="#F5B341" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg></div>
+                    <h3 class="text-lg font-semibold mb-2" style="color:var(--text-primary)">Air-Gapped Appliance</h3>
+                    <p class="text-sm" style="color:var(--text-secondary)">For enterprise and government: run the entire AI stack on-premises with zero external connectivity.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon-box mb-4"><svg class="w-6 h-6" fill="none" stroke="#34D27B" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"></path></svg></div>
+                    <h3 class="text-lg font-semibold mb-2" style="color:var(--text-primary)">BYOK</h3>
+                    <p class="text-sm" style="color:var(--text-secondary)">Bring your own API keys for the LLM provider of your choice. Full control over data access and costs.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon-box mb-4"><svg class="w-6 h-6" fill="none" stroke="#3DE8CF" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg></div>
+                    <h3 class="text-lg font-semibold mb-2" style="color:var(--text-primary)">15+ Years Expertise</h3>
+                    <p class="text-sm" style="color:var(--text-secondary)">Built by engineers with over a decade and a half of cybersecurity and infrastructure experience.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="relative py-20 overflow-hidden" style="background:#0B0F16">
+        <div class="section-glow"></div>
+        <div class="max-w-3xl mx-auto px-6 text-center relative z-10">
+            <h2 class="text-3xl md:text-4xl font-bold mb-4" style="color:var(--text-primary)">Ready to Manage Infrastructure with AI?</h2>
+            <p class="text-lg mb-8" style="color:var(--text-secondary)">Join our beta program. Free for the duration — no credit card required.</p>
+            <a href="/#beta" class="btn-brand inline-flex" style="padding:1rem 2rem;font-size:1.0625rem">
+                Get Early Access
+                <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path></svg>
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-12" style="background:#07090E;border-top:1px solid var(--border-subtle)">
+        <div class="max-w-7xl mx-auto px-6 text-center">
+            <a href="/" class="inline-flex items-center gap-3 mb-4">
+                <img src="vibe-computing-transparent.png" alt="Vibe Computing" class="w-10 h-10">
+                <span class="text-xl font-bold" style="color:var(--text-primary)">Vibe Computing</span>
+            </a>
+            <p class="text-sm" style="color:var(--text-tertiary)">AI-native infrastructure management. Built for engineers who'd rather describe than configure.</p>
+            <p class="text-sm mt-4" style="color:var(--text-tertiary)">&copy; 2026 TechImbue. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
