@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In | VibeComputing</title>
+    <style>
+        :root{--bg-base:#07090E;--bg-panel:#0B0F16;--bg-panel2:#0E131C;--bg-panel3:#111722;--brand-mint:#3DE8CF;--brand-blue:#4E8DFF;--text-primary:#E9EDF4;--text-secondary:#98A1B3;--text-tertiary:#5C6678;--border-subtle:hsla(0,0%,100%,0.055)}
+        *{box-sizing:border-box;margin:0;padding:0}
+        body{background:var(--bg-base);color:var(--text-primary);font-family:'Inter',system-ui,sans-serif;min-height:100vh;display:flex;align-items:center;justify-content:center}
+        .login-card{background:var(--bg-panel);border:1px solid var(--border-subtle);border-radius:12px;padding:2.5rem;width:100%;max-width:400px}
+        .logo{font-size:1.5rem;font-weight:700;color:var(--brand-mint);margin-bottom:0.5rem;text-decoration:none}
+        h1{font-size:1.5rem;margin-bottom:0.5rem}
+        p.sub{color:var(--text-secondary);font-size:0.9rem;margin-bottom:2rem}
+        label{display:block;font-size:0.85rem;color:var(--text-secondary);margin-bottom:0.4rem;margin-top:1rem}
+        input{width:100%;padding:0.7rem;border-radius:6px;background:var(--bg-panel2);border:1px solid var(--border-subtle);color:var(--text-primary);font-size:0.95px;font-family:inherit}
+        input:focus{outline:none;border-color:var(--brand-mint)}
+        button{width:100%;padding:0.75rem;border-radius:6px;background:var(--brand-mint);color:#000;border:none;font-weight:600;font-size:1rem;cursor:pointer;margin-top:1.5rem;font-family:inherit}
+        button:hover{opacity:0.9}
+        .back{display:block;text-align:center;margin-top:1.5rem;color:var(--text-tertiary);font-size:0.85rem;text-decoration:none}
+        .back:hover{color:var(--text-secondary)}
+    </style>
+</head>
+<body>
+    <div class="login-card">
+        <a href="/" class="logo">VibeComputing</a>
+        <h1>Sign in to your console</h1>
+        <p class="sub">Manage your infrastructure with AI.</p>
+        <form onsubmit="event.preventDefault(); alert('Local build — console not connected. This is a placeholder.');">
+            <label for="email">Email</label>
+            <input type="email" id="email" placeholder="you@company.com" required>
+            <label for="password">Password</label>
+            <input type="password" id="password" placeholder="••••••••" required>
+            <button type="submit">Sign in</button>
+        </form>
+        <a href="/" class="back">← Back to home</a>
+    </div>
+</body>
+</html>

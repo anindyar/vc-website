@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pricing | VibeComputing</title>
+    <style>
+        :root{--bg-base:#07090E;--bg-panel:#0B0F16;--bg-panel2:#0E131C;--bg-panel3:#111722;--brand-mint:#3DE8CF;--brand-blue:#4E8DFF;--brand-green:#34D27B;--text-primary:#E9EDF4;--text-secondary:#98A1B3;--text-tertiary:#5C6678;--border-subtle:hsla(0,0%,100%,0.055)}
+        *{box-sizing:border-box;margin:0;padding:0}
+        body{background:var(--bg-base);color:var(--text-primary);font-family:'Inter',system-ui,sans-serif;padding:2rem}
+        .nav{display:flex;justify-content:space-between;align-items:center;margin-bottom:3rem;max-width:1000px;margin-left:auto;margin-right:auto}
+        .logo{font-size:1.3rem;font-weight:700;color:var(--brand-mint);text-decoration:none}
+        .nav a{color:var(--text-secondary);text-decoration:none;margin-left:1.5rem;font-size:0.9rem}
+        .container{max-width:1000px;margin:0 auto}
+        h1{text-align:center;font-size:2.5rem;margin-bottom:0.5rem}
+        .sub{text-align:center;color:var(--text-secondary);margin-bottom:3rem}
+        .plans{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem}
+        .card{background:var(--bg-panel);border:1px solid var(--border-subtle);border-radius:12px;padding:2rem}
+        .card.featured{border-color:var(--brand-mint)}
+        .plan-name{font-size:1.1rem;font-weight:600;color:var(--brand-mint);margin-bottom:0.5rem}
+        .price{font-size:2.5rem;font-weight:700;margin-bottom:0.3rem}
+        .price span{font-size:1rem;color:var(--text-tertiary);font-weight:400}
+        .features{list-style:none;margin-top:1.5rem}
+        .features li{padding:0.5rem 0;color:var(--text-secondary);font-size:0.9rem;border-bottom:1px solid var(--border-subtle)}
+        .features li:last-child{border:none}
+        .cta{display:block;text-align:center;padding:0.7rem;border-radius:6px;background:var(--bg-panel3);color:var(--text-primary);text-decoration:none;margin-top:1.5rem;font-weight:600;font-size:0.9rem}
+        .card.featured .cta{background:var(--brand-mint);color:#000}
+    </style>
+</head>
+<body>
+    <div class="nav">
+        <a href="/" class="logo">VibeComputing</a>
+        <div>
+            <a href="/console">Sign in</a>
+        </div>
+    </div>
+    <div class="container">
+        <h1>Pricing</h1>
+        <p class="sub">Start free. Scale when ready.</p>
+        <div class="plans">
+            <div class="card">
+                <div class="plan-name">Free</div>
+                <div class="price">$0<span>/mo</span></div>
+                <ul class="features">
+                    <li>1 infrastructure connection</li>
+                    <li>Natural language queries</li>
+                    <li>Read-only operations</li>
+                    <li>Community support</li>
+                </ul>
+                <a href="/console" class="cta">Get started</a>
+            </div>
+            <div class="card featured">
+                <div class="plan-name">Pro</div>
+                <div class="price">$99<span>/mo</span></div>
+                <ul class="features">
+                    <li>10 infrastructure connections</li>
+                    <li>Full CRUD operations</li>
+                    <li>Policy-as-code enforcement</li>
+                    <li>Audit trails with reasoning</li>
+                    <li>Priority support</li>
+                </ul>
+                <a href="/console" class="cta">Start free trial</a>
+            </div>
+            <div class="card">
+                <div class="plan-name">Enterprise</div>
+                <div class="price">Custom</div>
+                <ul class="features">
+                    <li>Unlimited connections</li>
+                    <li>On-premise deployment</li>
+                    <li>SSO + RBAC</li>
+                    <li>Custom AI model fine-tuning</li>
+                    <li>Dedicated support</li>
+                </ul>
+                <a href="mailto:hello@vibecomputing.ai" class="cta">Contact us</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
