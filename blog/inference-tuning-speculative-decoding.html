@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inference Tuning: Get 2-3x More From the GPUs You Already Own</title>
+    <meta name="description" content="Speculative decoding, continuous batching, and prefix caching — the serving-stack upgrades that outperform hardware purchases. Practical tuning guide for self-hosted LLM inference.">
+    <meta name="keywords" content="LLM inference tuning, speculative decoding, continuous batching, prefix caching, vLLM, SGLang, self-hosted LLM, GPU utilisation, inference optimisation, AI infrastructure costs">
+    <link rel="canonical" href="https://vibecomputing.ai/blog/inference-tuning-speculative-decoding.html">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Inference Tuning: Get 2-3x More From the GPUs You Already Own">
+    <meta property="og:description" content="Speculative decoding, continuous batching, and prefix caching — serving-stack upgrades that outperform hardware purchases.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://vibecomputing.ai/blog/inference-tuning-speculative-decoding.html">
+    <meta property="og:site_name" content="VibeComputing">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Inference Tuning: 2-3x More From the GPUs You Already Own">
+    <meta name="twitter:description" content="The cheapest inference upgrade isn't a GPU. Speculative decoding, continuous batching, prefix caching.">
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Inference Tuning: Get 2-3x More From the GPUs You Already Own",
+      "description": "Speculative decoding, continuous batching, and prefix caching — the serving-stack upgrades that outperform hardware purchases.",
+      "author": { "@type": "Organization", "name": "VibeComputing" },
+      "publisher": { "@type": "Organization", "name": "VibeComputing" },
+      "datePublished": "2026-08-19",
+      "mainEntityOfPage": "https://vibecomputing.ai/blog/inference-tuning-speculative-decoding.html"
+    }
+    </script>
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, sans-serif;
+            line-height: 1.7;
+            color: #e0e0e0;
+            background: #0a0e1a;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            color: #00d4ff;
+            font-family: 'Segoe UI', -apple-system, sans-serif;
+            font-size: 2.1em;
+            margin: 30px 0 15px;
+            line-height: 1.3;
+        }
+        h2 {
+            color: #00d4ff;
+            font-size: 1.5em;
+            margin: 35px 0 15px;
+        }
+        h3 {
+            color: #b0b8cc;
+            font-size: 1.2em;
+            margin: 25px 0 10px;
+        }
+        p { margin: 15px 0; color: #c8cdd8; }
+        ul, ol { margin: 15px 0 15px 25px; color: #c8cdd8; }
+        li { margin: 8px 0; }
+        strong { color: #ffffff; }
+        .meta { color: #7a8299; font-size: 0.9em; margin-bottom: 30px; }
+        .cta {
+            background: linear-gradient(135deg, #0d253f, #0a3d4d);
+            border: 1px solid #00d4ff33;
+            border-radius: 10px;
+            padding: 25px;
+            margin: 40px 0;
+        }
+        .cta h3 { color: #00d4ff; margin-top: 0; }
+        .cta-button {
+            display: inline-block;
+            background: #00d4ff;
+            color: #0a0e1a;
+            padding: 12px 28px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 15px;
+        }
+        code {
+            background: #1a2032;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.9em;
+            color: #7fdbff;
+        }
+        footer {
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid #1a2032;
+            text-align: center;
+            color: #7a8299;
+            font-size: 0.9em;
+        }
+        footer a { color: #00d4ff; text-decoration: none; }
+    </style>
+</head>
+<body>
+
+<h1>Inference Tuning: Get 2-3x More From the GPUs You Already Own</h1>
+<p class="meta">August 19, 2026 · VibeComputing Engineering</p>
+
+<p>Teams keep budgeting for hardware when the real lever is the serving stack. Before you buy more GPUs, three configuration-level upgrades routinely deliver more tokens per second than a new card — and they cost nothing but understanding.</p>
+
+<h2>1. Speculative Decoding: Verification Is Cheaper Than Generation</h2>
+
+<p>Autoregressive generation is fundamentally serial: one token at a time, each waiting on the last. Speculative decoding breaks this bottleneck with an asymmetric trick:</p>
+
+<ul>
+    <li>A <strong>small draft model</strong> guesses the next 4-8 tokens in a single pass (cheap)</li>
+    <li>The <strong>large model verifies</strong> all guesses in one batched forward pass (parallel)</li>
+    <li>Accepted tokens are kept; generation continues from the first rejection</li>
+</ul>
+
+<p>The result: the big model's quality, with throughput approaching draft-model speed on accepting sequences. Modern implementations now beat multi-token-prediction (MTP) across the full concurrency range on many workloads — and day-one support on new hardware is serving 27B-class models at 38+ tokens/s on desktop-class silicon.</p>
+
+<p><strong>Where it wins:</strong> structured output, code, RAG answers — anywhere the target model is confidently predictable. <strong>Where it doesn't:</strong> high-entropy creative generation, where draft acceptance rates crater and you pay the draft overhead for nothing.</p>
+
+<h2>2. Continuous Batching: The Scheduler Is the Throughput</h2>
+
+<p>Under concurrent load, your inference server's scheduler — not the model — determines throughput. Static batching waits for a whole batch to finish before starting the next; sequences finish at different times, and GPU cycles idle while stragglers run. Continuous batching admits new requests the instant a slot frees.</p>
+
+<p>The trap: default concurrency limits. We've seen a 16-stream benchmark spread diagnosed as a "scheduling imbalance" that was actually a server capped at 4 concurrent sequences — 12 streams queueing politely behind a config default nobody read. Three requests were fast; everything after position four was waiting in line.</p>
+
+<p>Check your <code>max_num_seqs</code> (or engine equivalent) before concluding anything about model performance. A mis-set scheduler can silently eat an entire GPU's worth of throughput, and your dashboards will happily blame the model.</p>
+
+<h2>3. Prefix Caching: Stop Recomputing Your System Prompt</h2>
+
+<p>Production prompts share structure: system instructions, tool definitions, few-shot examples, RAG templates. Without prefix caching, every request recomputes the key-value cache for that shared prefix — identical work, repeated thousands of times per hour.</p>
+
+<p>Prefix caching stores computed KV blocks keyed by prompt prefix. Requests that share a prefix reuse them: first request pays full price, everything after skips straight to the novel suffix. For agentic workloads with 2-4K token system prompts, this alone can halve median latency and dramatically raise effective capacity.</p>
+
+<p><strong>One caveat:</strong> measure your hit rate. Adversarially varied prefixes (timestamped headers, randomised ordering) can defeat the cache. Instrument before and after.</p>
+
+<h2>The Method That Beats All Three</h2>
+
+<p>Benchmark before trusting any optimisation claim. Paper speedups routinely evaporate on real hardware — we've measured a "1.5-2x win" feature deliver a 4x <em>regression</em> on-box with a specific tensor-parallel configuration. Every one of these techniques interacts with model size, quantisation, sequence length distribution, and concurrency profile differently.</p>
+
+<p>The 30-minute protocol:</p>
+<ol>
+    <li>Establish a baseline with <em>your</em> prompts at <em>your</em> concurrency (not the vendor's benchmark)</li>
+    <li>Change one variable. Re-measure. Record.</li>
+    <li>Keep winners, revert losers, and write down why</li>
+</ol>
+
+<div class="cta">
+    <h3>Running self-hosted models below their potential?</h3>
+    <p>VibeComputing designs, benchmarks, and operates inference infrastructure — from single-node deployments to multi-GPU clusters with tuned serving stacks.</p>
+    <a href="/" class="cta-button">Talk to VibeComputing →</a>
+</div>
+
+<h2>Key Takeaways</h2>
+
+<ol>
+    <li><strong>Speculative decoding</strong> trades cheap guesses for batched verification — biggest wins on predictable, structured generation.</li>
+    <li><strong>Continuous batching + sane concurrency limits</strong> — the scheduler, not the model, sets throughput under load. Audit defaults.</li>
+    <li><strong>Prefix caching</strong> eliminates redundant KV computation on shared prompt structure — instrument the hit rate.</li>
+    <li><strong>Benchmark everything on-box.</strong> Vendor numbers are marketing; your workload is the only benchmark that pays you.</li>
+</ol>
+
+<footer>
+    <p>© 2026 VibeComputing. AI-agent-driven infrastructure management.</p>
+    <p><a href="/">vibecomputing.ai</a> · <a href="/blog">Blog</a></p>
+</footer>
+
+</body>
+</html>
