@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quantization Is a Kernel Contract, Not a File Format | VibeComputing</title>
+    <meta name="description" content="A 21GB NVFP4 model that needed 100GB to run: why 'supported' quantization formats silently fail, how dequant fallbacks explode memory, and the three checks that prevent deployment disasters.">
+    <meta name="keywords" content="quantization, NVFP4, FP8, INT4, LLM inference, GPU kernels, unified memory, AI infrastructure, model deployment">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Quantization Is a Kernel Contract, Not a File Format">
+    <meta property="og:description" content="A 21GB 4-bit model that needed 100GB to run. The silent fallback that turns 'supported' into a deployment disaster.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://vibecomputing.ai/blog/quantization-kernel-contract.html">
+
+    <link rel="canonical" href="https://vibecomputing.ai/blog/quantization-kernel-contract.html">
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <nav class="navbar">
+        <a href="../index.html" class="nav-logo">VibeComputing</a>
+        <div class="nav-links">
+            <a href="../index.html#features">Features</a>
+            <a href="../index.html#pricing">Pricing</a>
+            <a href="../index.html">Blog</a>
+            <a href="/console" class="nav-cta">Get Started</a>
+        </div>
+    </nav>
+
+    <article class="blog-post">
+        <div class="blog-container">
+            <div class="blog-header">
+                <h1>Quantization Is a Kernel Contract, Not a File Format</h1>
+                <p class="blog-meta">Published August 20, 2026 · 7 min read</p>
+                <p class="blog-tags">AI Infrastructure · Quantization · Inference · GPU</p>
+            </div>
+
+            <div class="blog-content">
+                <p>Here's a deployment story that cost us twelve launch attempts and a lot of beliefs about how quantization works.</p>
+
+                <p>The setup: a new ARM-based, unified-memory GPU appliance. The target: a 27B-parameter model in NVFP4 format — a 4-bit quantization scheme co-designed by NVIDIA for their newest silicon. On disk: <strong>21GB</strong>. The box has 128GB of unified memory. On paper, it fits with 6x headroom.</p>
+
+                <p>The model loaded beautifully. Every time. Then it died at the first 4-bit matrix multiply.</p>
+
+                <h2>What "Supported" Actually Means</h2>
+
+                <p>The inference runtime listed NVFP4 as a supported format. The checkpoint passed validation. Weight loading completed without a warning. Then, at the first compute-heavy operation, one of three things happened:</p>
+
+                <ul>
+                    <li><strong>Autotuning mode:</strong> kernel autotuner segfaulted hunting for an fp4 GEMM implementation that didn't exist.</li>
+                    <li><strong>Graph capture mode:</strong> CUDA graph capture segfaulted for the same reason.</li>
+                    <li><strong>Eager mode:</strong> the worst one — memory climbed toward <strong>100GB</strong> and the OOM killer shot the scheduler. On a unified-memory box, that collateral damage takes out everything else on the machine too.</li>
+
+                </ul>
+
+                <p>The root cause: this runtime relies on <em>just-in-time compiled</em> kernels. For this particular silicon generation, no native fp4 GEMM kernel existed in the JIT repository. So the runtime did the worst thing a "compatible" stack can do: <strong>it silently dequantized every tensor back to bf16 before compute</strong>.</p>
+
+                <p>A 21GB 4-bit model that suddenly needs bf16-sized working memory isn't a model that "runs with reduced efficiency." It's a model that cannot run — it just fails slowly enough to look like a memory leak.</p>
+
+                <h2>The Contract You Didn't Know You Signed</h2>
+
+                <p>Everyone treats quantization as a property of the model file. FP8, INT4, NVFP4 — check the box in the model card, ship it. But quantization is really a <strong>contract between three parties</strong>:</p>
+
+                <ol>
+                    <li><strong>The checkpoint</strong> — the weights, in their compressed representation</li>
+                    <li><strong>The runtime</strong> — the inference server that claims to load the format</li>
+                    <li><strong>The silicon</strong> — which must have actual kernels (compiled or compilable) to compute in that format</li>
+                </ol>
+
+                <p>Model cards and runtime release notes tell you about parties 1 and 2. Almost nothing in the standard deployment checklist tells you about party 3. And the failure mode of a broken party-3 contract isn't a clean error — it's a <strong>silent fallback to dequantization</strong> that trades your memory budget for the runtime's compatibility promise.</p>
+
+                <p>We've written before about <a href="on-premise-ai-regulated-industries.html">silent fallbacks in AI infrastructure</a>. This is the sharpest version of it we've seen: a fallback that's technically correct (the model does produce output, briefly) and operationally fatal (nothing else on the box survives).</p>
+
+                <h2>Dequant Math, Quickly</h2>
+
+                <p>Why does a 21GB model need ~100GB? Three multiplications stack:</p>
+
+                <ul>
+                    <li><strong>4-bit → 16-bit:</strong> dequantizing weights for compute inflates them ~4x. 21GB becomes ~84GB of bf16 working set.</li>
+                    <li><strong>Activations:</strong> computed in bf16 regardless — KV cache and intermediate tensors don't shrink because the weights were 4-bit on disk.</li>
+                    <li><strong>Overhead:</strong> dequant scratch buffers, allocator fragmentation, and (if you're unlucky) a runtime that holds both representations during the transition.</li>
+                </ul>
+
+                <p>On a discrete-GPU server with 80GB HBM, you'd get a clean out-of-memory at worst. On <strong>unified memory</strong>, the "GPU" allocation competes with the OS page cache, your desktop session, and every other process — so the failure cascades into whatever the kernel's OOM heuristic decides to kill first. During our twelve attempts, the casualties included the desktop audio stack. Twice.</p>
+
+                <h2>The Three Checks That Would Have Saved Us Twelve Attempts</h2>
+
+                <h3>1. Verify the native kernel for YOUR silicon, not the format checkbox</h3>
+                <p>"NVFP4 supported" in a runtime's README means <em>somewhere, on some hardware</em>. The question is whether a native fp4 kernel exists for your exact compute capability — and whether your runtime ships it compiled (AOT) or attempts to fetch/compile it (JIT). JIT-only stacks are fragile precisely because "no kernel found" doesn't fail loudly; it falls back.</p>
+
+                <h3>2. Watch memory at the FIRST matmul, not at load</h3>
+                <p>Model loading validates the file, not the compute path. A successful load followed by a memory explosion at the first forward pass is the fingerprint of dequant fallback. If your monitoring only samples after warmup completes, you'll see "OOM during inference" and go hunting for batch-size bugs in the wrong place.</p>
+
+                <h3>3. Test whether "unsupported" fails loudly or silently</h3>
+                <p>Take a small layer, force an unsupported path, and see what happens. A runtime that errors clearly is a good citizen. A runtime that quietly dequantizes is telling you it values perceived compatibility over your operational envelope. That preference will bite you at 3AM on the biggest model you own.</p>
+
+                <h2>What We Ended Up Doing</h2>
+
+                <p>The pragmatic answer on this hardware: <strong>FP8</strong>. Native kernels, verified. Weighted against the theoretical 2x memory advantage of 4-bit, an 8-bit format that actually computes in-format beats a 4-bit format that dequantizes on every layer. Add speculative decoding with an FP8 draft model and the serving throughput exceeded what the 4-bit config promised on paper.</p>
+
+                <p>There's a path to real 4-bit on this box — the vendor's prebuilt containers ship ahead-of-time compiled fp4 kernels — but that's a vendor-lock-in decision, not a deployment default. Knowing which one you're making is the point.</p>
+
+                <h2>The Generalizable Lesson</h2>
+
+                <p>Silicon vendors ship new formats every 18 months. Runtimes race to list compatibility. Model zoos race to publish checkpoints in the newest format. Nobody in that pipeline is incentivized to tell you <em>when the claim is load-bearing</em>.</p>
+
+                <p>So treat every quantized deployment as unverified until you've watched it compute in-format under production-shaped load. Your memory graph at the first matmul is the only support matrix that matters.</p>
+
+                <p><strong>Quantization is a kernel availability contract. Read the fine print — or watch it silently rewrite your memory budget.</strong></p>
+            </div>
+        </div>
+    </article>
+</body>
+</html>
