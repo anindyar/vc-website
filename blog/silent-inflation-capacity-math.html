@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Silent Inflation: When Your Capacity Math Lies | VibeComputing</title>
+    <meta name="description" content="4-bit models that need 5x their size in memory. 20GB container images that take down 128GB servers. The hidden-expansion failure class that breaks every 'it fits' calculation — and how to catch it.">
+    <meta name="keywords" content="capacity planning, AI infrastructure, container images, quantization, deployment, docker, GPU servers, site reliability">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Silent Inflation: When Your Capacity Math Lies">
+    <meta property="og:description" content="The hidden-expansion failure class: operations whose real cost is invisible until they break the capacity math.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://vibecomputing.ai/blog/silent-inflation-capacity-math.html">
+
+    <link rel="canonical" href="https://vibecomputing.ai/blog/silent-inflation-capacity-math.html">
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <nav class="navbar">
+        <a href="../index.html" class="nav-logo">VibeComputing</a>
+        <div class="nav-links">
+            <a href="../index.html#features">Features</a>
+            <a href="../index.html#pricing">Pricing</a>
+            <a href="../index.html">Blog</a>
+            <a href="/console" class="nav-cta">Get Started</a>
+        </div>
+    </nav>
+
+    <article class="blog-post">
+        <div class="blog-container">
+            <div class="blog-header">
+                <h1>Silent Inflation: When Your Capacity Math Lies</h1>
+                <p class="blog-meta">Published August 21, 2026 · 6 min read</p>
+                <p class="blog-tags">Infrastructure · Capacity Planning · Reliability</p>
+            </div>
+
+            <div class="blog-content">
+                <p>Two incidents this week, on two different systems, from two totally different domains. Same failure.</p>
+
+                <p><strong>Incident one:</strong> a quantized model checkpoint. 21GB on disk, running on hardware with 6x headroom. It "loaded successfully" — then OOMed at first compute.</p>
+
+                <p><strong>Incident two:</strong> a 20GB container image, pushed to a server with 121GB of RAM. The import didn't just fail — it took the entire node down, including SSH.</p>
+
+                <p>The common thread isn't Docker or AI or quantization. It's a failure class I've started calling <strong>silent inflation</strong>: an operation whose real resource cost is many times its advertised size, invisible until the moment it breaks your capacity math.</p>
+
+                <h2>The Three Inflation Vectors</h2>
+
+                <p>Hidden expansion shows up in three places, over and over:</p>
+
+                <ul>
+                    <li><strong>Decompression.</strong> A 20GB compressed container image becomes 28GB on disk — and the decompression itself burns CPU and memory on the <em>destination</em> node. Push a big image to a busy server and you've scheduled a resource storm on a box you don't control the pace of. In our case: memory compaction stalled, the kernel's compaction thread soft-locked for 15 minutes, and sshd starved. The node answered ping and nothing else.</li>
+                    <li><strong>Dequantization.</strong> A 4-bit model silently falls back to computing in bf16 when no native kernel exists for your silicon. The checkpoint is "supported" — but every tensor inflates 4-8x at compute time. Your 21GB model now needs 100GB of working memory.</li>
+                    <li><strong>Deserialization.</strong> That "small" config or snapshot file that becomes a gigantic in-memory object graph. Everyone who's loaded a 3MB JSON into 3GB of Java objects knows this one.</li>
+                </ul>
+
+                <p>Notice what all three share: the size you measured at rest is not the size at rest-in-motion. Capacity planning based on artifact size is planning on a lie of omission.</p>
+
+                <h2>Why "It Fits" Isn't a Number — It's a Question</h2>
+
+                <p>Every capacity conversation I've been in goes: "the artifact is X GB, the machine has Y GB, X &lt; Y, ship it." That arithmetic is only valid if resource cost at <em>use time</em> equals size at <em>rest time</em>. Silent inflation breaks exactly that assumption — and it always breaks it in the direction of "more."</p>
+
+                <p>The fix isn't more headroom (inflation doesn't scale with headroom, it explodes past it). The fix is changing what you measure:</p>
+
+                <ol>
+                    <li><strong>Measure at first contact with the expensive operation</strong> — the first matmul, the first import, the first deserialization. Not at load. "Model loaded" and "container started" are the cheapest moments of a process's life; measuring there is measuring the lobby, not the furnace room.</li>
+                    <li><strong>Make the destination pull, never push.</strong> When a host pulls an artifact itself, the transfer happens at the pace the host can absorb. When you push, you've decided the pace for it. Big artifacts to busy machines: pull, always.</li>
+                    <li><strong>Treat silent fallback as a louder failure than an error.</strong> A dequant fallback that "works" is operationally worse than a crash — it converts a deployment decision into a production incident with a delay fuse. Prefer systems that refuse over systems that cope.</li>
+                </ol>
+
+                <h2>The General Rule</h2>
+
+                <p>Before any "it fits" claim, audit the operation for hidden expansion. Ask: <em>between the bytes at rest and the bytes at work, what transformation happens, where does it happen, and who pays for it?</em></p>
+
+                <p>Decompress, dequantize, deserialize, duplicate — the four horsemen of capacity planning. If any of them ride, your GB-per-GB arithmetic is fiction, and the incident is already scheduled. The only question is whether you find out in a planning review or a 3 AM console session.</p>
+
+                <p>We built VibeComputing around this class of problem: infrastructure that tells you what it's actually doing — at the layer where the cost is really incurred — instead of what the checklist said it would do.</p>
+
+                <p><strong>Measure the furnace, not the lobby.</strong></p>
+            </div>
+
+            <div class="blog-cta">
+                <h3>Stop planning on advertised sizes</h3>
+                <p>VibeComputing gives you ground-truth visibility into what your infrastructure actually consumes — at the moment it matters.</p>
+                <a href="/console" class="cta-button">Get Started Free</a>
+            </div>
+        </div>
+    </article>
+</body>
+</html>
