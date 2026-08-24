@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estimates Dressed as Measurements | VibeComputing</title>
+    <meta name="description" content="The progress display sat at 35% for an hour. The print was fine. The number wasn't lying — it was never a measurement in the first place. How to tell derived metrics from ground truth.">
+    <meta name="keywords" content="observability, telemetry, ground truth, derived metrics, monitoring, site reliability, debugging, dashboards">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Estimates Dressed as Measurements">
+    <meta property="og:description" content="The progress display sat at 35% for an hour. The print was fine. The number wasn't lying — it was never a measurement in the first place.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://vibecomputing.ai/blog/estimates-dressed-as-measurements.html">
+
+    <link rel="canonical" href="https://vibecomputing.ai/blog/estimates-dressed-as-measurements.html">
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <nav class="navbar">
+        <a href="../index.html" class="nav-logo">VibeComputing</a>
+        <div class="nav-links">
+            <a href="../index.html#features">Features</a>
+            <a href="../index.html#pricing">Pricing</a>
+            <a href="../index.html">Blog</a>
+            <a href="/console" class="nav-cta">Get Started</a>
+        </div>
+    </nav>
+
+    <article class="blog-post">
+        <div class="blog-container">
+            <div class="blog-header">
+                <h1>Estimates Dressed as Measurements</h1>
+                <p class="blog-meta">Published August 24, 2026 · 5 min read</p>
+                <p class="blog-tags">Observability · Telemetry · Site Reliability</p>
+            </div>
+
+            <div class="blog-content">
+                <p>A 3D printer ran overnight. Its display sat at 35% for over an hour. Not 34%, not 36% — just 35%, perfectly still, while every debugging instinct said <em>stalled print</em>.</p>
+
+                <p>Pulling the real telemetry told a different story: the printer's file-position counter was advancing the entire time. The print wasn't stuck. It was nearly half done and running <em>ahead of schedule</em>.</p>
+
+                <p>Nothing was broken. The display was never showing a measurement in the first place — it was rendering the slicer's <strong>time-based estimates</strong>. The counter underneath shows actual bytes of G-code consumed. Two different metrics wearing the same "%" sign.</p>
+
+                <h2>The Failure Mode Isn't Estimating</h2>
+
+                <p>Estimates are fine. Estimates are useful. The failure mode is an <strong>estimate rendered without its source</strong>. It looks like a measurement, so everyone — including you, at 3AM, under pressure — treats it as one.</p>
+
+                <p>You've met this pattern before:</p>
+
+                <ul>
+                    <li><strong>Dashboards "on track"</strong> because they compare against plan dates, not delivered work.</li>
+                    <li><strong>Queues showing "processing"</strong> because a heartbeat exists — even when nothing is dequeuing.</li>
+                    <li><strong>Progress bars</strong> that are really just optimism with decimal places.</li>
+                    <li><strong>"Container Up"</strong> reported as service health while the process inside is crash-looping.</li>
+                </ul>
+
+                <p>In each case the number isn't wrong. It's <em>answering a different question</em> than the one you think you're asking.</p>
+
+                <h2>Derived vs. Ground Truth</h2>
+
+                <p>Every telemetry value is one of two things:</p>
+
+                <p><strong>Ground truth</strong> reads the state of the world directly: bytes consumed, rows written, requests served, current flowing. It costs something to collect, so systems often don't expose it prominently.</p>
+
+                <p><strong>Derived values</strong> are computed from plans, models, or adjacent signals: estimated completion, predicted arrival, "health" scores, progress percentages. They're cheap, smooth, and human-friendly — which is exactly why frontends love them.</p>
+
+                <p>The display in the printer story was derived twice over: the slicer estimated completion times from its own simulation, embedded them as tags in the G-code, and the printer displayed those tags as progress. Nobody lied at any step. The chain just quietly replaced a measurement with an estimate and kept the same icon.</p>
+
+                <h2>The Question That Saves You</h2>
+
+                <p>When something looks stuck, don't ask <em>"why did it stop?"</em></p>
+
+                <p>Ask: <strong>"what exactly is this number counting?"</strong></p>
+
+                <p>Half your false alarms are a derived value standing in front of a ground-truth value one layer down. The layer is always reachable — the counter under the progress bar, the consumer lag under the queue depth, the socket status under the "connected" flag. The discipline is remembering to descend before reacting.</p>
+
+                <p>This matters double for automation. A human glances at a frozen 35%, frowns, and maybe checks again later. An alerting rule — or an AI agent watching on your behalf — sees a threshold breach and <em>acts</em>: pages someone, restarts a service, kills a healthy job. Derived metrics plus automated response equals a machine that confidently intervenes on fiction.</p>
+
+                <h2>A Field Guide</h2>
+
+                <ol>
+                    <li><strong>Label your own dashboards.</strong> Every metric is either MEASURED or ESTIMATED. If you can't label it, you don't know what it counts — that's the finding.</li>
+                    <li><strong>Trace alarms to their sensor.</strong> Before acting on any alert, identify the source value. If the chain has a model or a plan in it, the alarm is a hypothesis, not a fact.</li>
+                    <li><strong>Prefer the ugly number.</strong> Ground truth is often awkward — byte counters, log offsets, monotonic sequence numbers. The awkward number that can't be flattered beats the smooth one that can.</li>
+                    <li><strong>Never automate a response to a derived metric.</strong> Automate on ground truth; let humans (or slower, deliberate agents) reconcile the difference.</li>
+                    <li><strong>Audit the path, not just the value.</strong> The printer's display became trustworthy the moment the watcher started reading the byte counter directly. Same data domain, different layer, different world.</li>
+                </ol>
+
+                <h2>Takeaway</h2>
+
+                <p>The print finished early that morning. The display had said 35% for an hour while the actual work ran at 49% and climbing. No alert was sent, nobody was woken, and the only permanent damage was to the display's credibility.</p>
+
+                <p>Your systems are full of numbers that look like measurements and aren't. Before the next 3AM decision — yours or your automation's — ask what the number is actually counting. The answer is one layer down, and it's usually the cheapest debugging you'll ever do.</p>
+            </div>
+        </div>
+    </article>
+</body>
+</html>
