@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug From Where the Rejection Happens | VibeComputing</title>
+    <meta name="description" content="Two wrong theories, five hours. The rejecting server's log settled it in one line: clock skew. Why client-side debugging is theorizing in the dark.">
+    <meta name="keywords" content="debugging, distributed systems, clock skew, server logs, site reliability, observability, authentication, NTP">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Debug From Where the Rejection Happens">
+    <meta property="og:description" content="Two wrong theories, five hours. The rejecting server's log settled it in one line: clock skew.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://vibecomputing.ai/blog/debug-from-where-the-rejection-happens.html">
+
+    <link rel="canonical" href="https://vibecomputing.ai/blog/debug-from-where-the-rejection-happens.html">
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <nav class="navbar">
+        <a href="../index.html" class="nav-logo">VibeComputing</a>
+        <div class="nav-links">
+            <a href="../index.html#features">Features</a>
+            <a href="../index.html#pricing">Pricing</a>
+            <a href="../index.html">Blog</a>
+            <a href="/console" class="nav-cta">Get Started</a>
+        </div>
+    </nav>
+
+    <article class="blog-post">
+        <div class="blog-container">
+            <div class="blog-header">
+                <h1>Debug From Where the Rejection Happens</h1>
+                <p class="blog-meta">Published August 25, 2026 · 5 min read</p>
+                <p class="blog-tags">Debugging · Distributed Systems · Site Reliability</p>
+            </div>
+
+            <div class="blog-content">
+                <p>A remote node wouldn't authenticate to a relay. From the node's side, everything looked healthy: daemon running, network reachable, handshakes happening — then rejection, retry, rejection, forever.</p>
+
+                <p>Five hours and two wrong theories later, someone finally read the relay's own log. One line: <em>"auth event timestamp outside ±60s window."</em></p>
+
+                <p>The node's clock was skewed by more than a minute. It was signing authentication challenges with timestamps from the past. The relay rejected every one — correctly. Re-enabling time sync fixed it in two minutes.</p>
+
+                <h2>The Client's View of Its Own Failure Is Incomplete</h2>
+
+                <p>The node could see that it was being rejected. It could not see <em>why</em> — the rejection reason lived on the other side of the connection. So its logs said "auth failed" and retried, and from the node's chair, "auth failed" looks like a credential problem, a membership problem, a network problem. Anything but a clock problem.</p>
+
+                <p>That's how you get two confident theories in a row:</p>
+
+                <ul>
+                    <li><strong>Theory 1: firewall.</strong> Fix the egress path. Still failing.</li>
+                    <li><strong>Theory 2: membership.</strong> Re-check admission, re-check the migration. Also wrong.</li>
+                </ul>
+
+                <p>Both theories fit every fact available on the client side. That's the trap: <strong>client-side-only debugging is theorizing in the dark</strong>. You're fitting explanations to a symptom instead of reading a cause.</p>
+
+                <h2>The Rejecting Side Has the Reason</h2>
+
+                <p>When a distributed system misbehaves, the two halves of the conversation hold different information:</p>
+
+                <p><strong>The initiator</strong> knows what it sent and that it failed. <strong>The rejector</strong> knows why it said no.</p>
+
+                <p>The debug information you need is almost always on the side doing the rejecting. Not the side feeling the pain. Those are different machines, and habit sends us to the wrong one — the one we're already logged into, the one that's hurting, the one whose logs are easy to reach.</p>
+
+                <p>Get to the other side first. Even indirect access beats perfect visibility on the wrong host: a forwarded log, a support ticket transcript, a colleague who can run one command. One line from the rejecting side outweighs an afternoon of client-side archaeology.</p>
+
+                <h2>Signed Protocols Fail on Time, Not Identity</h2>
+
+                <p>The clock-skew class of failure deserves its own respect. Anything with signed, time-bound credentials — JWTs, mTLS with short-lived certs, challenge-response protocols — treats a timestamp outside the validity window as <em>invalid, by design</em>.</p>
+
+                <p>A perfectly valid credential from "the past" is an invalid credential. The system is working correctly while appearing completely broken. And nothing in the credential itself will tell you — the key is fine, the signature is fine, the membership is fine. Only the clock is wrong, and only the rejector can see it.</p>
+
+                <p>Practical corollaries:</p>
+
+                <ul>
+                    <li><strong>Clock sync is a security dependency.</strong> Treat NTP/chrony as part of your auth infrastructure, not housekeeping. Monitor drift like you monitor disk.</li>
+                    <li><strong>When auth fails "everywhere" for one host,</strong> check that host's clock before rotating any keys.</li>
+                    <li><strong>Persist the fix.</strong> A one-time <code>date -s</code> unblocks you today and fails again on the next reboot. Sync daemons or nothing.</li>
+                </ul>
+
+                <h2>The Asymmetric Economics of Logs</h2>
+
+                <p>Here's what the five hours actually cost, broken down: two wrong fixes implemented and verified, one incorrect root-cause announced (and retracted), one team's attention burned — versus a single log line that was sitting on a disk the entire time.</p>
+
+                <p>The economics of debugging are asymmetric. <strong>Theories are expensive; the rejecting side's log is nearly free.</strong> The discipline is sequencing: pull the server log <em>before</em> forming theory two, not after. Ideally before theory one.</p>
+
+                <p>A useful self-check when you're deep in a distributed-systems failure: <em>whose log am I reading right now — the side that's hurting, or the side that's saying no?</em> If those are different machines and you're only on one of them, you don't have evidence yet. You have a hypothesis wearing evidence's clothes.</p>
+
+                <h2>Takeaway</h2>
+
+                <p>The node connected two minutes after its clock was fixed. The relay's log had contained the answer since the first failed handshake.</p>
+
+                <p>Debug from where the rejection happens, not from where the pain is felt. Signed protocols fail on time before they fail on identity. And the fastest path through your next mystery outage is one log line from the machine that said no.</p>
+            </div>
+        </div>
+    </article>
+</body>
+</html>
