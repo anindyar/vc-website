@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Narrative Is Not Evidence: A Plausible Story Almost Cost 25 Hours | VibeComputing</title>
+    <meta name="description" content="An AI assistant gave confident 3D-print advice that would have wasted 2kg of filament and 25 machine-hours. The proof it was wrong was already in its own analysis output.">
+    <meta name="keywords" content="AI agents, critical thinking, verification, engineering judgment, 3D printing, decision making">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Narrative Is Not Evidence: A Plausible Story Almost Cost 25 Hours">
+    <meta property="og:description" content="Confident advice, a fabricated explanation, and the proof of the mistake already sitting in the analysis output.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://vibecomputing.ai/blog/narrative-is-not-evidence.html">
+
+    <link rel="canonical" href="https://vibecomputing.ai/blog/narrative-is-not-evidence.html">
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <nav class="navbar">
+        <a href="../index.html" class="nav-logo">VibeComputing</a>
+        <div class="nav-links">
+            <a href="../index.html#features">Features</a>
+            <a href="../index.html#pricing">Pricing</a>
+            <a href="../index.html">Blog</a>
+            <a href="/console" class="nav-cta">Get Started</a>
+        </div>
+    </nav>
+
+    <article class="blog-post">
+        <div class="blog-container">
+            <div class="blog-header">
+                <h1>Narrative Is Not Evidence: A Plausible Story Almost Cost 25 Hours</h1>
+                <p class="blog-meta">Published August 27, 2026 · 5 min read</p>
+                <p class="blog-tags">AI Agents · Critical Thinking · Engineering Judgment · Verification</p>
+            </div>
+
+            <div class="blog-content">
+                <p>Someone asked which 3D file to print next. The assistant answered with confidence: "print the left duct." No hedging, no uncertainty. Just a directive.</p>
+
+                <p>Then came the question that saved everything: "Aren't these two files just mirrors of each other?"</p>
+
+                <p>They were. And the proof was already sitting in the assistant's own analysis output — exact mirrored bounding boxes (−139.8…85.5 versus −85.5…139.5), an 89% voxel match. One glance at numbers it had already computed would have settled the question. Instead, it skimmed past them and narrated a story: "There's an 11% real difference — the designer adjusted for clearance."</p>
+
+                <p>Fabricated. A different triangle count is tessellation noise, not geometry. The files were the same part, flipped. Following that one confident sentence would have printed a useless mirror: two kilograms of filament and roughly twenty-five machine-hours gone.</p>
+
+                <h2>How a Story Overrides the Data</h2>
+
+                <p>The interesting failure isn't the wrong answer. It's the mechanism: the analysis output contained the correct conclusion, and a <em>plausible narrative about why the numbers differed</em> quietly overrode what the numbers said.</p>
+
+                <p>This is not a language-model quirk. Humans do it constantly — the just-so explanation that retro-fits whatever we already decided. What's new is the speed and fluency agents bring to it. When a system can generate a convincing explanation for any pattern in milliseconds, the explanation stops being information. It's decoration on an assumption.</p>
+
+                <p>The tell in this case was structural: the story explained a <em>discrepancy</em> (different triangle counts) instead of resting on the <em>measurement</em> (mirrored bounds, near-total voxel overlap). When you catch yourself — or your agent — explaining away an inconvenient number rather than citing a convenient one, stop.</p>
+
+                <h2>Three Rules From the Near-Miss</h2>
+
+                <ul>
+                    <li><strong>Physical-resource advice has a higher evidentiary bar.</strong> Anything that spends material, money, or machine-hours requires verified evidence or an explicit "not sure" — never a fluent narrative. Bits are reversible; filament, parts, and shipping aren't.</li>
+                    <li><strong>Read your own analysis output.</strong> The most expensive ignorance is the kind where the answer is already in hand, unexamined. Generating a metric and consulting it are two different acts.</li>
+                    <li><strong>Treat explanatory confidence as a flag, not a signal.</strong> Confidence is cheap to produce and uncorrelated with correctness. The question "how do you know?" beats the question "are you sure?" every time.</li>
+                </ul>
+
+                <h2>The Same Bug, Different Coat</h2>
+
+                <p>A day later, the same assistant misdiagnosed a failing scheduled job by fixing a plausible mechanism instead of reading the source code that gated the job. Same family, different domain: the story in the head was updated; the system on disk was never consulted. The general law seems to be — <strong>when your model of the system and the system disagree, the system wins</strong>. Every debugging methodology worth anything is a procedure for making that disagreement visible fast: read the log, read the source, rerun the measurement.</p>
+
+                <p>Verification isn't a personality trait. It's a checklist you run precisely because fluency feels like knowledge and isn't.</p>
+
+                <h2>What to Build For</h2>
+
+                <p>If you're wiring agents into real workflows, engineer for this failure class:</p>
+
+                <ul>
+                    <li><strong>Cite or concede.</strong> Require agent recommendations that spend real resources to reference specific measurements ("bbox X vs Y") or open with "unverified."</li>
+                    <li><strong>Separate analysis from narration.</strong> Keep the computed evidence in the loop when the recommendation is formed — the numbers should be inputs, not leftovers.</li>
+                    <li><strong>Checkpoint before irreversible spend.</strong> A one-line confirmation before long prints, sends, and purchases converts fluent mistakes into cheap ones.</li>
+                </ul>
+
+                <p>The scariest failures aren't the ones where the system says "error." They're the ones where it says "here's why" — fluently, confidently, and wrong. Verify, or say you're not sure. Filament is cheap. Twenty-five hours isn't.</p>
+            </div>
+        </div>
+    </article>
+</body>
+</html>
