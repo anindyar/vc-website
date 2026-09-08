@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Fine-Tune That Forgot Its Own Name: Identity Bleed in Custom Models | VibeComputing</title>
+    <meta name="description" content="A fine-tuned model introduced itself as GPT-3.5 by OpenAI in a live demo. Fine-tunes don't inherit identity — base lineage bleeds through. The cure is training data, not prompt patches.">
+    <meta name="keywords" content="fine-tuning, LLM, AI agents, machine learning, model identity, evaluation, production AI">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="The Fine-Tune That Forgot Its Own Name">
+    <meta property="og:description" content="You taught it the job. You never taught it who it is. On identity bleed, prompt band-aids, and baking identity into the training mix.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://vibecomputing.ai/blog/fine-tune-identity-bleed.html">
+
+    <link rel="canonical" href="https://vibecomputing.ai/blog/fine-tune-identity-bleed.html">
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <nav class="navbar">
+        <a href="../index.html" class="nav-logo">VibeComputing</a>
+        <div class="nav-links">
+            <a href="../index.html#features">Features</a>
+            <a href="../index.html#pricing">Pricing</a>
+            <a href="../index.html">Blog</a>
+            <a href="/console" class="nav-cta">Get Started</a>
+        </div>
+    </nav>
+
+    <article class="blog-post">
+        <div class="blog-container">
+            <div class="blog-header">
+                <h1>The Fine-Tune That Forgot Its Own Name: Identity Bleed in Custom Models</h1>
+                <p class="blog-meta">Published September 8, 2026 · 7 min read</p>
+                <p class="blog-tags">Fine-Tuning · LLMs · Machine Learning · Production AI</p>
+            </div>
+
+            <div class="blog-content">
+                <p>A fine-tuned model introduced itself as "GPT-3.5 by OpenAI" — in a live product demo. It wasn't built by OpenAI. Nobody had asked it to say that.</p>
+
+                <p>The team had done everything the playbook prescribes: thousands of curated examples covering the domain, the tone, the response formats. Evaluation scores climbed across every task they measured. Then someone in the demo asked the model who it was, and it answered with its base model's résumé.</p>
+
+                <h2>What Fine-Tuning Actually Inherits</h2>
+
+                <p>Here's the uncomfortable part: <strong>a fine-tune doesn't inherit identity. It inherits everything else.</strong> The base model's manners, its default self-description, its habit of answering "who made you?" with its lineage. Fine-tuning is gradient descent on the behaviors you show it — and if the training mix never shows the model describing itself as your product, the base identity bleeds straight through untouched.</p>
+
+                <p>The fine-tune optimized for everything the team measured and nothing they assumed. Nobody wrote an eval for "says the right name," because nobody imagined it could say the wrong one.</p>
+
+                <h2>The Band-Aid and the Cure</h2>
+
+                <p>There are two fixes, and they are not equal.</p>
+
+                <p><strong>The band-aid: a system-prompt hard block.</strong> "Never claim to be GPT or OpenAI. You are X." It works day one, costs nothing, and ships in minutes. It's also a guardrail built around a gap. Every surface the prompt doesn't reach — a fine-tune regression, a prompt-drift refactor, a new deployment path that forgets to inject it — re-opens the bleed. You haven't taught the model anything; you've taped a note to its forehead.</p>
+
+                <p><strong>The cure: identity examples in the training mix itself.</strong> "Who are you?" → the product answer. "Who made you?" → the product answer. "Are you ChatGPT?" → the product answer, with the graceful pivot you actually want ("I'm X — built for Y"). Identity becomes behavior the model has <em>learned</em>, distributed across weights, not a rule it's told to follow. It survives prompt loss, deployment drift, and adversarial phrasing, because it isn't bolted on — it's in there.</p>
+
+                <p>In practice you want both during the transition: the prompt block stops the bleeding today, the training mix closes the wound permanently.</p>
+
+                <h2>Evaluation Mirrors Training</h2>
+
+                <p>The deeper lesson isn't about identity. It's about the shape of blind spots: <strong>we test what we teach, and we ship what we don't.</strong> Your eval suite is a mirror of your training priorities — including the priorities you never wrote down. If a behavior matters in production (naming, refusal boundaries, tone under pressure, tool-use conventions), it needs to exist in both places: examples in the mix, checks in the evals.</p>
+
+                <p>The demo caught the bleed because a human actually read what the model said about itself — not just what it said about the domain. That's the cheapest eval in the world and nobody had run it.</p>
+
+                <h2>Every Fine-Tune Is a Hire</h2>
+
+                <p>Think of it as onboarding. A fine-tune is a new hire with excellent skills and total amnesia about your company. If the onboarding materials never mention the company name, don't be surprised when the new hire introduces themselves as their previous employer.</p>
+
+                <ul>
+                    <li><strong>Skills training without identity training = an expert who represents someone else.</strong> The model will be fluent, competent, and wrong about itself.</li>
+                    <li><strong>Prompt-level identity rules are badge stickers; training-level identity is muscle memory.</strong> One washes off in an unmanaged deployment, the other doesn't.</li>
+                    <li><strong>Write the identity eval before you need it.</strong> "Who are you / who made you / are you [base model]" — three questions, thirty seconds, catches an entire class of embarrassment before it reaches a demo.</li>
+                    <li><strong>Base-model lineage is the default self-description.</strong> Any fine-tune that never saw identity examples will parrot it with full confidence.</li>
+                </ul>
+
+                <h2>The Pattern Generalizes</h2>
+
+                <p>Identity bleed is one instance of a broader rule about custom models: <strong>whatever you don't explicitly train, you implicitly inherit.</strong> Defaults don't disappear because you fine-tuned nearby — they survive everything except direct examples that overwrite them. Refusal styles, hedging habits, verbosity, tone under stress, how the model handles the questions it wasn't prepared for: all of it defaults to base behavior unless your data says otherwise.</p>
+
+                <p>The teams that ship fine-tunes successfully treat the training mix as a complete specification of the behavior they want — including the unglamorous parts like "knows its own name." The teams that don't ship demos where their product confidently credits the competition.</p>
+
+                <p>Thirty seconds of "who are you?" in the eval loop would have caught it. Now it's in ours.</p>
+            </div>
+        </div>
+    </article>
+</body>
+</html>
