@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog | VibeComputing</title>
+    <meta name="description" content="Field notes on running AI in production: agent architecture, infrastructure automation, inference economics, and the failures nobody posts about. 26 articles.">
+    <meta property="og:title" content="The VibeComputing Blog">
+    <meta property="og:description" content="Field notes on running AI in production — agent architecture, infra automation, inference economics, and the failures nobody posts about.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://vibecomputing.ai/blog/">
+    <link rel="canonical" href="https://vibecomputing.ai/blog/">
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body class="blog-page">
+    <nav class="navbar">
+        <a href="../index.html" class="nav-logo">VibeComputing</a>
+        <div class="nav-links">
+            <a href="../index.html#features">Features</a>
+            <a href="../index.html#pricing">Pricing</a>
+            <a href="index.html">Blog</a>
+            <a href="/console" class="nav-cta">Get Started</a>
+        </div>
+    </nav>
+
+    <article class="blog-post">
+        <div class="blog-container">
+            <div class="blog-header">
+                <h1>The VibeComputing Blog</h1>
+                <p class="blog-meta">26 articles · field notes on running AI in production</p>
+                <p class="blog-tags">Agent Architecture · Infrastructure · Inference · Reliability</p>
+            </div>
+            <ol class="blog-index-list">
+                <li>
+                    <span class="entry-date">September 09, 2026</span>
+                    <h2><a href="lane-separation-not-prompting.html">Your AI Agent Ignored You? It Wasn't Broken — It Was Outvoted</a></h2>
+                    <p class="entry-desc">An AI assistant stopped responding to its owner's direct messages. Logs showed delivery. The real cause: a background memory flush outvoted the human in a shared session. The fix i…</p>
+                </li>
+<li>
+                    <span class="entry-date">September 08, 2026</span>
+                    <h2><a href="fine-tune-identity-bleed.html">The Fine-Tune That Forgot Its Own Name: Identity Bleed in Custom Models</a></h2>
+                    <p class="entry-desc">A fine-tuned model introduced itself as GPT-3.5 by OpenAI in a live demo. Fine-tunes don't inherit identity — base lineage bleeds through. The cure is training data, not prompt pat…</p>
+                </li>
+<li>
+                    <span class="entry-date">August 28, 2026</span>
+                    <h2><a href="fix-that-fixed-nothing.html">The Fix That Fixed Nothing: Debugging the Wrong Layer</a></h2>
+                    <p class="entry-desc">A scheduled job kept skipping. The first fix was clean, logical, and completely irrelevant — the process never read it. How an unchanged error message points you to the layer you'r…</p>
+                </li>
+<li>
+                    <span class="entry-date">August 27, 2026</span>
+                    <h2><a href="narrative-is-not-evidence.html">Narrative Is Not Evidence: A Plausible Story Almost Cost 25 Hours</a></h2>
+                    <p class="entry-desc">An AI assistant gave confident 3D-print advice that would have wasted 2kg of filament and 25 machine-hours. The proof it was wrong was already in its own analysis output.</p>
+                </li>
+<li>
+                    <span class="entry-date">August 26, 2026</span>
+                    <h2><a href="success-status-laundering.html">Success-Status Laundering: When Agent 'OK' Means Nothing</a></h2>
+                    <p class="entry-desc">An AI agent returned success in 398 milliseconds and produced nothing. Three fleet failures where green status hid zero work — and the verification bar that fixes it.</p>
+                </li>
+<li>
+                    <span class="entry-date">August 25, 2026</span>
+                    <h2><a href="debug-from-where-the-rejection-happens.html">Debug From Where the Rejection Happens</a></h2>
+                    <p class="entry-desc">Two wrong theories, five hours. The rejecting server's log settled it in one line: clock skew. Why client-side debugging is theorizing in the dark.</p>
+                </li>
+<li>
+                    <span class="entry-date">August 24, 2026</span>
+                    <h2><a href="estimates-dressed-as-measurements.html">Estimates Dressed as Measurements</a></h2>
+                    <p class="entry-desc">The progress display sat at 35% for an hour. The print was fine. The number wasn't lying — it was never a measurement in the first place. How to tell derived metrics from ground tr…</p>
+                </li>
+<li>
+                    <span class="entry-date">August 23, 2026</span>
+                    <h2><a href="sparse-moe-vs-dense-scale-out.html">Shrink What's Active Before You Scale Out</a></h2>
+                    <p class="entry-desc">Same hardware, same quantization: a 35B sparse model on one node beat a dense model split across two — by 2-5x. The benchmark that inverts the scaling instinct.</p>
+                </li>
+<li>
+                    <span class="entry-date">August 22, 2026</span>
+                    <h2><a href="re-launch-reflex-budget-before-retry.html">The Re-Launch Reflex: When Retrying Feels Like Progress</a></h2>
+                    <p class="entry-desc">Ten launch attempts. Every retry found a real bug. Every fix was correct. The plan was arithmetically dead from attempt #1 — and nobody ran the math. The failure mode that hides be…</p>
+                </li>
+<li>
+                    <span class="entry-date">August 21, 2026</span>
+                    <h2><a href="silent-inflation-capacity-math.html">Silent Inflation: When Your Capacity Math Lies</a></h2>
+                    <p class="entry-desc">4-bit models that need 5x their size in memory. 20GB container images that take down 128GB servers. The hidden-expansion failure class that breaks every 'it fits' calculation — and…</p>
+                </li>
+<li>
+                    <span class="entry-date">August 20, 2026</span>
+                    <h2><a href="quantization-kernel-contract.html">Quantization Is a Kernel Contract, Not a File Format</a></h2>
+                    <p class="entry-desc">A 21GB NVFP4 model that needed 100GB to run: why 'supported' quantization formats silently fail, how dequant fallbacks explode memory, and the three checks that prevent deployment …</p>
+                </li>
+<li>
+                    <span class="entry-date">August 19, 2026</span>
+                    <h2><a href="inference-tuning-speculative-decoding.html">blog/inference-tuning-speculative-decoding.html</a></h2>
+                    <p class="entry-desc">Speculative decoding, continuous batching, and prefix caching — the serving-stack upgrades that outperform hardware purchases. Practical tuning guide for self-hosted LLM inference.</p>
+                </li>
+<li>
+                    <span class="entry-date">August 18, 2026</span>
+                    <h2><a href="on-premise-ai-regulated-industries.html">blog/on-premise-ai-regulated-industries.html</a></h2>
+                    <p class="entry-desc">How healthcare, finance, and government teams run production AI on-premise — air-gapped LLM deployment, data residency compliance, and the real infrastructure math vs cloud APIs.</p>
+                </li>
+<li>
+                    <span class="entry-date">August 16, 2026</span>
+                    <h2><a href="right-sizing-ai-infrastructure.html">Right-Sizing AI Infrastructure: Why Your Second GPU Might Be Slowing You Down</a></h2>
+                    <p class="entry-desc">A 295B model spread across two AI nodes ran 3x slower than a 26B model on one node. The active-parameters math every AI infrastructure buyer should know before scaling out.</p>
+                </li>
+<li>
+                    <span class="entry-date">August 15, 2026</span>
+                    <h2><a href="self-healing-infrastructure.html">Self-Healing Infrastructure: From Auto-Restart to Autonomous Operations</a></h2>
+                    <p class="entry-desc">Self-healing infrastructure goes beyond auto-restart restarts. Learn how AI agents detect, diagnose, and remediate incidents autonomously — with guardrails that keep humans in cont…</p>
+                </li>
+<li>
+                    <span class="entry-date">August 14, 2026</span>
+                    <h2><a href="ai-infrastructure-observability.html">AI-Powered Infrastructure Observability: Beyond Traditional Monitoring</a></h2>
+                    <p class="entry-desc">How AI-powered infrastructure observability transforms incident response from reactive dashboards to proactive investigation. Real-time analysis, natural language queries, and auto…</p>
+                </li>
+<li>
+                    <span class="entry-date">August 13, 2026</span>
+                    <h2><a href="vibe-slop-prevention.html">Vibe Slop is Coming. Here's How AI Infrastructure Avoids It</a></h2>
+                    <p class="entry-desc">The 'vibe slop' crisis is real — AI-generated code without governance creates technical debt, security holes, and outages. Here's how to use AI for infrastructure without the slop.</p>
+                </li>
+<li>
+                    <span class="entry-date">August 12, 2026</span>
+                    <h2><a href="devsecops-ai-agents.html">DevSecOps in the Age of AI Agents</a></h2>
+                    <p class="entry-desc">How AI agents are transforming DevSecOps — from automated vulnerability detection to infrastructure hardening. Security best practices for AI-managed server fleets.</p>
+                </li>
+<li>
+                    <span class="entry-date">August 09, 2026</span>
+                    <h2><a href="ai-infrastructure-cost-optimization.html">blog/ai-infrastructure-cost-optimization.html</a></h2>
+                    <p class="entry-desc">AI infrastructure costs are exploding. Learn 7 proven strategies for AI infrastructure cost optimization — right-sizing, idle detection, spot instances, and how natural-language AI…</p>
+                </li>
+<li>
+                    <span class="entry-date">August 08, 2026</span>
+                    <h2><a href="vibe-coding-security-risks.html">blog/vibe-coding-security-risks.html</a></h2>
+                    <p class="entry-desc">38% of AI-generated code contains security flaws. Explore the real vibe coding security risks — and how zero-trust AI infrastructure tools solve them.</p>
+                </li>
+<li>
+                    <span class="entry-date">August 06, 2026</span>
+                    <h2><a href="zero-trust-ai-agents.html">blog/zero-trust-ai-agents.html</a></h2>
+                    <p class="entry-desc">A practical architecture for zero-trust AI agents in infrastructure: outbound-only agents, data obfuscation, approval gates, and BYOK. Learn how to safely give AI production access…</p>
+                </li>
+<li>
+                    <span class="entry-date">January 01, 2026</span>
+                    <h2><a href="ai-agent-security.html">AI Agent Security: How to Safely Give AI Access to Production Systems</a></h2>
+                    <p class="entry-desc">Giving AI agents access to production infrastructure is risky. This guide covers the 5 layers of AI agent security — from data obfuscation to approval gates to zero-trust agents.</p>
+                </li>
+<li>
+                    <span class="entry-date">January 01, 2026</span>
+                    <h2><a href="ai-infrastructure-automation.html">AI Infrastructure Automation in 2026: Beyond Scripts and Playbooks</a></h2>
+                    <p class="entry-desc">How AI infrastructure automation is replacing static playbooks with adaptive, natural language workflows. Learn about zero-trust agent architecture, data obfuscation, and approval …</p>
+                </li>
+<li>
+                    <span class="entry-date">January 01, 2026</span>
+                    <h2><a href="aiops-vs-traditional-devops.html">AIOps vs Traditional DevOps: Why the Gap Is Widening</a></h2>
+                    <p class="entry-desc">AIOps isn't DevOps with AI sprinkled on top. The gap between traditional DevOps and AI-native operations is widening — here's what changes when infrastructure speaks natural langua…</p>
+                </li>
+<li>
+                    <span class="entry-date">January 01, 2026</span>
+                    <h2><a href="multi-cloud-management.html">Multi-Cloud Management Without Losing Your Mind</a></h2>
+                    <p class="entry-desc">Managing AWS, Azure, and on-prem servers doesn't need 5 dashboards. A practical guide to unified multi-cloud management with natural language and zero context switching.</p>
+                </li>
+<li>
+                    <span class="entry-date">January 01, 2026</span>
+                    <h2><a href="natural-language-infrastructure.html">blog/natural-language-infrastructure.html</a></h2>
+                    <p class="entry-desc">The case for managing server fleets with natural language — why it works, where it fails, and what 'AI-augmented DevOps' actually means in practice.</p>
+                </li>
+            </ol>
+        </div>
+    </article>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2026 VibeComputing. All rights reserved.</p>
+            <p><a href="../privacy.html">Privacy</a> · <a href="../terms.html">Terms</a> · <a href="mailto:hello@vibecomputing.ai">Contact</a></p>
+        </div>
+    </footer>
+</body>
+</html>
