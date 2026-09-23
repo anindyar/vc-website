@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Certificates with AI | VibeComputing</title>
+    <meta name="description" content="Manage TLS certificates with AI — Let's Encrypt, AWS ACM, cert-manager, and Venafi through natural language: expiry forecasting, renewal verification, chain validation, SAN drift detection, and full certificate inventory.">
+    <meta name="keywords" content="manage certificates with AI, AI certificate lifecycle, TLS expiry monitoring AI, certificate automation AI, cert-manager AI, Let's Encrypt management AI, ACM management AI, PKI AI assistant, certificate inventory AI, TLS troubleshooting AI">
+    <link rel="canonical" href="https://vibecomputing.ai/manage-certificates-with-ai">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Manage Certificates with AI | VibeComputing">
+    <meta property="og:description" content="Renewal jobs that run green but never deploy, chains that work everywhere except Android, and certs nobody knows exist until Friday. Manage your TLS estate through natural language — any CA, any endpoint.">
+    <meta property="og:url" content="https://vibecomputing.ai/manage-certificates-with-ai">
+    <meta property="og:image" content="https://vibecomputing.ai/vibe-computing-transparent.png">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Manage Certificates with AI | VibeComputing">
+    <meta name="twitter:description" content="Expiry forecasting, renewal verification, chain validation, and SAN drift detection through natural language — Let's Encrypt, ACM, cert-manager, Venafi, or any CA.">
+    <meta name="twitter:image" content="https://vibecomputing.ai/vibe-computing-transparent.png">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "SoftwareApplication",
+          "name": "Manage Certificates with AI",
+          "description": "AI-powered TLS certificate lifecycle management — expiry forecasting, renewal verification, chain validation, SAN drift detection, and certificate inventory across load balancers, ingress, CDNs, and API gateways through natural language.",
+          "url": "https://vibecomputing.ai/manage-certificates-with-ai",
+          "applicationCategory": "SecurityApplication",
+          "operatingSystem": "Let's Encrypt, AWS ACM, GCP Certificate Manager, Azure Key Vault, cert-manager, Venafi, DigiCert",
+          "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD", "description": "Free during beta" }
+        },
+        {
+          "@type": "FAQPage",
+          "mainEntity": [
+            { "@type": "Question", "name": "Can AI manage TLS certificates?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. VibeComputing connects read-only to your estate, inventories certificates across ingress, load balancers, CDNs, and gateways, forecasts expiry, verifies that renewals actually deployed, checks chains and SAN coverage, and proposes exact fixes — which humans approve before anything runs." } },
+            { "@type": "Question", "name": "Which CAs and platforms are supported?", "acceptedAnswer": { "@type": "Answer", "text": "Let's Encrypt and any ACME CA, AWS ACM, GCP Certificate Manager, Azure Key Vault, Kubernetes cert-manager, Venafi, DigiCert, and internal PKI — plus wherever the certs are served: Nginx, Traefik, HAProxy, load balancers, CDNs, and API gateways." } },
+            { "@type": "Question", "name": "Does the AI renew or rotate certificates on its own?", "acceptedAnswer": { "@type": "Answer", "text": "No. VibeComputing is read-only by default. Every renewal, deploy-hook fix, chain update, or monitoring extension is shown as the exact command before it runs, and a human approves it." } }
+          ]
+        },
+        {
+          "@type": "Product",
+          "name": "VibeComputing — AI-Native Infrastructure Management",
+          "url": "https://vibecomputing.ai",
+          "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD", "description": "Free during beta" },
+          "publisher": { "@type": "Organization", "name": "TechImbue", "url": "https://techimbue.com" }
+        }
+      ]
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="icon" type="image/png" href="vibe-computing-transparent.png">
+    <script>
+        tailwind.config = { theme: { extend: {
+            fontFamily: { sans: ['Inter','system-ui','sans-serif'], mono: ['JetBrains Mono','Menlo','Monaco','monospace'] },
+            colors: { bg: { base:'#07090E', panel:'#0B0F16', panel2:'#0E131C', panel3:'#111722' },
+                brand: { mint:'#3DE8CF', blue:'#4E8DFF', green:'#34D27B', amber:'#F5B341', red:'#F0556B' },
+                text: { primary:'#E9EDF4', secondary:'#98A1B3', tertiary:'#5C6678' } }
+        } } }
+    </script>
+    <style>
+        :root{--bg-base:#07090E;--bg-panel:#0B0F16;--bg-panel2:#0E131C;--bg-panel3:#111722;--brand-mint:#3DE8CF;--brand-blue:#4E8DFF;--brand-green:#34D27B;--brand-amber:#F5B341;--brand-red:#F0556B;--text-primary:#E9EDF4;--text-secondary:#98A1B3;--text-tertiary:#5C6678;--border-subtle:hsla(0,0%,100%,0.055);--border-hover:hsla(0,0%,100%,0.1)}
+        *{box-sizing:border-box}
+        body{background:var(--bg-base);color:var(--text-primary);font-family:'Inter',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+        .pattern-grid{background-image:linear-gradient(hsla(0,0%,100%,0.018) 1px,transparent 1px),linear-gradient(90deg,hsla(0,0%,100%,0.018) 1px,transparent 1px);background-size:40px 40px}
+        .hero-glow{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:0}
+        .hero-glow::before{content:'';position:absolute;top:-10%;left:30%;width:600px;height:600px;background:radial-gradient(circle,rgba(61,232,207,0.08) 0%,transparent 60%);border-radius:50%}
+        .hero-glow::after{content:'';position:absolute;top:20%;right:5%;width:500px;height:500px;background:radial-gradient(circle,rgba(78,141,255,0.06) 0%,transparent 60%);border-radius:50%}
+        .section-glow{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:0}
+        .section-glow::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:800px;height:400px;background:radial-gradient(ellipse,rgba(61,232,207,0.04) 0%,transparent 70%);border-radius:50%}
+        .feature-card{position:relative;padding:2rem;border-radius:0.75rem;transition:all 0.3s ease;background:linear-gradient(135deg,hsla(0,0%,100%,0.025) 0%,hsla(0,0%,100%,0.008) 100%);border:1px solid var(--border-subtle)}
+        .feature-card:hover{background:linear-gradient(135deg,hsla(0,0%,100%,0.04) 0%,hsla(0,0%,100%,0.015) 100%);border-color:rgba(61,232,207,0.18);transform:translateY(-2px);box-shadow:0 8px 32px rgba(61,232,207,0.06)}
+        .btn-brand{display:inline-flex;align-items:center;justify-content:center;padding:0.75rem 1.5rem;border-radius:0.5rem;font-weight:600;color:#07090E;background:linear-gradient(100deg,#3DE8CF,#4E8DFF);transition:all 0.25s ease;border:none;cursor:pointer}
+        .btn-brand:hover{box-shadow:0 0 24px rgba(61,232,207,0.3),0 0 48px rgba(78,141,255,0.15);transform:translateY(-1px)}
+        .btn-primary{display:inline-flex;align-items:center;justify-content:center;padding:0.75rem 1.5rem;border-radius:0.5rem;font-weight:600;color:var(--text-primary);background:#111722;border:1px solid var(--border-subtle);transition:all 0.25s ease;cursor:pointer}
+        .btn-primary:hover{background:#161d2c;border-color:var(--border-hover)}
+        .icon-box{width:3rem;height:3rem;border-radius:0.625rem;display:flex;align-items:center;justify-content:center;background:hsla(0,0%,100%,0.04);border:1px solid var(--border-subtle)}
+        .brand-text{background:linear-gradient(100deg,#3DE8CF,#4E8DFF);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+        ::-webkit-scrollbar{width:8px;height:8px}
+        ::-webkit-scrollbar-track{background:#07090E}
+        ::-webkit-scrollbar-thumb{background:hsla(0,0%,100%,0.1);border-radius:4px}
+        ::selection{background:rgba(61,232,207,0.25);color:#E9EDF4}
+        .nav-link{color:var(--text-secondary);font-weight:500;transition:color 0.2s ease}
+        .nav-link:hover{color:var(--text-primary)}
+        .code-block{background:rgba(7,9,14,0.6);border:1px solid var(--border-subtle);border-radius:0.5rem;padding:0.75rem 1rem;font-family:'JetBrains Mono',monospace}
+    </style>
+</head>
+<body class="antialiased">
+    <!-- Navigation -->
+    <nav class="sticky top-0 z-50 backdrop-blur-xl border-b" style="background:rgba(7,9,14,0.8);border-color:var(--border-subtle)">
+        <div class="max-w-7xl mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <a href="/" class="flex items-center gap-3">
+                    <img src="vibe-computing-transparent.png" alt="Vibe Computing" class="w-10 h-10">
+                    <span class="text-xl font-bold" style="color:var(--text-primary)">Vibe Computing</span>
+                </a>
+                <div class="hidden md:flex items-center gap-8">
+                    <a href="/#features" class="nav-link">Platform</a>
+                    <a href="/#how-it-works" class="nav-link">How it Works</a>
+                    <a href="/pricing.html" class="nav-link">Pricing</a>
+                    <div class="flex items-center gap-3">
+                        <a href="/console" class="nav-link">Sign in</a>
+                        <a href="/#beta" class="btn-brand text-sm" style="padding:0.5rem 1.25rem">Get Early Access</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="relative py-16 lg:py-24 pattern-grid overflow-hidden">
+        <div class="hero-glow"></div>
+        <div class="max-w-4xl mx-auto px-6 relative z-10 text-center">
+            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-6" style="background:rgba(61,232,207,0.08);border:1px solid rgba(61,232,207,0.15)">
+                <span class="w-2 h-2 rounded-full animate-pulse" style="background:#3DE8CF;box-shadow:0 0 8px rgba(61,232,207,0.4)"></span>
+                <span class="font-medium text-sm" style="color:#3DE8CF">Let's Encrypt · ACM · cert-manager · Venafi · Any CA</span>
+            </div>
+            <h1 class="text-4xl lg:text-5xl xl:text-6xl font-bold mb-6 leading-tight" style="color:var(--text-primary)">
+                Manage Certificates <span class="brand-text">with AI</span>
+            </h1>
+            <p class="text-xl mb-8 leading-relaxed max-w-2xl mx-auto" style="color:var(--text-secondary)">
+                Renewal jobs that run green but never deploy, chains that work everywhere except Android, and certificates nobody remembers until Friday at 4 PM. Describe the estate — the AI inventories every cert, verifies what renewal actually shipped, and shows you the exact fix before anything runs.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="/#beta" class="btn-brand" style="padding:1rem 2rem;font-size:1.0625rem">
+                    Join the Beta
+                    <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path></svg>
+                </a>
+                <a href="/#features" class="btn-primary" style="padding:1rem 2rem;font-size:1.0625rem">Explore the Platform</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Content -->
+    <section class="relative py-16 overflow-hidden" style="background:#0B0F16">
+        <div class="section-glow"></div>
+        <div class="max-w-3xl mx-auto px-6 relative z-10 space-y-6">
+            <p class="text-lg leading-relaxed" style="color:var(--text-secondary)">
+                TLS estates accrete like sediment. The cert on the legacy load balancer that predates the migration. The Let's Encrypt renewal that succeeds every 60 days — while the deploy hook behind it has been 404ing for a month. The intermediate that went missing during an issuer rotation, breaking only the clients too polite to complain. The wildcard covering eleven services, renewed with a SAN list someone edited and nobody reviewed. Whether your certs live in cert-manager, AWS ACM, GCP Certificate Manager, Key Vault, Venafi, or a flat file on a proxy nobody admits owning — VibeComputing handles the full lifecycle: inventory, expiry forecasting, renewal verification, chain validation, SAN drift detection, and monitoring coverage. Because "renewed successfully" and "serving the new certificate" are two different statements.</p>
+            <p class="text-lg leading-relaxed" style="color:var(--text-secondary)">
+                The agent connects in seconds and reads your estate the way a senior PKI engineer would — which certificates exist and where they're actually served, which expiry dates collide with your change freeze, whether the served chain matches the issued chain at every endpoint, whether renewal automation exists for each cert or just for the famous ones, which monitoring would catch an outage and which would watch it happen. "What expires in the next 30 days?" "Did the renewal actually deploy?" "Why do Android clients fail on this endpoint?" The AI correlates issuance records, served certificates, renewal job history, and endpoint reality into a single picture — and separates the cert that will renew fine from the one that will renew "successfully" and still take the API down.</p>
+            <p class="text-lg leading-relaxed" style="color:var(--text-secondary)">
+                For teams that live under change-control and audit, VibeComputing fits existing setups without ceremony. The zero-trust outbound-only agent model works inside locked-down environments — no inbound ports, no CA admin tokens overreaching. Read-only by default: the agent analyzes the estate, and every renewal, chain fix, SAN correction, or monitoring extension is shown as the exact command before it runs. Hostnames, SANs, and issuer identifiers are obfuscated before they reach any model — certificate inventories are attack surface maps, and they're treated that way. Humans approve every mutation. Combined with BYOK for strict control over your AI provider and air-gapped deployment for regulated environments, it's the safest way to manage certificates with AI.</p>
+            <div class="code-block my-8">
+                <p class="text-sm" style="color:var(--text-tertiary)">Example:</p>
+                <p class="mt-2" style="color:#3DE8CF">$ what expires in the next 30 days — and will the renewals actually work?</p>
+                <p class="mt-1" style="color:var(--text-secondary)">→[OBFUSCATING] Masking hostnames, SANs, and issuer identifiers...</p>
+                <p style="color:var(--text-secondary)">→ Inventory: 47 certificates across ingress, load balancers, CDN, and API gateways — only 12 have expiry monitoring; 35 are invisible</p>
+                <p style="color:var(--text-secondary)">→ Expiring ≤30d: 3 — [masked-ingress-1] (9d) · [masked-api-gw] (14d) · [masked-legacy-lb] (23d)</p>
+                <p style="color:var(--text-secondary)">→ Renewal verification: [masked-api-gw] renewal job ran GREEN 6h ago — but the gateway still serves the OLD certificate (deploy hook 404ing since the endpoint migration). Renewed ≠ live</p>
+                <p style="color:var(--text-secondary)">→ Chain: [masked-ingress-1] serves an incomplete chain (intermediate missing since issuer rotation) — Android/mobile clients fail; desktop browsers mask it</p>
+                <p style="color:var(--text-secondary)">→ SAN drift: [masked-legacy-lb] renewal config drops api.[masked].com — cert would renew "successfully" without the one name that matters</p>
+                <p style="color:var(--text-secondary)">→ Side findings: staging serves a 2-year-old self-signed cert carrying a production SAN; one RSA-2048 private key reused across 3 endpoints; renewal automation exists for 9 of 47 certs</p>
+                <p class="mt-2" style="color:#3DE8CF">Verdict: fix the 404 deploy hook before day 14, restore the intermediate on [masked-ingress-1], correct the SAN list, extend expiry monitoring to all 47 (exact commands attached). Awaiting your approval.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Key Differentiators -->
+    <section class="relative py-20 overflow-hidden">
+        <div class="section-glow"></div>
+        <div class="max-w-5xl mx-auto px-6 relative z-10">
+            <div class="text-center mb-12">
+                <span class="font-semibold text-sm uppercase tracking-wider" style="color:#3DE8CF">Why VibeComputing</span>
+                <h2 class="text-3xl font-bold mt-3 mb-4" style="color:var(--text-primary)">Built Different</h2>
+            </div>
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="feature-card">
+                    <div class="icon-box mb-4"><svg class="w-6 h-6" fill="none" stroke="#F0556B" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg></div>
+                    <h3 class="text-lg font-semibold mb-2" style="color:var(--text-primary)">Renewed ≠ Live</h3>
+                    <p class="text-sm" style="color:var(--text-secondary)">A green renewal job that never deployed is an outage on a timer. The agent verifies what's actually served at the endpoint — not what the job log claims — and catches the broken deploy hook weeks before the badge turns red.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon-box mb-4"><svg class="w-6 h-6" fill="none" stroke="#F5B341" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7 8h10M5 6h14a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2z"></path></svg></div>
+                    <h3 class="text-lg font-semibold mb-2" style="color:var(--text-primary)">Exact Change, Human Approved</h3>
+                    <p class="text-sm" style="color:var(--text-secondary)">Every renewal, chain fix, SAN correction, or monitoring extension is shown as the exact command before it runs — staged for your change window, approved by a human.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon-box mb-4"><svg class="w-6 h-6" fill="none" stroke="#4E8DFF" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01"></path></svg></div>
+                    <h3 class="text-lg font-semibold mb-2" style="color:var(--text-primary)">Any CA, Any Endpoint</h3>
+                    <p class="text-sm" style="color:var(--text-secondary)">Let's Encrypt and any ACME CA, AWS ACM, GCP Certificate Manager, Key Vault, cert-manager, Venafi, DigiCert, internal PKI — and wherever they're served: Nginx, Traefik, HAProxy, load balancers, CDNs, API gateways. One conversation across all of it.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon-box mb-4"><svg class="w-6 h-6" fill="none" stroke="#F5B341" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg></div>
+                    <h3 class="text-lg font-semibold mb-2" style="color:var(--text-primary)">Air-Gapped Appliance</h3>
+                    <p class="text-sm" style="color:var(--text-secondary)">For government and defense: run the entire AI stack on-premises with zero external connectivity.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon-box mb-4"><svg class="w-6 h-6" fill="none" stroke="#34D27B" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"></path></svg></div>
+                    <h3 class="text-lg font-semibold mb-2" style="color:var(--text-primary)">BYOK</h3>
+                    <p class="text-sm" style="color:var(--text-secondary)">Bring your own API keys for the LLM provider of your choice. Full control over data access and costs.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon-box mb-4"><svg class="w-6 h-6" fill="none" stroke="#3DE8CF" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg></div>
+                    <h3 class="text-lg font-semibold mb-2" style="color:var(--text-primary)">15+ Years Expertise</h3>
+                    <p class="text-sm" style="color:var(--text-secondary)">Born from deep infrastructure and security roots. Built by engineers who've debugged an outage caused by a "successfully renewed" certificate — and built the verification that catches it weeks early.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="relative py-20 overflow-hidden" style="background:#0B0F16">
+        <div class="section-glow"></div>
+        <div class="max-w-3xl mx-auto px-6 text-center relative z-10">
+            <h2 class="text-3xl md:text-4xl font-bold mb-4" style="color:var(--text-primary)">Ready to Manage Certificates with AI?</h2>
+            <p class="text-lg mb-8" style="color:var(--text-secondary)">Join our beta program. Free for the duration — no credit card required.</p>
+            <a href="/#beta" class="btn-brand inline-flex" style="padding:1rem 2rem;font-size:1.0625rem">
+                Get Early Access
+                <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path></svg>
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-12" style="background:#07090E;border-top:1px solid var(--border-subtle)">
+        <div class="max-w-7xl mx-auto px-6 text-center">
+            <a href="/" class="inline-flex items-center gap-3 mb-4">
+                <img src="vibe-computing-transparent.png" alt="Vibe Computing" class="w-10 h-10">
+                <span class="text-xl font-bold" style="color:var(--text-primary)">Vibe Computing</span>
+            </a>
+            <p class="text-sm" style="color:var(--text-tertiary)">AI-native infrastructure management. Built for engineers who'd rather describe than configure.</p>
+            <p class="text-sm mt-4" style="color:var(--text-tertiary)">&copy; 2026 TechImbue. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
