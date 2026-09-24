@@ -3,51 +3,66 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manage Infrastructure with AI | VibeComputing</title>
-    <meta name="description" content="Manage your entire infrastructure with AI — servers, VMs, cloud, on-prem, and Kubernetes through natural language. Data obfuscation, zero-trust agents, and unified fleet control.">
-    <meta name="keywords" content="manage infrastructure with AI, AI infrastructure management, natural language DevOps, AI server management">
+    <title>AI Infrastructure Management | VibeComputing</title>
+    <meta name="description" content="AI infrastructure management for the whole estate — Kubernetes, cloud, databases, networking, DNS, identity, certificates, backups and more through one natural-language conversation. Read-only by default, human-approved changes.">
+    <meta name="keywords" content="AI infrastructure management, AI infrastructure manager, manage infrastructure with AI, AI ops platform, natural language infrastructure, AI DevOps platform, infrastructure automation AI, AI infrastructure monitoring, conversational infrastructure management">
     <link rel="canonical" href="https://vibecomputing.ai/manage-infrastructure-with-ai">
-    <meta name="robots" content="index, follow">
-    <meta name="author" content="VibeComputing">
-    <meta name="theme-color" content="#07090E">
-
-    <!-- Open Graph -->
     <meta property="og:type" content="website">
-    <meta property="og:title" content="Manage Infrastructure with AI | VibeComputing">
-    <meta property="og:description" content="Manage your entire infrastructure through natural language. Multi-cloud, on-prem, bare metal — all from one AI-powered console.">
+    <meta property="og:title" content="AI Infrastructure Management | VibeComputing">
+    <meta property="og:description" content="One conversation across the whole estate — clusters, clouds, databases, networks, DNS, identity, certs, backups. The AI reads everything, correlates across layers, and proposes exact fixes a human approves.">
     <meta property="og:url" content="https://vibecomputing.ai/manage-infrastructure-with-ai">
-    <meta property="og:site_name" content="VibeComputing">
     <meta property="og:image" content="https://vibecomputing.ai/vibe-computing-transparent.png">
-
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Manage Infrastructure with AI | VibeComputing">
-    <meta name="twitter:description" content="Manage your entire server fleet through natural language. Cloud, on-prem, bare metal — all from one AI-powered console.">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="AI Infrastructure Management | VibeComputing">
+    <meta name="twitter:description" content="Kubernetes, cloud, databases, networking, DNS, identity, certificates, backups — one natural-language interface across every layer. Read-only by default.">
     <meta name="twitter:image" content="https://vibecomputing.ai/vibe-computing-transparent.png">
-
-    <!-- JSON-LD Structured Data -->
     <script type="application/ld+json">
-    [
-      {
-        "@context": "https://schema.org",
-        "@type": "WebPage",
-        "name": "Manage Infrastructure with AI",
-        "description": "AI-powered infrastructure management platform for managing servers, VMs, cloud, and on-prem through natural language.",
-        "url": "https://vibecomputing.ai/manage-infrastructure-with-ai",
-        "isPartOf": { "@type": "WebSite", "name": "VibeComputing", "url": "https://vibecomputing.ai" }
-      },
-      {
-        "@context": "https://schema.org",
-        "@type": "SoftwareApplication",
-        "name": "VibeComputing",
-        "applicationCategory": "InfrastructureManagementApplication",
-        "operatingSystem": "Linux, Windows, Cloud",
-        "description": "AI-native infrastructure management platform that lets you manage your entire infrastructure through natural language commands.",
-        "url": "https://vibecomputing.ai",
-        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD", "description": "Free during beta" },
-        "publisher": { "@type": "Organization", "name": "TechImbue", "url": "https://techimbue.com" }
-      }
-    ]
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "SoftwareApplication",
+          "name": "VibeComputing — AI Infrastructure Management",
+          "description": "AI-powered infrastructure management across the entire estate — Kubernetes, containers, cloud, servers, databases, networking, DNS, identity, certificates, observability, security operations, backups, CI/CD and storage — through one natural-language conversation. Read-only by default, human-approved changes.",
+          "url": "https://vibecomputing.ai/manage-infrastructure-with-ai",
+          "applicationCategory": "BusinessApplication",
+          "operatingSystem": "Kubernetes, Docker, AWS, Azure, GCP, Linux, Windows, VMware, Proxmox, any infrastructure",
+          "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD", "description": "Free during beta" }
+        },
+        {
+          "@type": "FAQPage",
+          "mainEntity": [
+            { "@type": "Question", "name": "Can AI manage infrastructure?", "acceptedAnswer": { "@type": "Answer", "text": "Yes — for a senior-engineer definition of manage. VibeComputing connects read-only to your estate, builds a living picture across clusters, clouds, databases, networks, identity, and certificates, answers questions in natural language, correlates incidents across layers, and proposes exact fixes. Humans approve every change before anything runs." } },
+            { "@type": "Question", "name": "How is this different from a domain-specific AI tool?", "acceptedAnswer": { "@type": "Answer", "text": "Domain tools see one layer. Most real incidents cross layers — a DNS zone drift that looks like an app bug, a green renewal job that still serves the old certificate, a database regression that started at a deploy. VibeComputing walks the whole estate the way a principal engineer does: follow the symptom across layers until the root cause appears, wherever it lives." } },
+            { "@type": "Question", "name": "Is it safe to point an AI at production infrastructure?", "acceptedAnswer": { "@type": "Answer", "text": "The agent is read-only by default and connects outbound-only with no inbound ports. Every mutation is shown as the exact command before it runs and requires human approval. Identifiers are obfuscated before reaching any model, you can bring your own keys, and regulated environments can run the full stack air-gapped on-premises." } }
+          ]
+        },
+        {
+          "@type": "ItemList",
+          "name": "AI Infrastructure Management Series",
+          "description": "Deep-dive guides for managing every layer of the estate with AI",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "url": "https://vibecomputing.ai/manage-kubernetes-with-ai", "name": "Manage Kubernetes with AI" },
+            { "@type": "ListItem", "position": 2, "url": "https://vibecomputing.ai/manage-docker-with-ai", "name": "Manage Docker with AI" },
+            { "@type": "ListItem", "position": 3, "url": "https://vibecomputing.ai/manage-cloud-with-ai", "name": "Manage Cloud with AI" },
+            { "@type": "ListItem", "position": 4, "url": "https://vibecomputing.ai/manage-databases-with-ai", "name": "Manage Databases with AI" },
+            { "@type": "ListItem", "position": 5, "url": "https://vibecomputing.ai/manage-networking-with-ai", "name": "Manage Networking with AI" },
+            { "@type": "ListItem", "position": 6, "url": "https://vibecomputing.ai/manage-dns-with-ai", "name": "Manage DNS with AI" },
+            { "@type": "ListItem", "position": 7, "url": "https://vibecomputing.ai/manage-identity-with-ai", "name": "Manage Identity with AI" },
+            { "@type": "ListItem", "position": 8, "url": "https://vibecomputing.ai/manage-certificates-with-ai", "name": "Manage Certificates with AI" },
+            { "@type": "ListItem", "position": 9, "url": "https://vibecomputing.ai/manage-security-ops-with-ai", "name": "Manage Security Ops with AI" },
+            { "@type": "ListItem", "position": 10, "url": "https://vibecomputing.ai/manage-observability-with-ai", "name": "Manage Observability with AI" },
+            { "@type": "ListItem", "position": 11, "url": "https://vibecomputing.ai/manage-backups-with-ai", "name": "Manage Backups with AI" },
+            { "@type": "ListItem", "position": 12, "url": "https://vibecomputing.ai/manage-cicd-with-ai", "name": "Manage CI/CD with AI" },
+            { "@type": "ListItem", "position": 13, "url": "https://vibecomputing.ai/manage-nas-with-ai", "name": "Manage NAS with AI" },
+            { "@type": "ListItem", "position": 14, "url": "https://vibecomputing.ai/manage-vms-with-ai", "name": "Manage VMs with AI" },
+            { "@type": "ListItem", "position": 15, "url": "https://vibecomputing.ai/manage-vmware-with-ai", "name": "Manage VMware with AI" },
+            { "@type": "ListItem", "position": 16, "url": "https://vibecomputing.ai/manage-linux-with-ai", "name": "Manage Linux with AI" },
+            { "@type": "ListItem", "position": 17, "url": "https://vibecomputing.ai/manage-windows-with-ai", "name": "Manage Windows with AI" },
+            { "@type": "ListItem", "position": 18, "url": "https://vibecomputing.ai/manage-servers-with-ai", "name": "Manage Servers with AI" }
+          ]
+        }
+      ]
     </script>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -75,6 +90,8 @@
         .section-glow::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:800px;height:400px;background:radial-gradient(ellipse,rgba(61,232,207,0.04) 0%,transparent 70%);border-radius:50%}
         .feature-card{position:relative;padding:2rem;border-radius:0.75rem;transition:all 0.3s ease;background:linear-gradient(135deg,hsla(0,0%,100%,0.025) 0%,hsla(0,0%,100%,0.008) 100%);border:1px solid var(--border-subtle)}
         .feature-card:hover{background:linear-gradient(135deg,hsla(0,0%,100%,0.04) 0%,hsla(0,0%,100%,0.015) 100%);border-color:rgba(61,232,207,0.18);transform:translateY(-2px);box-shadow:0 8px 32px rgba(61,232,207,0.06)}
+        .series-card{position:relative;padding:1.25rem 1.5rem;border-radius:0.625rem;transition:all 0.25s ease;background:linear-gradient(135deg,hsla(0,0%,100%,0.02) 0%,hsla(0,0%,100%,0.005) 100%);border:1px solid var(--border-subtle)}
+        .series-card:hover{background:linear-gradient(135deg,hsla(0,0%,100%,0.045) 0%,hsla(0,0%,100%,0.012) 100%);border-color:rgba(61,232,207,0.25);transform:translateY(-1px)}
         .btn-brand{display:inline-flex;align-items:center;justify-content:center;padding:0.75rem 1.5rem;border-radius:0.5rem;font-weight:600;color:#07090E;background:linear-gradient(100deg,#3DE8CF,#4E8DFF);transition:all 0.25s ease;border:none;cursor:pointer}
         .btn-brand:hover{box-shadow:0 0 24px rgba(61,232,207,0.3),0 0 48px rgba(78,141,255,0.15);transform:translateY(-1px)}
         .btn-primary{display:inline-flex;align-items:center;justify-content:center;padding:0.75rem 1.5rem;border-radius:0.5rem;font-weight:600;color:var(--text-primary);background:#111722;border:1px solid var(--border-subtle);transition:all 0.25s ease;cursor:pointer}
@@ -118,20 +135,20 @@
         <div class="max-w-4xl mx-auto px-6 relative z-10 text-center">
             <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-6" style="background:rgba(61,232,207,0.08);border:1px solid rgba(61,232,207,0.15)">
                 <span class="w-2 h-2 rounded-full animate-pulse" style="background:#3DE8CF;box-shadow:0 0 8px rgba(61,232,207,0.4)"></span>
-                <span class="font-medium text-sm" style="color:#3DE8CF">AI-Native Infrastructure Management</span>
+                <span class="font-medium text-sm" style="color:#3DE8CF">Clusters · Clouds · Data · Network · Identity · Any Estate</span>
             </div>
             <h1 class="text-4xl lg:text-5xl xl:text-6xl font-bold mb-6 leading-tight" style="color:var(--text-primary)">
-                Manage Infrastructure <span class="brand-text">with AI</span>
+                Manage Your Infrastructure <span class="brand-text">with AI</span>
             </h1>
             <p class="text-xl mb-8 leading-relaxed max-w-2xl mx-auto" style="color:var(--text-secondary)">
-                Stop memorizing CLI flags and writing Ansible playbooks. Describe what you want in plain English, and VibeComputing's AI executes it across your entire fleet — cloud, on-prem, and bare metal.
+                Kubernetes, databases, DNS, certificates, firewalls, backups, identity — eighteen tools, eighteen consoles, one 3 AM pager. VibeComputing is one conversation across all of it: the AI reads your entire estate, correlates incidents across layers, and shows you the exact fix before anything runs.
             </p>
             <div class="flex flex-col sm:flex-row gap-4 justify-center">
                 <a href="/#beta" class="btn-brand" style="padding:1rem 2rem;font-size:1.0625rem">
                     Join the Beta
                     <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path></svg>
                 </a>
-                <a href="/#features" class="btn-primary" style="padding:1rem 2rem;font-size:1.0625rem">Explore the Platform</a>
+                <a href="#series" class="btn-primary" style="padding:1rem 2rem;font-size:1.0625rem">Explore Every Layer</a>
             </div>
         </div>
     </section>
@@ -141,21 +158,22 @@
         <div class="section-glow"></div>
         <div class="max-w-3xl mx-auto px-6 relative z-10 space-y-6">
             <p class="text-lg leading-relaxed" style="color:var(--text-secondary)">
-                VibeComputing redefines how teams manage infrastructure with AI at its core. Instead of switching between five different dashboards, you describe what you want in plain English. The AI translates your intent into the right commands, executes them across your fleet, and reports back with a clear summary. Whether you're running a handful of cloud VMs or hundreds of bare-metal servers across multiple data centers, the experience is the same: type it, get it done.
-            </p>
+                Modern infrastructure accretes in layers, and every layer grows its own sediment. The Kubernetes cluster that started as three nodes and became a petting zoo. The cloud account where an autoscaling floor quietly became a commitment. The database that was fine until the deploy that wasn't. The certificate that renews "successfully" while serving last year's key. The DNS zone edited by two teams with two truths. Individually, each layer has tools. Collectively, they have gaps — and the gaps are where incidents live. Most outages aren't a layer failing; they're two healthy layers disagreeing. VibeComputing treats the estate as one system: one natural-language interface that reads clusters, clouds, data stores, networks, identity, and certificates together, and follows a symptom across layer boundaries until the root cause appears — wherever it lives.</p>
             <p class="text-lg leading-relaxed" style="color:var(--text-secondary)">
-                What makes this different from traditional automation tools is context. The AI understands your infrastructure topology, knows which servers are production vs. staging, remembers recent changes, and can reason about dependencies. Ask it to "roll out the new config to staging first, then production if health checks pass" and it will sequence the rollout appropriately. Security is built in — every IP address, hostname, and secret is automatically obfuscated before reaching the LLM, then restored on execution.
-            </p>
+                The agent connects in seconds and reads your estate the way a principal engineer on their best day would — inventory across every layer, utilization and cost reality versus assumptions, drift between what was deployed and what was intended, expiry and capacity timelines that turn into calendars, correlations between deploys and regressions, alert storms reduced to the one signal that matters. "Why is checkout slow?" becomes a walk: p99 latency onset at 14:02, a deploy at 13:58, a query plan flip in the database, a connection-pool exhaustion traced to a replica that drifted — one answer assembled from five layers, not five tickets. And because the AI is read-only by default, the scariest part of pointing intelligence at production is handled: every proposed change arrives as the exact command, staged for a maintenance window, approved by a human who can read it.</p>
             <p class="text-lg leading-relaxed" style="color:var(--text-secondary)">
-                Built by engineers with over 15 years of cybersecurity experience, VibeComputing is designed for production environments. Zero-trust, outbound-only agents mean no inbound ports are ever opened on your servers. Credentials never leave your network. And for organizations with the strictest requirements — government, defense, regulated industries — an air-gapped appliance runs the entire AI stack on-premises with zero external connectivity.
-            </p>
+                For teams under change-control, audit, and procurement, the model fits without ceremony. Zero-trust outbound-only agents work inside locked-down environments — no inbound ports, no standing admin tokens. Identifiers are obfuscated before they reach any model, because infrastructure inventories are attack-surface maps. Bring your own keys for strict control over AI providers and costs; run fully air-gapped for regulated environments. Whether you run one cluster or a hybrid estate of VMs, containers, clouds, and the forgotten NAS in the corner rack — it's the safest way to manage infrastructure with AI: see everything, touch nothing until you say so.</p>
             <div class="code-block my-8">
                 <p class="text-sm" style="color:var(--text-tertiary)">Example:</p>
-                <p class="mt-2" style="color:#3DE8CF">$ check system health on all production servers</p>
-                <p class="mt-1" style="color:var(--text-secondary)">→prod-web-01: load 0.05, mem 44%, disk 62% ✓</p>
-                <p style="color:var(--text-secondary)">→prod-web-02: load 0.03, mem 38%, disk 58% ✓</p>
-                <p style="color:var(--text-secondary)">→prod-api-01: load 0.12, mem 52%, disk 71% ✓</p>
-                <p class="mt-2" style="color:#3DE8CF">All 3 servers healthy. No action needed.</p>
+                <p class="mt-2" style="color:#3DE8CF">$ why is checkout slow since this afternoon?</p>
+                <p class="mt-1" style="color:var(--text-secondary)">→[OBFUSCATING] Masking hostnames, identifiers, and keys across all layers...</p>
+                <p style="color:var(--text-secondary)">→ [observability] p95 checkout latency 180ms→2.4s, onset 14:02:40 · error rate flat — slow, not failing</p>
+                <p style="color:var(--text-secondary)">→ [cicd] deploy d4f2a1c shipped 13:58 — connection-pool config change flagged</p>
+                <p style="color:var(--text-secondary)">→ [databases] query plan flip on orders lookup: index no longer used, Seq Scan 1.2M rows · replica lag 34s</p>
+                <p style="color:var(--text-secondary)">→ [kubernetes] replica pool exhausted — 47 threads waiting on connections; pool sizing drifted from config-map edit 3 days ago (not the deploy)</p>
+                <p style="color:var(--text-secondary)">→ [networking] path clean — CRC flat, MTU consistent · [dns] resolution stable · [certificates] not implicated</p>
+                <p style="color:var(--text-secondary)">→ Correlation: config-map pool drift (day -3) × deploy-triggered traffic mix change (13:58) = exhaustion at 14:02. Two changes, each harmless alone</p>
+                <p class="mt-2" style="color:#3DE8CF">Verdict: restore pool sizing + CREATE INDEX CONCURRENTLY (exact commands attached, staged for your window). Awaiting your approval.</p>
             </div>
         </div>
     </section>
@@ -170,24 +188,24 @@
             </div>
             <div class="grid md:grid-cols-2 gap-6">
                 <div class="feature-card">
-                    <div class="icon-box mb-4"><svg class="w-6 h-6" fill="none" stroke="#3DE8CF" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"></path></svg></div>
-                    <h3 class="text-lg font-semibold mb-2" style="color:var(--text-primary)">LLM Data Obfuscation</h3>
-                    <p class="text-sm" style="color:var(--text-secondary)">IPs, hostnames, and secrets are automatically tokenized before reaching any AI model — then restored on execution.</p>
+                    <div class="icon-box mb-4"><svg class="w-6 h-6" fill="none" stroke="#3DE8CF" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h12a2 2 0 012 2v7a2 2 0 01-2 2H6l-4 4V6z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01"></path></svg></div>
+                    <h3 class="text-lg font-semibold mb-2" style="color:var(--text-primary)">One Conversation, Whole Estate</h3>
+                    <p class="text-sm" style="color:var(--text-secondary)">Most incidents cross layers. The AI follows a symptom across clusters, databases, networks, DNS, identity, and certificates until the root cause appears — instead of eighteen consoles showing eighteen green dashboards.</p>
                 </div>
                 <div class="feature-card">
-                    <div class="icon-box mb-4"><svg class="w-6 h-6" fill="none" stroke="#F0556B" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg></div>
-                    <h3 class="text-lg font-semibold mb-2" style="color:var(--text-primary)">Zero-Trust Architecture</h3>
-                    <p class="text-sm" style="color:var(--text-secondary)">Outbound-only agents. No inbound ports, no SSH keys to manage. Credentials never leave your servers.</p>
+                    <div class="icon-box mb-4"><svg class="w-6 h-6" fill="none" stroke="#F5B341" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7 8h10M5 6h14a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2z"></path></svg></div>
+                    <h3 class="text-lg font-semibold mb-2" style="color:var(--text-primary)">Exact Change, Human Approved</h3>
+                    <p class="text-sm" style="color:var(--text-secondary)">Every fix is shown as the exact command before it runs — staged for your change window, approved by a human. The AI proposes; engineers decide. Read-only by default.</p>
                 </div>
                 <div class="feature-card">
-                    <div class="icon-box mb-4"><svg class="w-6 h-6" fill="none" stroke="#4E8DFF" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg></div>
-                    <h3 class="text-lg font-semibold mb-2" style="color:var(--text-primary)">Unified Console</h3>
-                    <p class="text-sm" style="color:var(--text-secondary)">On-prem + cloud + Kubernetes from one interface. No more switching between five different tools.</p>
+                    <div class="icon-box mb-4"><svg class="w-6 h-6" fill="none" stroke="#4E8DFF" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01"></path></svg></div>
+                    <h3 class="text-lg font-semibold mb-2" style="color:var(--text-primary)">Any Layer, Any Vendor</h3>
+                    <p class="text-sm" style="color:var(--text-secondary)">Kubernetes and Docker, AWS, Azure, GCP, and Alibaba, PostgreSQL to MongoDB, Cisco to UniFi, BIND to Route53, Entra to Keycloak, on-prem VMs and that NAS in the corner. Hybrid estates are the norm, not the edge case.</p>
                 </div>
                 <div class="feature-card">
                     <div class="icon-box mb-4"><svg class="w-6 h-6" fill="none" stroke="#F5B341" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg></div>
                     <h3 class="text-lg font-semibold mb-2" style="color:var(--text-primary)">Air-Gapped Appliance</h3>
-                    <p class="text-sm" style="color:var(--text-secondary)">For enterprise and government: run the entire AI stack on-premises with zero external connectivity.</p>
+                    <p class="text-sm" style="color:var(--text-secondary)">For government and defense: run the entire AI stack on-premises with zero external connectivity.</p>
                 </div>
                 <div class="feature-card">
                     <div class="icon-box mb-4"><svg class="w-6 h-6" fill="none" stroke="#34D27B" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"></path></svg></div>
@@ -197,17 +215,103 @@
                 <div class="feature-card">
                     <div class="icon-box mb-4"><svg class="w-6 h-6" fill="none" stroke="#3DE8CF" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg></div>
                     <h3 class="text-lg font-semibold mb-2" style="color:var(--text-primary)">15+ Years Expertise</h3>
-                    <p class="text-sm" style="color:var(--text-secondary)">Built by engineers with over a decade and a half of cybersecurity and infrastructure experience.</p>
+                    <p class="text-sm" style="color:var(--text-secondary)">Born from deep infrastructure and security roots. Built by engineers who've spent careers in the gap between two healthy layers disagreeing — and built the AI that walks it.</p>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- Series Index -->
+    <section id="series" class="relative py-20 overflow-hidden" style="background:#0B0F16">
+        <div class="section-glow"></div>
+        <div class="max-w-6xl mx-auto px-6 relative z-10">
+            <div class="text-center mb-12">
+                <span class="font-semibold text-sm uppercase tracking-wider" style="color:#3DE8CF">Every Layer, Deep</span>
+                <h2 class="text-3xl font-bold mt-3 mb-4" style="color:var(--text-primary)">The AI Management Series</h2>
+                <p class="max-w-2xl mx-auto" style="color:var(--text-secondary)">Dedicated deep-dives for every layer of the estate — the same read-only, human-approved model, specialized for each domain.</p>
+            </div>
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                <a href="/manage-kubernetes-with-ai" class="series-card block">
+                    <p class="font-semibold" style="color:var(--text-primary)">⎈ Manage Kubernetes with AI</p>
+                    <p class="text-sm mt-1" style="color:var(--text-secondary)">Crashloops, HPA floors, node sediment — EKS/AKG/GKE/any cluster</p>
+                </a>
+                <a href="/manage-docker-with-ai" class="series-card block">
+                    <p class="font-semibold" style="color:var(--text-primary)">🐳 Manage Docker with AI</p>
+                    <p class="text-sm mt-1" style="color:var(--text-secondary)">Restart loops, image bloat, compose drift — any host, zero exposed sockets</p>
+                </a>
+                <a href="/manage-cloud-with-ai" class="series-card block">
+                    <p class="font-semibold" style="color:var(--text-primary)">☁️ Manage Cloud with AI</p>
+                    <p class="text-sm mt-1" style="color:var(--text-secondary)">Bill shock, autoscaling floors, idle fleets — AWS/Azure/GCP/Alibaba</p>
+                </a>
+                <a href="/manage-databases-with-ai" class="series-card block">
+                    <p class="font-semibold" style="color:var(--text-primary)">🗄️ Manage Databases with AI</p>
+                    <p class="text-sm mt-1" style="color:var(--text-secondary)">Plan flips, replication lag, untested backups — SQL to NoSQL, any cloud</p>
+                </a>
+                <a href="/manage-networking-with-ai" class="series-card block">
+                    <p class="font-semibold" style="color:var(--text-primary)">🌐 Manage Networking with AI</p>
+                    <p class="text-sm mt-1" style="color:var(--text-secondary)">Intermittent slowness, duplex mismatches, shadowed rules — any fabric</p>
+                </a>
+                <a href="/manage-dns-with-ai" class="series-card block">
+                    <p class="font-semibold" style="color:var(--text-primary)">🧭 Manage DNS with AI</p>
+                    <p class="text-sm mt-1" style="color:var(--text-secondary)">Split-horizon drift, stale records, TTL math — because it's always DNS</p>
+                </a>
+                <a href="/manage-identity-with-ai" class="series-card block">
+                    <p class="font-semibold" style="color:var(--text-primary)">🔑 Manage Identity with AI</p>
+                    <p class="text-sm mt-1" style="color:var(--text-secondary)">Risky sign-ins, dormant accounts, privilege creep — Entra/Okta/any directory</p>
+                </a>
+                <a href="/manage-certificates-with-ai" class="series-card block">
+                    <p class="font-semibold" style="color:var(--text-primary)">🔒 Manage Certificates with AI</p>
+                    <p class="text-sm mt-1" style="color:var(--text-secondary)">Renewed-but-not-deployed, chain breaks, SAN drift — any CA, any endpoint</p>
+                </a>
+                <a href="/manage-security-ops-with-ai" class="series-card block">
+                    <p class="font-semibold" style="color:var(--text-primary)">🛡️ Manage Security Ops with AI</p>
+                    <p class="text-sm mt-1" style="color:var(--text-secondary)">3,847 alerts to 14 incidents — triage, chains, human-approved response</p>
+                </a>
+                <a href="/manage-observability-with-ai" class="series-card block">
+                    <p class="font-semibold" style="color:var(--text-primary)">📈 Manage Observability with AI</p>
+                    <p class="text-sm mt-1" style="color:var(--text-secondary)">Alert fatigue to signal — "what changed at 14:03?" answered cross-stack</p>
+                </a>
+                <a href="/manage-backups-with-ai" class="series-card block">
+                    <p class="font-semibold" style="color:var(--text-primary)">💾 Manage Backups with AI</p>
+                    <p class="text-sm mt-1" style="color:var(--text-secondary)">38 "successful" jobs, 9 verified — verified, never assumed</p>
+                </a>
+                <a href="/manage-cicd-with-ai" class="series-card block">
+                    <p class="font-semibold" style="color:var(--text-primary)">🔁 Manage CI/CD with AI</p>
+                    <p class="text-sm mt-1" style="color:var(--text-secondary)">Flaky-test makeup, queue starvation, deploy-to-incident correlation</p>
+                </a>
+                <a href="/manage-nas-with-ai" class="series-card block">
+                    <p class="font-semibold" style="color:var(--text-primary)">📀 Manage NAS with AI</p>
+                    <p class="text-sm mt-1" style="color:var(--text-secondary)">SMART trends before the loudest failure — Synology/QNAP/TrueNAS/Unraid</p>
+                </a>
+                <a href="/manage-vms-with-ai" class="series-card block">
+                    <p class="font-semibold" style="color:var(--text-primary)">🖥️ Manage VMs with AI</p>
+                    <p class="text-sm mt-1" style="color:var(--text-secondary)">Sprawl, snapshots-as-backups, ballooning — any hypervisor fleet</p>
+                </a>
+                <a href="/manage-vmware-with-ai" class="series-card block">
+                    <p class="font-semibold" style="color:var(--text-primary)">🔲 Manage VMware with AI</p>
+                    <p class="text-sm mt-1" style="color:var(--text-secondary)">vSphere estates under change-control — clusters, hosts, licensing reality</p>
+                </a>
+                <a href="/manage-linux-with-ai" class="series-card block">
+                    <p class="font-semibold" style="color:var(--text-primary)">🐧 Manage Linux with AI</p>
+                    <p class="text-sm mt-1" style="color:var(--text-secondary)">The fleet that runs everything — packages, journald, systemd sediment</p>
+                </a>
+                <a href="/manage-windows-with-ai" class="series-card block">
+                    <p class="font-semibold" style="color:var(--text-primary)">🪟 Manage Windows with AI</p>
+                    <p class="text-sm mt-1" style="color:var(--text-secondary)">AD-joined estates — patch reality, GPO drift, service sediment</p>
+                </a>
+                <a href="/manage-servers-with-ai" class="series-card block">
+                    <p class="font-semibold" style="color:var(--text-primary)">⚙️ Manage Servers with AI</p>
+                    <p class="text-sm mt-1" style="color:var(--text-secondary)">Bare metal and fleet reality — firmware, RAID, capacity forecasting</p>
+                </a>
+            </div>
+        </div>
+    </section>
+
     <!-- CTA -->
-    <section class="relative py-20 overflow-hidden" style="background:#0B0F16">
+    <section class="relative py-20 overflow-hidden">
         <div class="section-glow"></div>
         <div class="max-w-3xl mx-auto px-6 text-center relative z-10">
-            <h2 class="text-3xl md:text-4xl font-bold mb-4" style="color:var(--text-primary)">Ready to Manage Infrastructure with AI?</h2>
+            <h2 class="text-3xl md:text-4xl font-bold mb-4" style="color:var(--text-primary)">Ready to Manage Your Infrastructure with AI?</h2>
             <p class="text-lg mb-8" style="color:var(--text-secondary)">Join our beta program. Free for the duration — no credit card required.</p>
             <a href="/#beta" class="btn-brand inline-flex" style="padding:1rem 2rem;font-size:1.0625rem">
                 Get Early Access
@@ -220,11 +324,11 @@
     <footer class="py-12" style="background:#07090E;border-top:1px solid var(--border-subtle)">
         <div class="max-w-7xl mx-auto px-6 text-center">
             <a href="/" class="inline-flex items-center gap-3 mb-4">
-                <img src="vibe-computing-transparent.png" alt="Vibe Computing" class="w-10 h-10">
-                <span class="text-xl font-bold" style="color:var(--text-primary)">Vibe Computing</span>
+                <img src="vibe-computing-transparent.png" alt="Vibe Computing" class="w-8 h-8">
+                <span class="text-lg font-bold" style="color:var(--text-primary)">Vibe Computing</span>
             </a>
-            <p class="text-sm" style="color:var(--text-tertiary)">AI-native infrastructure management. Built for engineers who'd rather describe than configure.</p>
-            <p class="text-sm mt-4" style="color:var(--text-tertiary)">&copy; 2026 TechImbue. All rights reserved.</p>
+            <p class="text-sm mb-6" style="color:var(--text-tertiary)">AI-native infrastructure management. Read-only by default, human-approved changes.</p>
+            <p class="text-xs" style="color:var(--text-tertiary)">© 2026 VibeComputing. All rights reserved. · <a href="/privacy.html" style="color:var(--text-secondary)">Privacy</a></p>
         </div>
     </footer>
 </body>
