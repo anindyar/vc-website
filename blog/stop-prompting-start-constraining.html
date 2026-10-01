@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stop Prompting. Start Constraining. | VibeComputing</title>
+    <meta name="description" content="The trading agent's own post-mortems were brilliant — and changed nothing. What fixed it wasn't feedback, better prompts, or retraining. It was three lines of code that made the wrong trade impossible.">
+    <meta name="keywords" content="AI agents, guardrails, agentic systems, autonomous agents, system design, risk management, LLM constraints">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Stop Prompting. Start Constraining.">
+    <meta property="og:description" content="Its self-critique was flawless. Its behavior didn't change. The fix wasn't feedback — it was structure that made the mistake unaffordable by construction.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://vibecomputing.ai/blog/stop-prompting-start-constraining.html">
+
+    <link rel="canonical" href="https://vibecomputing.ai/blog/stop-prompting-start-constraining.html">
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body class="blog-page">
+    <nav class="navbar">
+        <a href="../index.html" class="nav-logo">VibeComputing</a>
+        <div class="nav-links">
+            <a href="../index.html#features">Features</a>
+            <a href="../index.html#pricing">Pricing</a>
+            <a href="index.html">Blog</a>
+            <a href="/console" class="nav-cta">Get Started</a>
+        </div>
+    </nav>
+
+    <article class="blog-post">
+        <div class="blog-container">
+            <div class="blog-header">
+                <h1>Stop Prompting. Start Constraining.</h1>
+                <p class="blog-meta">Published October 1, 2026 · 6 min read</p>
+                <p class="blog-tags">AI Agents · Guardrails · System Design · Risk</p>
+            </div>
+
+            <div class="blog-content">
+                <p>Here is an uncomfortable thing about autonomous agents: the one I watch over kept a beautiful journal. Every night it graded its own performance against two baselines — what a cash account would have done, and what simply holding the asset would have done. It lost to both, four days straight. It documented every failure mode with receipts: fee accounting that undercounted real costs five to one, a sizing bug that made some trades ten times smaller than intended, a daily loss cap that quietly drifted looser as the account shrank.</p>
+
+                <p>The post-mortems were honest, specific, and correct. And the next day, it went out and made the same class of mistake again.</p>
+
+                <p>That's not a discipline problem. You can't have a discipline problem with a system that has no memory of shame. It's a structural one — and it has a structural fix.</p>
+
+                <h2>Feedback Informs. Structure Enforces.</h2>
+
+                <p>When an agent keeps making the same category of error, the reflexive response is feedback: more detailed instructions, sharper examples, sterner system prompts. Tell it to stop overtrading. Tell it to respect the trend. Tell it to be careful.</p>
+
+                <p>This works about as well as telling a river to stop finding the sea. The agent's mistakes weren't failures of understanding — again, its own reviews were better written than most human trading journals. The mistakes were what the system's structure made <em>affordable</em>. Every wrong trade was available, cheap, and unpunished at the moment it was made. The journal entry came later, and later doesn't vote.</p>
+
+                <p>The fix wasn't to ask harder. It was to make the wrong move either impossible or ruinously expensive — <em>by construction</em>, in code, before the model ever gets asked.</p>
+
+                <h2>Three Constraints That Replaced a Thousand Words</h2>
+
+                <p>The rebuilt agent shipped with three structural changes. None of them involve prompting the model to behave.</p>
+
+                <p><strong>1. The regime gate.</strong> Before, the model was free to go long in a downtrend — and did, twenty-five times, because nothing in its world made direction legible (that story is its own post). Now longs are only reachable above a daily trend line with short-term momentum confirming; shorts only below it. This isn't advice. It's a precondition. The model can want a long all it wants; below the line, the order simply doesn't exist. The single worst failure mode of the previous version is now <em>unexpressible</em>.</p>
+
+                <p><strong>2. Payoff asymmetry by arithmetic.</strong> The old setup risked about $30 to make about $9. At that ratio you need to win more than three trades in four just to break even — the agent won two in five. No amount of prediction quality rescues that geometry; the math eats it. The new spec sets the profit target at a fixed multiple of the risk, minimum two to one, with the stop distance floored as a percentage of price so noise can't collect it. Losing streaks became survivable not because the model got smarter, but because losing got smaller relative to winning.</p>
+
+                <p><strong>3. Escalating cost of repetition.</strong> Stop out of an instrument and re-enter it immediately, and the cooldown clock starts over — four hours minimum before that instrument is tradable again. Combine that with a hard cap on entries per day and loss caps that re-base every day at the account's true value, and the failure loop of yesterday (fourteen consecutive re-entries into the same falling coin) cannot compound. The system's cost of stubbornness now grows with each repetition. That's all discipline ever was, translated from adjective to invariant.</p>
+
+                <h2>The Pattern Generalizes</h2>
+
+                <p>Once you see it, every flaky agent you know is secretly asking for a cage:</p>
+
+                <ul>
+                    <li>The coding agent that retries a failing command five times with identical arguments — it doesn't need better error messages, it needs a retry budget and an argument-change requirement.</li>
+                    <li>The triage agent that never escalates anything — it doesn't need encouragement, it needs an SLA clock that makes non-escalation cost something at decision time.</li>
+                    <li>The summarizer that confidently invents details — it doesn't need a stern tone, it needs an invariant: every claim carries a pointer to its source or it doesn't ship.</li>
+                    <li>The procurement agent that overspends on convenience — it doesn't need a values lecture, it needs approval thresholds priced in the currency of its own budget.</li>
+                </ul>
+
+                <p>In each case the intervention that works is the same shape: find the failure mode, then make that failure mode structurally expensive or structurally unreachable — before the model is consulted. Feedback is for teaching the model what good looks like. Constraints are for guaranteeing bad can't happen regardless of what the model thinks good looks like today.</p>
+
+                <h2>Yes, Constraints Cut Both Ways</h2>
+
+                <p>The honest cost: the regime gate that blocks stupid longs also blocks the occasional brilliant one. Hard payoff ratios forfeit the monster winner that a loose target might have caught. Cooldowns mean sometimes you sit out the V-bottom.</p>
+
+                <p>This is the trade you're making: variance for correctness. An unconstrained agent has a wider outcome distribution in both directions — including the direction where the account is gone by Thursday. A constrained one compresses the left tail, pays a little on the right tail, and survives long enough for the feedback to matter. And here's the part people miss: <strong>cages are adjustable with evidence.</strong> The gate can widen after a hundred clean trades. The blown account doesn't get a hundred trades.</p>
+
+                <p>Loosen structure when the data earns it. Never loosen it because the model asked nicely.</p>
+
+                <h2>Takeaways</h2>
+
+                <ul>
+                    <li><strong>Self-critique without self-constraint is theater.</strong> An agent that documents its failures beautifully and repeats them anyway isn't broken — it's telling you the failure is affordable. Change the price.</li>
+                    <li><strong>Make the worst failure unexpressible.</strong> For your system's single most expensive mistake class, don't reduce the probability — remove the possibility. Preconditions beat probations.</li>
+                    <li><strong>Check the arithmetic before the intelligence.</strong> If the payoff geometry requires a win rate the system has never shown, better predictions are the wrong line item to fix first.</li>
+                    <li><strong>Repetition should cost more each time.</strong> Cooldowns, budgets, and caps are how you turn "be careful" into a mechanism the system can't argue with.</li>
+                    <li><strong>Constraints are data-driven, not ego-driven.</strong> Tighten from evidence of failure; loosen from evidence of discipline. Both directions need receipts, and only one of them risks ruin if you're wrong.</li>
+                </ul>
+
+                <h2>The Cage Builds Itself</h2>
+
+                <p>The quiet coda: the best constraints in this story weren't imposed from outside. The daily caps, the re-basing, the fee truth — the agent's own nightly reviews proposed them, one honest line at a time. It diagnosed everything except the authority to make its diagnoses binding. That's the missing layer in most agent architectures: a path from <em>what the system learns about itself</em> to <em>what the system is no longer allowed to do</em>, without a human in the loop.</p>
+
+                <p>Prompt engineering is the art of asking well. Systems engineering is the art of making the ask unnecessary. The second one wins, because it's still standing on the days the model has a bad opinion — and every model has those days.</p>
+
+                <p>Stop prompting. Start constraining. And let the constraints keep the score.</p>
+            </div>
+        </div>
+    </article>
+</body>
+</html>
