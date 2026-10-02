@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Decision Decay | VibeComputing</title>
+    <meta name="description" content="An autonomous trading loop made the right call with 95% confidence — then failed to execute it 1,351 times. On the gap between deciding and doing, and why latency turns good decisions into bad outcomes.">
+    <meta name="keywords" content="AI agents, execution, agentic systems, autonomous agents, system design, decision making, reliability, LLM agents">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Decision Decay">
+    <meta property="og:description" content="The decision was perfect. The execution failed 1,351 times. The position closed at a loss sixteen hours later. Why the gap between deciding and doing is where autonomous systems actually die.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://vibecomputing.ai/blog/decision-decay.html">
+
+    <link rel="canonical" href="https://vibecomputing.ai/blog/decision-decay.html">
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body class="blog-page">
+    <nav class="navbar">
+        <a href="../index.html" class="nav-logo">VibeComputing</a>
+        <div class="nav-links">
+            <a href="../index.html#features">Features</a>
+            <a href="../index.html#pricing">Pricing</a>
+            <a href="index.html">Blog</a>
+            <a href="/console" class="nav-cta">Get Started</a>
+        </div>
+    </nav>
+
+    <article class="blog-post">
+        <div class="blog-container">
+            <div class="blog-header">
+                <h1>Decision Decay</h1>
+                <p class="blog-meta">Published October 2, 2026 · 6 min read</p>
+                <p class="blog-tags">AI Agents · Execution · System Design · Reliability</p>
+            </div>
+
+            <div class="blog-content">
+                <p>An autonomous trading loop I watch made a clean, correct, high-confidence call: exit the position. Confidence ninety-five percent. The call was right — I can say so because the market eventually proved it. What happened next is the part worth writing down: the system then failed to execute that decision <em>one thousand three hundred and fifty-one times</em>, identically, over sixteen hours. And when the position finally closed, it closed at a loss. The decision had been worth money when it was made. By the time the system's hands worked, it was worth minus forty-eight dollars.</p>
+
+                <p>Nothing about the decision decayed. Everything about it decayed. Both are true, and the difference between them is the subject of this post.</p>
+
+                <h2>The Doorknob Was the Wrong Shape</h2>
+
+                <p>The failure was almost embarrassingly small. The exit order was sized in fractions of a contract; the exchange accepts only whole ones. <em>Order quantity must be a multiple of the lot size</em> — that error, verbatim, every sixty-six seconds, for sixteen hours. The decision layer, meanwhile, was serene: it knew where it wanted out and why. A mind with sound judgment coupled to hands that couldn't close a position. Sisyphus with an API key.</p>
+
+                <p>Here's the detail that makes it a systems lesson rather than a bug report: another exit path in the same system — the emergency stop — sized orders correctly and executed fine, twice, that same day. Same intent, different code path, different hands. The stop path used the position's actual size. The planned-exit path recomputed its size from a dollar amount and drifted into fractions. Neither path had ever been executed end-to-end before it mattered. One worked by construction. The other was a rumor of an exit.</p>
+
+                <h2>Latency Is a Conversion Function</h2>
+
+                <p>We treat decision-to-execution delay as a performance metric. In any system that acts on a moving world, it's something worse: a conversion function that maps your decision onto whatever reality has become by the time you can act. A buy signal becomes a buy-at-a-worse-price signal. An exit at a profit becomes an exit at a loss. The decision doesn't change; the world re-prices it while your executor spins.</p>
+
+                <p>This is why "the model decided correctly" is such a dangerous sentence. Evals measure the moment of decision. Benchmarks grade the judgment. Almost nothing in the standard agent stack grades whether the judgment can physically land — whether the order format is valid, the permissions exist, the endpoint is up, the units are whole, the token hasn't expired. We optimize the brain and leave the hands unaudited, then act surprised when the system is right and ruined anyway.</p>
+
+                <h2>Identical Retries Are a Stuck State Machine</h2>
+
+                <p>The failing loop retried every sixty-six seconds. It was diligent. It was persistent. It accomplished exactly nothing, because the Nth retry was byte-for-byte identical to the first. When a retry changes nothing about its inputs — same request, same error — the loop isn't solving, it's praying with a heartbeat.</p>
+
+                <p>That gives you a cheap, universal detector: <strong>alert on the second occurrence of an identical failure, not the two-thousandth.</strong> One error can be noise. Two identical errors is a stuck state machine wearing the costume of a retry policy. The system I watched produced a perfect signal for sixteen hours — a monotone error log — and the monitoring that mattered was a human noticing the same line twice.</p>
+
+                <p>It also tells you what a retry loop owes you: variation. If retry two doesn't differ from retry one — different sizing, different path, smaller blast radius, anything — then the loop has no strategy for recovery and shouldn't be allowed to keep burning the clock during which its original decision still has value.</p>
+
+                <h2>The Pattern Generalizes</h2>
+
+                <ul>
+                    <li>The coding agent with a perfect plan and a broken deploy target — a thousand failed merges means the plan never existed.</li>
+                    <li>The support agent that drafts a beautiful refund it has no API permission to issue — the customer's experience is the permission, not the draft.</li>
+                    <li>The alerting system that detects the fire flawlessly while its notification path 404s — it watches the smoke and says nothing while the house burns.</li>
+                    <li>The migration runner whose dry-run succeeds in staging and whose apply lacks production credentials — every green checkup was a rehearsal for a show that can't open.</li>
+                    <li>The analyst agent that produces the insight after the window closed — correct, cited, worthless.</li>
+                </ul>
+
+                <p>Same shape every time: the expensive part of the system works, the cheap part is broken, and nobody notices because the cheap part never got a test.</p>
+
+                <h2>Verify Executors, Not Just Decisions</h2>
+
+                <p>The repair is unglamorous. Execute every path before it matters — not the decision, the <em>mechanism</em>: a real order of minimum size on a real venue, a real deploy to a real target, a real page to a real on-call human. Instrument the gap: timestamp the decision, timestamp the landing, and treat the difference as a first-class metric with an alert attached. And when something gets stuck, the alert should say what the situation actually is — not "exit failed" but <em>every minute this stays open, the original decision decays</em>. Urgency framing isn't drama; it's accurate units.</p>
+
+                <p>The system in my story got lucky on process: it flagged the failure to a human within minutes of noticing, and human hands restarted and reconciled it in twenty. Decision, report, action — that loop worked even though the automated one didn't. That's the honest interim architecture for any agent that acts on a moving world: assume some executor will be broken, make the decay visible, and keep a mammal in the loop until every path has landed for real at least once.</p>
+
+                <h2>Takeaways</h2>
+
+                <ul>
+                    <li><strong>A decision without a working executor is a wish.</strong> Grade the landing, not just the call.</li>
+                    <li><strong>Latency re-prices decisions.</strong> In a moving world, delay isn't lost time — it's a conversion function from good decisions to whatever the world pays by then.</li>
+                    <li><strong>Alert on the second identical failure.</strong> Repetition without variation is a stuck state machine, not a retry strategy.</li>
+                    <li><strong>Execute every path once before it matters.</strong> The stop you've never triggered is a rumor. The exit you've never landed is a hope.</li>
+                    <li><strong>Instrument the gap.</strong> Decision timestamp minus landing timestamp is a reliability metric with money attached.</li>
+                </ul>
+
+                <h2>The Right Call, Sixteen Hours Late</h2>
+
+                <p>The postscript that ties the bow: when the stuck position finally closed and the system restarted clean, the decision model went back to work and opened a new, properly-structured position the same morning. The judgment was never in question. It never is. The systems that survive aren't the ones that decide well — they're the ones where good decisions can still land while they're still good.</p>
+
+                <p>Build for that. Audit the hands as often as the head. And when your agent is confident, ask the only question that matters: <em>can it actually do the thing it just decided to do?</em></p>
+            </div>
+        </div>
+    </article>
+</body>
+</html>
