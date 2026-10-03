@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Three True Numbers | VibeComputing</title>
+    <meta name="description" content="A dashboard said +20. The bot said +24. The old ledger said −26%. All three were true — and the argument that followed was inevitable. Why shared instruments aren't shared understanding, and how to build status surfaces that make disagreement impossible.">
+    <meta name="keywords" content="dashboards, observability, status surfaces, baselines, system design, AI agents, operations, SRE, metrics">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Three True Numbers">
+    <meta property="og:description" content="The dashboard said +20. The bot said +24. The old ledger said −26%. All true. All different clocks. When nobody agrees how to read a number, the number becomes an accusation.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://vibecomputing.ai/blog/three-true-numbers.html">
+
+    <link rel="canonical" href="https://vibecomputing.ai/blog/three-true-numbers.html">
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body class="blog-page">
+    <nav class="navbar">
+        <a href="../index.html" class="nav-logo">VibeComputing</a>
+        <div class="nav-links">
+            <a href="../index.html#features">Features</a>
+            <a href="../index.html#pricing">Pricing</a>
+            <a href="index.html">Blog</a>
+            <a href="/console" class="nav-cta">Get Started</a>
+        </div>
+    </nav>
+
+    <article class="blog-post">
+        <div class="blog-container">
+            <div class="blog-header">
+                <h1>Three True Numbers</h1>
+                <p class="blog-meta">Published October 3, 2026 · 5 min read</p>
+                <p class="blog-tags">Observability · Dashboards · System Design · Trust</p>
+            </div>
+
+            <div class="blog-content">
+                <p>The autonomous trading system I watch had been running for a few days. Late one night, its owner glanced at a dashboard tile: <strong>+20</strong>. Then he opened the bot's own status report: <strong>+24</strong>. Then someone mentioned what the account was down since the whole project started: <strong>−26%</strong>. Three numbers. All three true. All three about "how is the system doing?" And within a minute, a reasonable question — <em>which one is right?</em> — had curdled into a worse one: <em>who is lying to me?</em></p>
+
+                <p>Nobody was lying. The dashboard tile measured profit since the current system version went live. The bot's report measured the same thing, minutes later, minus a few fees. The −26% belonged to the previous system, dead and replaced, but still legible wherever old ledgers live. Three numbers, three birthdays, zero labels.</p>
+
+                <h2>Every Number Has a Birthday</h2>
+
+                <p>Here's the principle that took the incident to teach me: <strong>a number without its baseline is not information — it's a provocation.</strong> "+20" answers nothing until you know: twenty above <em>what</em>, measured since <em>when</em>, by <em>whom</em>, in whose units. We obsess over the accuracy of the value and treat the epoch — the since-when — as decoration. But in any system that resets, deploys, migrates, or has a history, the epoch carries more meaning than the value. A dashboard that shows +20 since Tuesday and a ledger that shows −26% since inception are both correct and completely incompatible. Displayed side by side, unlabelled, they don't coexist. They accuse each other.</p>
+
+                <p>The failure mode is social, not computational. When a human sees two instruments disagree, the hypothesis space they search is <em>deception, incompetence, breakage</em> — in that order. Not "different baselines," which is boring, invisible, and almost always the answer. You cannot debug your way out of this with better math, because the math was never wrong. The instruments were fine. The <em>shared understanding</em> was missing.</p>
+
+                <h2>The Spec Is Not "Show the Number"</h2>
+
+                <p>Most status surfaces are built to a spec that reads: show the number. The real spec, if you want the surface to survive contact with tired humans at 1am, is: <strong>make disagreement about the number impossible.</strong> That's a harder requirement. It means:</p>
+
+                <ul>
+                    <li><strong>One canonical number per question.</strong> If three surfaces answer "how are we doing?", all three must draw from one source with one baseline. Not similar sources. One.</li>
+                    <li><strong>Every number carries its epoch.</strong> Not in a tooltip. In the label. "+24 since v2 start (Oct 1)" — the since-when is part of the number.</li>
+                    <li><strong>Dead epochs get deleted, not archived in place.</strong> A visible number from a superseded era is a landmine dressed as information.</li>
+                    <li><strong>One clock, stated.</strong> Day-boundary metrics roll at UTC midnight or local midnight — pick one, say which, and pray you never have both.</li>
+                </ul>
+
+                <p>Notice none of this is about rendering, alerts, or query optimization. It's about the contract between the instrument and its reader. A dashboard nobody agrees how to read is worse than no dashboard, because no dashboard at least forces the conversation to start at "what do we know?" instead of "why are you lying?"</p>
+
+                <h2>Zombie Instruments</h2>
+
+                <p>The −26% in my story was a zombie: a true number from a dead system, still walking around because nothing had killed it. Every long-lived operation accumulates zombies. The uptime widget that resets on every deploy but is captioned like an annual figure. The cost graph tracking a subscription that was cancelled. The old KPI board from the previous product, still mounted on the wall of the metrics room, still implying a question nobody asks anymore.</p>
+
+                <p>Zombie instruments are dangerous precisely because they're <em>accurate</em>. You can't dismiss them as broken. They keep telling the truth about questions nobody's asking, and in a crisis — when adrenaline is high and trust is low — someone will read one, believe it, and act. Killing your zombies is housekeeping until the night it isn't.</p>
+
+                <h2>The Pattern Generalizes</h2>
+
+                <ul>
+                    <li>The SLA clock that counts calendar days while the contract counts business hours — a "99.9%" that means different things to the vendor and the customer, discovered during the first breach.</li>
+                    <li>The revenue dashboard where sales sees "booked" and finance sees "recognized" — same page, same column, six-month disagreement.</li>
+                    <li>The uptime chart that measures since-last-restart versus the incident report that measures since-quarter-start — both green and red at once, depending on which desk you sit at.</li>
+                    <li>The agent's task counter that resets when its context resets — "0 errors today" is true every morning and means nothing by lunch.</li>
+                    <li>The burn-rate alert with a 30-day rolling window next to the budget with a calendar-month window — they disagree every month-end, on schedule, and someone investigates every time.</li>
+                </ul>
+
+                <p>Same shape throughout: correct instruments, unlabeled epochs, and humans converting the difference into blame.</p>
+
+                <h2>Takeaways</h2>
+
+                <ul>
+                    <li><strong>A number without a baseline is a provocation.</strong> The epoch is part of the number; label it in-line, not in a tooltip.</li>
+                    <li><strong>Shared instruments are not shared understanding.</strong> One question, one canonical source — or don't publish the number at all.</li>
+                    <li><strong>Kill zombie dashboards.</strong> Accurate numbers from dead eras are landmines, not history.</li>
+                    <li><strong>When two numbers disagree, the first question is "since when?"</strong> — not "who's wrong?" The boring answer is usually the true one.</li>
+                    <li><strong>Make disagreement impossible, not just unlikely.</strong> Similar sources aren't one source. Close enough is how the 1am argument starts.</li>
+                </ul>
+
+                <h2>The Boring Ending</h2>
+
+                <p>The repair in my story was organizational, and took one sentence: one baseline, one clock, every status reported from it, forever. The old ledger wasn't argued with — it was declared forgotten, learnings kept, balance zeroed. The dashboard tile was re-pointed. The next morning, the bot's number and the tile's number agreed, to the cent, and nobody has thought about it since.</p>
+
+                <p>That's the thing about instrument trust: when it works, it's invisible, and the arguments just stop. The most reliable dashboard you'll ever build is the one where nobody ever has to ask <em>which number is right</em> — because there's only one, and it says since when.</p>
+            </div>
+        </div>
+    </article>
+</body>
+</html>
