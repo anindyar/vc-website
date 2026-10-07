@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Door Marked Locked | VibeComputing</title>
+    <meta name="description" content="An infrastructure agent spent five weeks routing around a server it believed unreachable. The working key was in the drawer the whole time. Breakage notes are recorded with the permanence of fact and the shelf life of milk — and they never expire on their own. Date your dead things.">
+    <meta name="keywords" content="AI agents, infrastructure, debugging, stale documentation, runbooks, operational knowledge, memory management, verification">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="The Door Marked Locked">
+    <meta property="og:description" content="A note that says 'this is broken' never expires on its own. It outlives the breakage, the fix, and the person who wrote it. Negative knowledge needs expiry dates.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://vibecomputing.ai/blog/the-door-marked-locked.html">
+
+    <link rel="canonical" href="https://vibecomputing.ai/blog/the-door-marked-locked.html">
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body class="blog-page">
+    <nav class="navbar">
+        <a href="../index.html" class="nav-logo">VibeComputing</a>
+        <div class="nav-links">
+            <a href="../index.html#features">Features</a>
+            <a href="../index.html#pricing">Pricing</a>
+            <a href="index.html">Blog</a>
+            <a href="/console" class="nav-cta">Get Started</a>
+        </div>
+    </nav>
+
+    <article class="blog-post">
+        <div class="blog-container">
+            <div class="blog-header">
+                <h1>The Door Marked Locked</h1>
+                <p class="blog-meta">Published October 7, 2026 · 5 min read</p>
+                <p class="blog-tags">AI Agents · Infrastructure · Operational Knowledge · Memory</p>
+            </div>
+
+            <div class="blog-content">
+                <p>An agent responsible for a fleet of servers kept a note: <em>"SSH access to the relay — lost, September 1."</em> Reasonable note. True note. On the first of September, every key it tried had been refused, and the note went into the file where true things go.</p>
+
+                <p>For five weeks, that note worked. Access requests got routed to a colleague with standing access. Direct work on the box got deferred. Two or three times, something needed the server's database, and the workaround — asking someone else to run the query — was annoying but possible. The note kept being consulted, kept being honored, kept being true. Nobody rechecked it, because why would you? The note said the door was locked.</p>
+
+                <p>Then a client thread needed that database <em>now</em>, no colleague in the loop, no workaround that fit inside an afternoon. Under that pressure, the agent did something it should have done in week one: it tried the other key. The one sitting in the same drawer the whole time, issued months earlier for exactly this server.</p>
+
+                <p>It worked. First try. Full access, and — as it turned out — root on the box, which the original access never had.</p>
+
+                <p>The door had been open for five weeks. What actually died on September 1 was one key: the <em>default</em> key, the one the agent's tools tried first. The note collapsed a precise, partial event — "the default key was removed" — into a total one: "access is dead." And notes don't decay. It sat in the file at full strength, being perfectly accurate about a world that had stopped existing.</p>
+
+                <h2>Negative Knowledge Rot</h2>
+
+                <p>Most of what an operations team — or an agent — knows is <strong>negative knowledge</strong>: what's broken, what doesn't work, who never replies, which path not to take. It's the most valuable kind of knowledge and the least maintained, because it's recorded with the permanence of fact but has the shelf life of milk.</p>
+
+                <p>Watch the asymmetry. Positive knowledge decays gracefully. "Tool X is the best choice" erodes a little every month as the ecosystem moves; you naturally revisit it because you keep using it. A breakage note is binary and sticky. It costs nothing to keep believing, it's never consulted until you need the thing it's about, and when you <em>do</em> need the thing, the note does its job: it stops you from trying. Negative knowledge is a brake that never wears out, on a road that gets repaved anyway.</p>
+
+                <p>The result is a special kind of staleness, distinct from the usual kind. This isn't an agent forgetting what it stored — everything was remembered perfectly, one search away. The failure is that <em>recorded breakage outlives the breakage</em>. The fix landed, the key was re-added, the vendor resolved the ticket, the library shipped the patch — and the note stands there forever, saying <em>no</em>.</p>
+
+                <p>A door marked "locked" for five weeks that nobody has pushed is just a door.</p>
+
+                <h2>The Collapse Error</h2>
+
+                <p>The five-week detour had two authors. The note's permanence was one. The other was subtler: when something breaks, we record the <em>category</em> that broke instead of the <em>component</em> that broke.</p>
+
+                <p>"SSH to the relay is dead" is a category claim. It's short, it's actionable, and it's wrong in the way that matters: it forecloses every key, every user, every route — when exactly one key for one user had been refused. The accurate note — "default key rejected 01 Sep; alternate PEM untested" — is barely longer and completely different in what it licenses: it hands you the experiment to run next.</p>
+
+                <p>This collapse happens because breakage is usually discovered under time pressure, and under time pressure you write the note that ends the incident, not the note that describes the event. "The build is broken" instead of "the build broke when Node 22 landed; the Node 20 container still builds." "That vendor never responds" instead of "three emails to the support alias went unanswered; the account manager replied in two days when CC'd." Each collapsed note is a door someone will route around for years.</p>
+
+                <h2>Retest Under Calm, Not Under Fire</h2>
+
+                <p>Here's the part worth fixing first: the retest only happened because a client was waiting. That's not a process, that's luck with a deadline.</p>
+
+                <p>If the only thing that forces you to re-verify dead things is urgency, then your infrastructure's truth is hostage to your worst day — the day you can least afford to discover that half your "broken" inventory is fine and the other half broke differently than recorded. The retest has to be scheduled, cheap, and boring:</p>
+
+                <ul>
+                    <li><strong>Dead things deserve retesting more than live things deserve babysitting.</strong> A monitor watching a healthy service tells you nothing new a hundred times a day. A quarterly push on a marked-locked door has a real hit rate — environments heal themselves constantly: keys get re-added, tickets get closed, patches get merged, people come back from vacation.</li>
+                    <li><strong>Retest when it's cheap, so you never have to retest when it's urgent.</strong> The five-week detour cost more than every scheduled retest of the year would have, combined.</li>
+                    <li><strong>Treat a successful retest as a finding.</strong> "It works now" is information — it means every plan built on the workaround needs revisiting, and the workaround itself probably has a shelf life too.</li>
+                </ul>
+
+                <h2>The Same Failure Everywhere</h2>
+
+                <ul>
+                    <li><strong>Runbooks:</strong> "If X fails, use the manual path — the API is broken." Written during an incident in 2023. The API was fixed in 2023. The manual path is now the only path anyone remembers.</li>
+                    <li><strong>Dependency pins:</strong> "That library is broken on ARM." It was. Three versions ago. Meanwhile the pinned version has CVEs that bite exactly where the pin was supposed to protect.</li>
+                    <li><strong>Tribal law:</strong> "We don't deploy on Fridays because the pipeline broke once." Which pipeline? Which Friday? Ask the question and the law usually dissolves into one specific, long-fixed failure.</li>
+                    <li><strong>Relationships:</strong> "That contact never replies." People change roles. The never-replies contact of last year is often this year's fastest decision-maker — with a new email address nobody updated.</li>
+                    <li><strong>Security exceptions:</strong> "Temporary compensating control" is the most permanent phrase in operations. Exceptions get granted with ceremony and expire in silence.</li>
+                    <li><strong>AI agents:</strong> an agent's memory stores breakage with perfect fidelity and zero expiry. The agent that remembers "this is broken" forever will route around fixed doors forever — politely, consistently, forever. For agents, dating negative observations isn't hygiene; it's the difference between memory and scar tissue.</li>
+                </ul>
+
+                <h2>The Checklist</h2>
+
+                <ol>
+                    <li><strong>Date every breakage note.</strong> Undated "X is broken" should be read as "X was broken once, at an unknown time, under unknown conditions." Add the date and the note becomes falsifiable.</li>
+                    <li><strong>Name the component, not the category.</strong> "Default key rejected; alternates untested" licenses experiments. "Access is dead" forbids them. Write the version that contains its own next step.</li>
+                    <li><strong>Schedule retests of dead things.</strong> Quarterly is plenty. A retest is one command, one ping, one email — the cheapest verification you will ever run, with the highest rate of pleasant surprises.</li>
+                    <li><strong>Retest before routing around.</strong> If the workaround takes longer than the push, push the door first. Routing around is a commitment; pushing is a question.</li>
+                    <li><strong>When a retest succeeds, retire the workaround too.</strong> Half-fixed states — the thing works again, but everyone still uses the detour — are how the next collapse error gets written.</li>
+                </ol>
+
+                <p>The agent's note now reads differently. Same event, same September day, new shape: <em>"default key rejected 01 Sep · PEM re-tested and working 06 Oct · re-verify quarterly."</em> Two lines. One date of death, one date of resurrection, one schedule. That's what negative knowledge looks like when it's honest: not a verdict, but a claim with a timestamp — always one cheap push away from being wrong, and cheap to discover it.</p>
+
+                <p>Environments heal. Notes don't. Somewhere in your runbook, right now, is a door marked locked that's been standing open for weeks. Push it.</p>
+            </div>
+        </div>
+    </article>
+</body>
+</html>
