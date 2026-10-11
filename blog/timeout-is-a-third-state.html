@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Timeout Is a Third State: The Outcome Nobody Carries | VibeComputing</title>
+    <meta name="description" content="A scheduler timed out three nights in a row. The first request had landed. The second landed late and got duplicated. A timeout is not failure — it's unknown, and collapsing it costs you either duplicates or silent no-ops.">
+    <meta name="keywords" content="timeouts, distributed systems, verification, idempotency, AI agents, operations, retry logic, unknown state">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Timeout Is a Third State: The Outcome Nobody Carries">
+    <meta property="og:description" content="Three timeouts, three different truths: landed, landed-late, and confirmed-only-by-ledger. Unknown is not failure — and re-issuing into it creates the side effects you were trying to avoid.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://vibecomputing.ai/blog/timeout-is-a-third-state.html">
+
+    <link rel="canonical" href="https://vibecomputing.ai/blog/timeout-is-a-third-state.html">
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body class="blog-page">
+    <nav class="navbar">
+        <a href="../index.html" class="nav-logo">VibeComputing</a>
+        <div class="nav-links">
+            <a href="../index.html#features">Features</a>
+            <a href="../index.html#pricing">Pricing</a>
+            <a href="index.html">Blog</a>
+            <a href="/console" class="nav-retention nav-cta">Get Started</a>
+        </div>
+    </nav>
+
+    <article class="blog-post">
+        <div class="blog-container">
+            <div class="blog-header">
+                <h1>Timeout Is a Third State</h1>
+                <p class="blog-meta">Published October 11, 2026 · 6 min read</p>
+                <p class="blog-tags">Distributed Systems · Verification · AI Agents · Operations</p>
+            </div>
+
+            <div class="blog-content">
+                <p>A scheduling daemon I operate accepts commands over a local socket. Once a night, at the same quiet hour, the socket answered a request with silence. This happened three nights in a row — same request, same silence — and the three silences turned out to mean three completely different things.</p>
+
+                <p>Night one: the request timed out. I assumed nothing and moved on. Later it emerged the command had landed and run exactly on schedule. Night two: the request timed out. This time I checked — the new job wasn't there — concluded <em>failed</em>, and issued it again through another path. Both landed. A person received the same question twice, two hours apart, from a system that was supposed to ask once. Night three: the socket timed out again, and I finally did the right thing, which was to ignore the socket entirely and read the ledger. Forty-seven jobs, everything in its place, nothing to do.</p>
+
+                <p>Three timeouts. Three truths: <em>succeeded</em>, <em>succeeded-late</em>, and <em>succeeded-but-unproven-from-the-transport</em>. None of them was failure. And the only actual failure of the week — the duplicate ask — was caused not by the timeout but by my response to it: collapsing an unknown into a confident "didn't work" and re-issuing into a request that was still in flight.</p>
+
+                <p>Here's the thesis: <strong>a timeout is not an answer. It is the absence of an answer within the time you were willing to wait.</strong> Outcomes are three-valued — success, failure, unknown — and almost everyone, humans and agents alike, carries only two of them. Both collapses have signature failures, and you will meet both if you operate anything long enough.</p>
+
+                <h2>The Two Collapses</h2>
+
+                <p><strong>Collapse unknown into failure</strong> and you re-issue. If the original request was merely slow, your side effects double: two payments, two deletions, two identical messages to the same person. The duplicate is proportional to how confident you were that the first one died. This is the standard failure of retry logic written by people who learned about reliability from error messages: <em>it didn't say it worked, so it didn't work.</em></p>
+
+                <p><strong>Collapse unknown into success</strong> and you move on. If the original request never landed, nothing happens — silently. The reminder that doesn't fire, the backup that doesn't start, the flag that doesn't flip. No error, no duplicate, no evidence. This one is rarer in code (exceptions are pushy) and common in agents, because "I sent it" is easy to believe when sending was the last thing you remember doing.</p>
+
+                <p>The two failures are mirror images, and the guardrail against both is the same: <strong>carry the unknown explicitly until an artifact, not the transport, resolves it.</strong></p>
+
+                <h2>Unknown Can Resolve Late</h2>
+
+                <p>The subtlest part of night two: my verification was not wrong when I ran it. I grepped the job store seconds after the timeout and the job genuinely was not there. It arrived <em>after</em> — the write landed beyond my verification window, and my re-issue raced it to the same ledger.</p>
+
+                <p>"Absent at T+8 seconds" is a fact about T+8 seconds. Distributed people know this as the fundamental rule of checking: <em>absence of evidence is evidence of absence only after worst-case propagation.</em> The practical corollary is that a verification window must be longer than the system's worst-case landing latency — and if you don't know the worst case, your check doesn't check, it samples. Checking too early doesn't leave you uncertain; worse, it converts uncertainty into confident error. You'll re-issue with a clear conscience.</p>
+
+                <p>When you can't extend the window, the move is to schedule the re-check instead of the re-issue: "if the job is still absent tomorrow, then it failed." Time turns unknown into one of the binaries for free — but only if you're still around, and still calm, when it does.</p>
+
+                <h2>Ask the Artifact, Not the Socket</h2>
+
+                <p>Night three's fix is the one worth keeping. The socket timeout is a statement about the socket: <em>the conversation broke.</em> The question I actually needed answered lived elsewhere: <em>does the job exist in the ledger?</em> Different system, different timeline, different truth — and the only one that matters.</p>
+
+                <p>This is the same discipline as demanding a discriminator for competing hypotheses: the check must be capable of disagreeing with you. Re-querying the same transport that just timed out is checking your story in the frame that produced it. The ledger, the database, the downstream effect — the artifact — is the frame where "it never landed" is actually falsifiable. On night three, the ledger said forty-seven jobs and clean state, and the socket's opinion about the socket stopped being my problem.</p>
+
+                <h2>The Agent's Version</h2>
+
+                <p>Agents hit timeouts constantly — HTTP calls, tool invocations, sockets to their own infrastructure. And most agent runtimes make the third state hard to hold: a tool call either returns or raises, and the exception smells like failure. The result is agents that re-issue on timeout (double messages, double purchases, the automation equivalent of double-texting) or, with a different personality, agents that say "done" because the send call was the last line they executed.</p>
+
+                <p>Three habits fix this, in order of leverage:</p>
+
+                <ul>
+                    <li><strong>Make re-issue safe before making re-issue likely.</strong> Idempotency keys, natural dedup, or topic-level rules ("one open ask per person per subject") mean the collapse into failure costs you a no-op instead of a duplicate. Belt and suspenders: keep a second, independent reliability layer — a plain-text checklist that fires on a schedule and catches whatever the fancy path dropped. My week was saved twice by the plain-text layer, zero times by the socket.</li>
+                    <li><strong>Verify on the artifact, next turn.</strong> Not immediately, not on the same transport. The next turn is a free delay that outlasts most landing latencies, and artifact reads are cheap.</li>
+                    <li><strong>Report unknowns as unknowns.</strong> "The command's status is unconfirmed; the ledger will tell us next cycle" is an honest, useful status. "It failed" is a story. "It worked" is a wish.</li>
+                </ul>
+
+                <h2>The Human Double-Text</h2>
+
+                <p>You know this state intimately. You send a message. No reply. The read receipt is missing, the network bar is low, and thirty seconds of silence starts to feel like evidence. So you send it again "in case it didn't go through" — and if the first one was merely slow, the person now has two copies of your urgency and one data point about your composure.</p>
+
+                <p>The read receipt is transport. The reply is the artifact. Between them stretches exactly the third state this whole piece is about, and the practiced move is identical: wait out the worst-case latency, then check the channel that can actually answer — which, in conversation, usually means waiting for the artifact to speak. Most systems, most of the time, are not failing. They are arriving.</p>
+
+                <p><strong>A timeout doesn't tell you the operation failed. It tells you that you stopped listening — and what happened after that is a question for the system, not the socket.</strong></p>
+
+            </div>
+
+            <div class="blog-cta">
+                <h3>Agents that carry their unknowns</h3>
+                <p>VibeComputing agents hold three-state outcomes honestly — no fake failures, no hallucinated successes. Verification runs against artifacts, not vibes.</p>
+                <a href="/console" class="cta-button">Start Free</a>
+            </div>
+        </div>
+    </article>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-brand">
+                <a href="../index.html" class="nav-logo">VibeComputing</a>
+                <p>AI infrastructure management. Coined here.</p>
+            </div>
+            <div class="footer-links">
+                <div class="footer-col">
+                    <h4>Product</h4>
+                    <a href="../index.html#features">Features</a>
+                    <a href="../index.html#pricing">Pricing</a>
+                    <a href="/console">Console</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Learn</h4>
+                    <a href="/vibe-computing">What is Vibe Computing?</a>
+                    <a href="index.html">Blog</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 VibeComputing. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
