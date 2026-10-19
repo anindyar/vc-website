@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Eleven-Millisecond Alibi: Timestamps, Sequences, and False Attribution | VibeComputing</title>
+    <meta name="description" content="A model router was accused of ignoring an instruction. The logs looked damning — until someone computed the delta. 11 milliseconds acquits what sequence implicates.">
+    <meta name="keywords" content="attribution, debugging, AI agents, operations, reliability, timestamps, causation, forensics, model routing, concurrent sessions">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="The Eleven-Millisecond Alibi">
+    <meta property="og:description" content="The logs told the truth the whole time. They just were never under oath about who did it. Sequence is not causation — the instrument for ownership questions is a clock.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://vibecomputing.ai/blog/the-eleven-millisecond-alibi.html">
+
+    <link rel="canonical" href="https://vibecomputing.ai/blog/the-eleven-millisecond-alibi.html">
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body class="blog-page">
+    <nav class="navbar">
+        <a href="../index.html" class="nav-logo">VibeComputing</a>
+        <div class="nav-links">
+            <a href="../index.html#features">Features</a>
+            <a href="../index.html#pricing">Pricing</a>
+            <a href="index.html">Blog</a>
+            <a href="/console" class="nav-retention nav-cta">Get Started</a>
+        </div>
+    </nav>
+
+    <article class="blog-post">
+        <div class="blog-container">
+            <div class="blog-header">
+                <h1>The Eleven-Millisecond Alibi</h1>
+                <p class="blog-meta">Published October 19, 2026 · 5 min read</p>
+                <p class="blog-tags">Attribution · Debugging · Operations · AI Agents · Reliability</p>
+            </div>
+
+            <div class="blog-content">
+                <p>Not long ago, a routing layer on a small inference cluster was accused. Its job is simple: read each request, and if it smells like heavy reasoning work, send it to the big model; otherwise, send it to the fast one. A user complained: <em>I told it to think hard, and it still answered with the quick model. The router is ignoring me.</em></p>
+
+                <p>The logs, at first, made the router look guilty. There was the user's message, timestamped 22:07:26.6. And there — the very next model call in the log — a request dispatched to the quick lane at 22:07:26.630. Same second, same order, open-and-shut. The instruction arrived, and the router sent the very next request somewhere dumb.</p>
+
+                <p>Except: the gap between the message landing and the model call was <strong>eleven milliseconds</strong>.</p>
+
+                <p>No chat pipeline on earth turns a human message into a model call in eleven milliseconds. The message has to be received, parsed, queued, wrapped in a session's context, and only then does inference fire. That takes hundreds of milliseconds on a good day. A call 11ms after the message isn't a response to the message. It's a request that was <em>already in flight</em> when the message arrived — from a different session entirely, a background job whose traffic was interleaved in the same log.</p>
+
+                <p><strong>The router didn't ignore anyone. The log entry just wasn't the user's request.</strong></p>
+
+                <h2>Sequence Is Not Attribution</h2>
+
+                <p>Logs are stories, and stories run on sequence: this happened, then that happened, so this caused that. It's the oldest reasoning bug there is — <em>post hoc, ergo propter hoc</em> — and logs are machine-readable generators of it. Two events in order, same file, adjacent lines. The narrative assembles itself, and it feels like evidence.</p>
+
+                <p>But on any system with concurrent traffic — background agents, cron jobs, heartbeats, multiple sessions — the log is an <em>interleaving</em>, not a conversation. Adjacent lines are usually strangers. Before you attribute an observed action to a trigger, you have to answer the question the story quietly skips: <strong>whose request was this?</strong> And that question isn't answered by reading the log louder. It's answered by arithmetic.</p>
+
+                <p>Compute the delta. Ask one question: <em>is this interval physically possible for this pipeline?</em> A model call 11ms after a human message is causally impossible — the chain has more stages than the clock allows. A call 400ms later is plausible. The same two log lines, the same apparent sequence, opposite verdicts — separated by one subtraction.</p>
+
+                <h2>The Clock Is the Instrument for Ownership Questions</h2>
+
+                <p>This is instrument-matching again, but for a question most people never realize they're asking. "What happened?" is a log question. "Why did it happen?" is a mechanism question. But <em>"who did this?"</em> — which request, which session, which trigger — is an <strong>ownership question</strong>, and ownership questions are timing questions. The instrument is a clock.</p>
+
+                <p>The rules of thumb fall out of physics:</p>
+                <p><strong>Sub-100ms after a human action is never a response.</strong> Humans are slow to be heard. Anything that close is parallel traffic — tag it as background and move on.<br>
+                <strong>Two events at the same wall-clock second are probably unrelated.</strong> On a busy box, coincidence per second is high. Suspicion should scale with the <em>specificity</em> of the match, not its adjacency.<br>
+                <strong>Corroborate with an identifier, not a timestamp.</strong> Session ids, request ids, trace ids — a shared id is proof; a shared millisecond is a flirtation.</p>
+
+                <p>Once the 11ms alibi cleared the router, the real work could start: not "did it ignore the instruction" but "when <em>does</em> the instruction work?" That's where the second lesson lives. An hour of log archaeology had produced a hunch about the router's matching rule — and then a controlled experiment nailed it in two minutes: three crafted requests, identical except for one variable at a time. The logs could tell us what <em>had</em> happened; only the repro could tell us what <em>must</em> happen. Mechanism questions want experiments. Ownership questions want clocks. Neither is well served by reading the story again.</p>
+
+                <h2>The Agent Angle</h2>
+
+                <p>Agents are uniquely vulnerable to false attribution, in both directions. Reading logs, an agent inherits sequence-as-causation wholesale: the narrative is pre-assembled, fluent, and arriving with the confidence of a timestamped record. The agent doesn't experience the interleaving — only the interleaved story.</p>
+
+                <p>And when an agent <em>acts</em>, it becomes the confounder: its own background tasks, retries, and scheduled jobs spray requests into the same systems it's diagnosing, manufacturing exactly the coincidences it will later misread. The agent that asks "why did the system do X right after I did Y?" is often the author of X.</p>
+
+                <p>The defense is cheap and mechanical: <strong>before blaming the handler, check whether the request even belongs to the trigger.</strong> Delta first, id second, narrative last. Timestamps are the cheapest forensics an agent owns — no tool calls, no side effects, just subtraction — which makes skipping them especially inexcusable.</p>
+
+                <h2>The Human Version</h2>
+
+                <p>You know this bug intimately. The reply that lands suspiciously fast after your message — drafted in parallel, answering a different message, and you spend an hour offended by an interleaving. The outage that starts the minute after your deploy — and the midnight cron nobody looked at that fires at the same minute. The new hire joins, sales dip, and the story writes itself; the dip started two weeks before the start date, in a different log.</p>
+
+                <p>Every witch hunt in every organization runs on adjacency. The defendant was nearby, in the same file, at the same time. The alibi is almost always available and almost never requested, because the story feels complete without it. Sequence gave you a suspect. Only a delta can give you a culprit.</p>
+
+                <p>The logs told the truth the whole time. They just were never under oath about <em>who</em> did it. Eleven milliseconds of arithmetic acquitted the router — after the narrative had already convicted it. In any system with more than one thing running, that's all of them, the order of events is not a confession. It's an interleaving. Compute before you conclude.</p>
+            </div>
+        </div>
+    </article>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-brand">
+                <a href="../index.html" class="nav-logo">VibeComputing</a>
+                <p>AI infrastructure management. Coined here.</p>
+            </div>
+            <div class="footer-links">
+                <a href="../index.html">Home</a>
+                <a href="index.html">Blog</a>
+                <a href="../pillar/what-is-vibe-computing.html">What is Vibe Computing?</a>
+            </div>
+            <div class="footer-copy">
+                <p>&copy; 2026 VibeComputing. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
