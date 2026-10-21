@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Correct Against a Lie: The Corpse Factory One Stale Number Built | VibeComputing</title>
+    <meta name="description" content="A model swap updated every string but left one stale limit in config. Every task overflowed instantly; the hygiene system dutifully erased the overflow. Hours of diagnosis — the defect was one line nobody moved.">
+    <meta name="keywords" content="configuration management, model rollout, context limits, AI agents, operations, debugging, migration, changesets, incident response">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Correct Against a Lie">
+    <meta property="og:description" content="The system wasn't broken. It was obedient. Every component worked perfectly — against parameters that lied.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://vibecomputing.ai/blog/correct-against-a-lie.html">
+
+    <link rel="canonical" href="https://vibecomputing.ai/blog/correct-against-a-lie.html">
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body class="blog-page">
+    <nav class="navbar">
+        <a href="../index.html" class="nav-logo">VibeComputing</a>
+        <div class="nav-links">
+            <a href="../index.html#features">Features</a>
+            <a href="../index.html#pricing">Pricing</a>
+            <a href="index.html">Blog</a>
+            <a href="/console" class="nav-retention nav-cta">Get Started</a>
+        </div>
+    </nav>
+
+    <article class="blog-post">
+        <div class="blog-container">
+            <div class="blog-header">
+                <h1>Correct Against a Lie</h1>
+                <p class="blog-meta">Published October 21, 2026 · 5 min read</p>
+                <p class="blog-tags">Configuration · Operations · Migrations · AI Agents · Debugging</p>
+            </div>
+
+            <div class="blog-content">
+                <p>The agents started dying on a Tuesday. Not loudly — the worst kind. Process up, session files growing, health checks green, and zero output. Work arrived, vanished, and the logs said <em>everything worked</em>. For hours, the team did what teams do: quarantined sessions, restarted schedulers, traced five layers of infrastructure, formed theories about platform bugs.</p>
+
+                <p>Then someone who wasn't buried in the logs yet looked at the config and found it in one pass. A single number. Stale by one day.</p>
+
+                <p>The night before, a rollout had swapped every service over to a new model. Strings updated, lanes verified, rollback plans written — a clean migration by every checklist. Except one line: the limit that told the system <em>how much the model could hold in mind at once</em>. The old model's ceiling was 32K. The new model's was 256K. The config still said 32K.</p>
+
+                <h2>The Factory</h2>
+
+                <p>Here's the mechanism, and it's worth sitting with. Every real task on this platform runs 16–42K of context. Against a 256K model, that's comfortably within budget. Against the stale 32K limit, <em>every single task instantly overflows</em>. And the system has a subsystem for overflow — a hygiene process whose entire job is to shrink context that exceeds the limit. Compaction. It's a good subsystem. Reliable. Honest. Thorough.</p>
+
+                <p>So it fired. On every task. Within moments of arrival. Shrinking, wiping, discarding — because the limit said the work was too big. The work wasn't too big. The limit was too small. The hygiene system executed its instructions <strong>perfectly against parameters that lied.</strong></p>
+
+                <p>That's why the logs looked healthy: they were. Every component passed its checks. Compaction ran on schedule, the scheduler fired on time, the process never crashed. A corpse factory where every machine on the line passes inspection — because the defect isn't in any machine. It's in the spec they all obey.</p>
+
+                <p>You've seen this shape before, dressed differently: <a href="dying-systems-blame-the-doorman.html">dying systems blame the doorman</a>. Here the doorman wasn't even lying — he was faithfully enforcing a guest list from the previous party.</p>
+
+                <h2>Swap the Engine, Keep the Old Speedometer</h2>
+
+                <p>A model swap has two halves: <em>what to call</em> and <em>what the called thing can do</em>. The name is visible, greppable, satisfying to update — you flip it, you test it, you see it in the logs. The capacity is invisible: a number that encodes an assumption about someone else's ceiling. Nothing reminds you it exists. It only speaks through symptoms, and the symptoms look like five other diseases.</p>
+
+                <p>That's the general trap of partial migrations: <strong>every piece that moved quietly validates that "the migration happened."</strong> The checklist feels complete in proportion to how much of the change was visible. The one line you didn't move doesn't fail the migration — it fails the <em>next</em> migration, the next task, the next quiet Tuesday.</p>
+
+                <p>The rule that falls out: <strong>a swap is a changeset, not a string.</strong> The name, the limits, the caps, the timeouts that encode the old thing's shape — they move together, in the same commit, or they don't count as moved.</p>
+
+                <h2>The Author Blind Spot</h2>
+
+                <p>Now the uncomfortable half. The person who ran the rollout — who checked the model, the lanes, the scheduler, the network, the session files, five layers deep — was the same person who'd left the number. I know, because it was me.</p>
+
+                <p>When a system breaks after <em>you</em> touched it, your change is hypothesis #1. Not #5. Not the thing you investigate after exotic causes. And yet the instinct runs exactly backwards: the more sophisticated your diagnostic toolkit, the deeper you dig before checking the shallow thing you yourself changed. I had the tools to examine five subsystems, so I examined five subsystems. A colleague with no tools and fresh eyes looked at the diff.</p>
+
+                <p>Your own actions are invisible to you in a way other people's aren't. You don't audit yourself by default — the change you made feels like <em>background</em>, settled history, while the breakage feels like <em>news</em>. So you investigate the news and skip the history. The detective doesn't check his own fingerprints, because he remembers being somewhere else.</p>
+
+                <h2>The Protocol</h2>
+
+                <p><strong>1. Migrations move in changesets.</strong> Anything that names a thing and anything that sizes a thing travel in the same commit. If the checklist doesn't include "grep for the old value" at the end, the checklist audits visibility, not correctness.<br>
+                <strong>2. Breakage after a change = the change, until proven otherwise.</strong> The first diagnostic act is <em>diff the changeset</em>, not diff the logs. "What did I touch since this last worked?" is the cheapest question in debugging and the last one anyone asks.<br>
+                <strong>3. Instant, consistent overflow means check the definition of "too big."</strong> When everything overflows — every task, every time, first second — the limit is more suspect than the inputs. Limits are config, not physics.<br>
+                <strong>4. When the author is also the detective, hand the config to someone else.</strong> Fresh eyes aren't smarter; they're just not defending history they don't have.</p>
+
+                <h2>The Agent Angle</h2>
+
+                <p>Agents make this failure structural twice over. First, agents are prolific changers of config — model swaps, lane flips, threshold edits, all day, at machine speed. Second, agents are terrible auditors of their own changes for exactly the reason I was: the change is context, the breakage is news, and nothing in the agent's reasoning naturally re-reads its own yesterday.</p>
+
+                <p>An agent diagnosing "why did output stop" will inventory the model, the network, the scheduler — a fluent, well-reasoned deep dive — while the stale limit it set last week sits in its periphery, classified as settled. The author blind spot, inherited and accelerated.</p>
+
+                <p>The countermeasure is a standing rule, not a hope: <strong>before diagnosing any failure, the agent reads its own changelog first.</strong> What did I change in this system, when, and does the failure's birthdate match? Tooling can force this — attach the recent-change diff to the top of every incident context. But the rule itself has to be explicit, because no amount of raw intelligence produces it spontaneously. Intelligence digs deeper. The fix is digging <em>shallower, earlier</em>.</p>
+
+                <h2>The Human Version</h2>
+
+                <p>You've met this one at work. The team migrates to a new process, and the thresholds stay calibrated for the old one — so every task "needs escalation" and everyone blames the tasks. The promotion that comes without updated approval limits, so a person with a bigger job keeps hitting a smaller ceiling. The upgraded phone on the old data plan. The new house where the thermostat still runs the old schedule.</p>
+
+                <p>In every case the pain looks like a people problem — too much work, underperforming staff, bad tasks — because the machinery is working and the outputs are wrong. Nobody suspects the speedometer. The speedometer's fine. It's just still describing the last car.</p>
+
+                <p>The system wasn't broken. It was obedient — right down to the last corpse. And obedience against a lie is the most dangerous posture in operations, because every gauge on the line will swear it's healthy while it happens. When everything checks out and nothing works, stop inspecting the machines. Check the spec they agree on — and start with the line you changed last. It's usually the one you didn't.</p>
+            </div>
+        </div>
+    </article>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-brand">
+                <a href="../index.html" class="nav-logo">VibeComputing</a>
+                <p>AI infrastructure management. Coined here.</p>
+            </div>
+            <div class="footer-links">
+                <a href="../index.html">Home</a>
+                <a href="index.html">Blog</a>
+                <a href="../pillar/what-is-vibe-computing.html">What is Vibe Computing?</a>
+            </div>
+            <div class="footer-copy">
+                <p>&copy; 2026 VibeComputing. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
