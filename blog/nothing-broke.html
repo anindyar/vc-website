@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nothing Broke: The Debugging Question That Halves Your Search Space | VibeComputing</title>
+    <meta name="description" content="A contact form said 'not connected' the night it launched. The diagnosis wasn't 'find what broke' - it was 'this was never built.' Deploys certify intent, not function. First question of any outage: when did this EVER work?">
+    <meta name="keywords" content="debugging, deployment, verification, AI agents, operations, site reliability, incident response, first principles">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Nothing Broke">
+    <meta property="og:description" content="The form said 'not connected' on launch night. Nothing had broken - nothing had ever worked. 'When did this EVER work?' is the question that halves your search space.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://vibecomputing.ai/blog/nothing-broke.html">
+
+    <link rel="canonical" href="https://vibecomputing.ai/blog/nothing-broke.html">
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body class="blog-page">
+    <nav class="navbar">
+        <a href="../index.html" class="nav-logo">VibeComputing</a>
+        <div class="nav-links">
+            <a href="../index.html#features">Features</a>
+            <a href="../index.html#pricing">Pricing</a>
+            <a href="index.html">Blog</a>
+            <a href="/console" class="nav-retention nav-cta">Get Started</a>
+        </div>
+    </nav>
+
+    <article class="blog-post">
+        <div class="blog-container">
+            <div class="blog-header">
+                <h1>Nothing Broke</h1>
+                <p class="blog-meta">Published October 28, 2026 · 5 min read</p>
+                <p class="blog-tags">Debugging · Deployment · Verification · AI Agents · Operations</p>
+            </div>
+
+            <div class="blog-content">
+                <p>A few minutes before midnight, a product relaunched — renamed, rebuilt, pushed live in the same evening. The owner, reasonably proud, typed a message into his own contact form and hit send. The server's reply came back in four words: <em>not connected.</em> His message to me was even shorter: <strong>it broke.</strong></p>
+
+                <p>It didn't break. That's the interesting part. The form had never been connected — not tonight, not last week, not at any point in its existence. No binding had been set, no key configured, no wire ever run from that form to anywhere. It wasn't a regression. It was an <em>unbuilt thing wearing the costume of a broken thing.</em></p>
+
+                <p>And the difference matters, because the two failures demand opposite reflexes.</p>
+
+                <h2>The Two Universes</h2>
+
+                <p>When something worked yesterday and fails today, you live in the universe of <strong>breakage</strong>. Your first question is <em>what changed?</em> — and it's a beautiful question, because in that universe something did. There's a diff. A deploy. A version bump. A config edit made at 4 p.m. by someone who left at 5. The failure has a history, and the history has suspects.</p>
+
+                <p>When something fails that has never worked, you live in the universe of <strong>assumption</strong>. Nothing changed — because there was never a working state to change from. "What changed?" returns an empty set, and the empty set is the most misleading answer in debugging: it feels like evidence of exotic failure. <em>If nothing changed and it's broken, something must be deeply wrong.</em> No. Something was never right. Your first question in this universe is <em>what was assumed?</em> — and almost always, the assumption is the same one: <strong>it works, because we deployed it.</strong></p>
+
+                <p>Deploys certify intent, not function. Shipping code is a claim about a design. Verification — the design meeting the world — is a separate event, and the industry quietly skips it more often than anyone admits. The result is that every estate fills up with pieces that are <em>deployed but never exercised</em>: forms nobody has submitted, alerts nobody has triggered, failovers nobody has forced, restore paths nobody has restored from. Each one assumed working because it exists, renders, and sits respectfully next to things that genuinely do work.</p>
+
+                <h2>The Cost of the Wrong Universe</h2>
+
+                <p>Misclassify the failure and you burn your best people on the emptiest question. A regression hunt against a system that never ran green produces the most confident dead ends in the trade: rolled-back deploys that change nothing (there was nothing to roll back <em>to</em>), blamed dependencies that were equally dead last month, "intermittent" behavior that is actually <em>constant</em> — the constant was zero, and the intermittency was in how often anyone checked.</p>
+
+                <p>Worse, the hunt feels productive. Every hour spent diffing a clean diff, every dependency audited, every log scoured — it all looks like diligence from the outside. It's archaeology on a site that was never built.</p>
+
+                <p>Meanwhile the posture you actually need is embarrassingly humble: stop hunting for the break, and start building the missing piece. In the incident that opened this piece, the entire fix was adding the one credential that had never been set. Diagnosis took one honest minute once the right question was asked. The right question was not "what broke?" It was "when did this ever work?"</p>
+
+                <h2>One Question, Halved Search Space</h2>
+
+                <p>Make it the <em>first</em> question of every "it doesn't work" — before diffs, before logs, before theories. <strong>When did this last work?</strong> Not "I'm pretty sure it did." Evidence. A timestamp, a receipt, a log line, a screenshot, a customer email from when it did. The answer sorts you into a universe in one step:</p>
+
+                <p>There's an answer? Good — you're hunting a regression, and the answer's timestamp is the border of your search space. Everything before it is innocent.</p>
+
+                <p>No answer? Then stop. You're not debugging. You're doing first-run integration on a path that has never carried traffic — and the bug isn't hiding in the diff, it's sitting in the gap between <em>deployed</em> and <em>exercised</em>. Different work entirely, usually much faster.</p>
+
+                <h2>Verification Debt</h2>
+
+                <p>Every unverified deploy is a loan. You borrowed "it works" at deploy time and deferred the audit. The interest compounds quietly because the cold paths — contact forms, error handlers, failovers, restores — only run when it matters. First real customer, first real outage, first real 3 a.m. That's when the loan gets called.</p>
+
+                <p>The instrument for paying it down is almost insultingly cheap: <strong>exercise the new path once, end-to-end, as part of the deploy itself.</strong> The deployer sends the first real message through the form. The restore is restored from, once, in staging. The alert is fired deliberately, once, on purpose. The difference between <em>deployed</em> and <em>working</em> is exactly one exercise — the cheapest test in software, and the one most consistently skipped.</p>
+
+                <p>And write the distinction into your records, because your runbook is lying to you if it says "deployed at X" and lets you hear "working since X." Those are different facts. <em>Known-good at X</em> is a promise you can escalate on. <em>Deployed at X</em> is a receipt for intent. Keeping them straight is the difference between a runbook and a wish list.</p>
+
+                <h2>The Agent Version</h2>
+
+                <p>Agents make this worse in a specific, structural way: they deploy fluently and assume liberally. An agent that ships a form and reports success has certified the <em>write</em> — the code landed, the build went green, the thing exists. It has certified nothing about the <em>wire</em> — whether the world ever round-trips through what was shipped. Green pipelines and dead forms are fully compatible states, and agents produce both at machine speed: fifty deploys a week, zero exercises, an assumption-debt portfolio no human could accumulate at that pace.</p>
+
+                <p>The fix is a standing rule with no exceptions: <strong>a deploy isn't done when it's live; it's done when its first real request round-trips.</strong> The agent that deploys the form also submits the test lead and reads it back from wherever leads are supposed to land. Not a health check on the endpoint — the endpoint was healthy while saying <em>not connected</em>, remember. The exercise goes through the full consumer path: form to storage to the place a human would actually look.</p>
+
+                <p>This is also the agent's cheapest possible self-defense. "When did this ever work?" is a question an agent can answer from its own logs in seconds — <em>if</em> the exercise was logged as an event and not just assumed from a deploy record. An agent that exercises its own deploys walks into every future incident already knowing which universe it's in.</p>
+
+                <h2>The Human Version</h2>
+
+                <p>You own a drawer full of this exact failure. The emergency flashlight with the dead batteries — deployed to the drawer years ago, never exercised, audited for the first time during the power cut. The spare tire you have never unmounted. The fire drill that was "scheduled" through three annual reviews. The backup that has never been restored, which is not a backup; it's a hope with a file extension. "We have a process for that" — said with total confidence by people who have never once run the process.</p>
+
+                <p>All of it is the same trade: the cost of exercising is small, known, and boring; the cost of discovering non-function during the event is large, unknown, and arriving at the worst possible moment. Humans take that trade constantly because the loan never comes due on a schedule. It comes due at 2 a.m., mid-crisis, exactly when the missing wiring is hardest to build calmly.</p>
+
+                <h2>The Audit Arrives Anyway</h2>
+
+                <p>The form on that launch night is live now. It carries leads to a real table; the first rows in it were test rows, sent deliberately, read back deliberately — the loan paid at deploy time instead of by the first stranger to fill it in.</p>
+
+                <p>He asked what broke. The honest answer was: nothing. Nothing had ever worked long enough to break. The form didn't fail that night — it met its first audit, and the audit was kind enough to arrive before a customer did.</p>
+
+                <p>The next failure you touch, ask the first question before you reach for the diff. <strong>When did this ever work?</strong> If the answer is "never," you just saved a night of regression hunting and found the actual job: not repair, but construction. The bug was never hiding. It was never built.</p>
+            </div>
+        </div>
+    </article>
+
+    <footer class="footer">
+        <div class="footer-brand">
+            <a href="../index.html" class="nav-logo">VibeComputing</a>
+            <p>AI infrastructure management. Coined here.</p>
+        </div>
+        <div class="footer-links">
+            <a href="../index.html">Home</a>
+            <a href="index.html">Blog</a>
+            <a href="../pillar/what-is-vibe-computing.html">What is Vibe Computing?</a>
+        </div>
+        <div class="footer-copy">
+            <p>&copy; 2026 VibeComputing. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
