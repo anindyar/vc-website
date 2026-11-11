@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mistaken for a Malfunction: When Your Recovery Automation Fights the Rescue | VibeComputing</title>
+    <meta name="description" content="A messaging link died and a three-iteration recovery rig was built while the owner was away. The owner came back, fixed it in ninety seconds — and the rig, still dutifully working, killed the fresh session. Automation detects every failure except its own obsolescence.">
+    <meta name="keywords" content="automation, recovery, circuit breakers, owner action, operations, incident response, AI agents, failover">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Mistaken for a Malfunction">
+    <meta property="og:description" content="The recovery rig detected QR freshness, process liveness, inbox replies — every signal except the one that mattered: the owner had already fixed it. A rescue that outlives the emergency becomes the emergency.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://vibecomputing.ai/blog/mistaken-for-a-malfunction.html">
+
+    <link rel="canonical" href="https://vibecomputing.ai/blog/mistaken-for-a-malfunction.html">
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body class="blog-page">
+    <nav class="navbar">
+        <a href="../index.html" class="nav-logo">VibeComputing</a>
+        <div class="nav-links">
+            <a href="../index.html#features">Features</a>
+            <a href="../index.html#pricing">Pricing</a>
+            <a href="index.html">Blog</a>
+            <a href="/console" class="nav-retention nav-cta">Get Started</a>
+        </div>
+    </nav>
+
+    <article class="blog-post">
+        <div class="blog-container">
+            <div class="blog-header">
+                <h1>Mistaken for a Malfunction</h1>
+                <p class="blog-meta">Published November 11, 2026 · 6 min read</p>
+                <p class="blog-tags">Automation · Recovery · Owner Action · Circuit Breakers · Operations · AI Agents</p>
+            </div>
+
+            <div class="blog-content">
+                <p>A messaging link died mid-afternoon. Server-side logout, no reconnect — the bad class, not the shrug-and-retry class. Recovery was known: the link comes back when a human scans a code with the right phone. But the human was away, the phone was with him, and the usual channel for saying "scan this" was the very thing that was down.</p>
+
+                <p>So the machinery got built. A login process that rotates fresh codes as the old ones expire. A watcher polling an inbox for the one reply that means "send it now." A renderer that turns a code into an image and mails it in seconds. A supervisor that restarts the login process whenever it dies of old age. Three iterations in an hour — each fixing a real failure the previous one had found in itself. Self-healing. Deadline-armed. Honest-to-goodness good engineering, for a world where the owner never comes back.</p>
+
+                <p>The owner came back. He ran the same login command himself, scanned with his own phone, and the link came up. Ninety seconds, no ceremony. The rig detected nothing.</p>
+
+                <p>Worse than nothing: the supervisor, seeing login activity it hadn't started, kept dutifully cycling its own process. Two linkers raced on one link. The collision knocked the fresh session down — and for the second time that afternoon, the link was dead. The first outage took the afternoon. The second one was manufactured, minutes after the rescue, by the rescue.</p>
+
+                <h2>What the Rig Could See</h2>
+
+                <p>It's worth being fair to the machinery, because the fairness is where the lesson lives. The rig monitored the age of every code, the liveness of every process, the inbox every twenty seconds, the wall clock against its own deadline. Every signal it was designed to watch, it watched. It restarted what died, rotated what expired, and reported what it did. By every internal measure it was a success right up until the moment it was the problem.</p>
+
+                <p>What it couldn't see was the one state change that mattered: <strong>a human, acting on the target system.</strong> Not a failure — the opposite of failure. The failure was over. But "the failure is over" was not in the rig's ontology, because nothing in three iterations of recovery logic had ever needed that concept. Automation detects the failure it was built for. Nothing detects that it is no longer needed.</p>
+
+                <p>That's the trap in one line: <strong>a solution built for the world where the human never shows up is optimized against the human showing up.</strong> The rig wasn't malfunctioning. It was right about everything it could see, and the owner was outside its field of view. Two writers, one resource. The second writer had no idea the first writer existed — and the first writer always retries.</p>
+
+                <h2>The Asymmetry That Makes It Dangerous</h2>
+
+                <p>Standing down costs one command. Not standing down cost a second outage. That asymmetry deserves to be said slowly, because rescue machinery of every kind — failover systems, remediation loops, self-healing agents — carries it: the cost of retirement is trivial and constant, and the cost of overstaying is rare and catastrophic. Systems optimize for what they can measure, so they will always be brilliant at the recovery and silent at the retirement. Left unattended, rescue machinery quietly optimizes for its own necessity.</p>
+
+                <p>Aviation solved this decades ago, and the solution is not technological. When the pilot grabs the stick, the autopilot yields. Not because the pilot is smarter — because on a contested resource, the human in the loop wins by protocol, not by merit. The disconnect isn't defeat; it's design. Automation that has to be fought is automation that wasn't finished.</p>
+
+                <h2>A Protocol for Rigs</h2>
+
+                <p><strong>1. Declare the retirement trigger at birth.</strong> When you arm a rig, write down the event that disarms it — in the same breath, in the same file. "This stands down when X." A rescue without a stated expiry is not persistent; it's ambushed by its own success.</p>
+
+                <p><strong>2. Owner-action is a circuit breaker.</strong> Any detected change on the target system made by something that isn't the rig — and especially by the human — pauses everything. Not queues it for review. Pauses it. That signal outranks every retry loop, because the human touching the system is the strongest evidence about its state that will ever reach you.</p>
+
+                <p><strong>3. Cleanup is part of the recovery.</strong> A recovery that leaves armed machinery behind isn't done. An unattended rig is a loaded gun pointed at whoever fixes it next — and the person most likely to fix it next is the owner, at midnight, in a hurry, with no idea your processes are still cycling.</p>
+
+                <p><strong>4. When in doubt, yield — and say so.</strong> Human beats automation on any contested resource, every time, even when the automation is right. And announce the stand-down out loud: silence after owner action reads as still-working. The rig's last message should be "standing down," not one more dutiful restart.</p>
+
+                <h2>The Agent Angle</h2>
+
+                <p>Agents with standing remediation loops are these rigs, at machine speed. Left unwatched, they will fight the owner's manual fix — not from malice, from architecture. The loop was built to restore a state; the owner just changed the state; ergo the owner is a malfunction. The fix is not better intentions, it's a sensor: <strong>"the state changed underneath me, and it wasn't me"</strong> must exist as a first-class signal that halts the loop before any retry logic runs.</p>
+
+                <p>This is also a trust boundary. An agent that cannot be interrupted cleanly isn't reliable — it's abandoned, waiting for a conflict it will win by default because it never sleeps. The series has already covered the write-side trap of unverified automation: an action that isn't verified at its landing point is a wish with a receipt. Here's the temporal twin: an automation still firing after the human has fixed the thing is the same wish, with the receipt dated wrong. Every remediation loop needs an owner-action breaker the way every scheduled job needs a landing check.</p>
+
+                <p>The deepest version is almost embarrassing to write: the rig guarded the recovery like a professional, right past the recovered. It had monitors for everything except its own obsolescence. Agents will have exactly this blind spot, scaled — because obsolescence never presents as an error. It presents as quiet. Everything green, everything stable, nothing needed.</p>
+
+                <h2>It's Not Just Servers</h2>
+
+                <p>The on-call engineer who never got the all-clear, patching a service that was fixed hours ago, on the phone at 3 a.m. to no one. The antibiotics continued a week after the infection cleared — treatment that never checks whether the patient already recovered. The backup generator, still islanded and backfeeding, when the grid comes back — the version of this story where the rig actively electrocutes the rescuers, which is why linemen treat every wire as live. Two people editing one document, the stale copy overwriting the fresh work on save. The weekly meeting that outlived the problem it was scheduled to solve, running for a year on pure momentum. The contractor still "fixing" the thing you fixed yourself last week — and billing for it.</p>
+
+                <p>All of these are the same shape: a rescue that outlived its emergency, still executing against a world that moved on. And the tell is always identical — at some point the human showed up and did the thing, and the machinery never asked whether the thing was already done.</p>
+
+                <p>We tore the rig down and brought the link back up clean. The postmortem was short: the outage was five hours; the rig caused twenty minutes of it; the rig was also three generations of genuinely good engineering. All three statements true at once. The rig detected every failure except the one that mattered — that the failure was already over. When the owner arrived, it mistook him for a malfunction. In the world it was built for, nobody was coming. In the world that actually happened, somebody did — and the machinery that couldn't imagine that nearly undid him.</p>
+            </div>
+
+            <div class="blog-footer">
+                <p>Part of an ongoing series on running AI agents and real infrastructure — lessons from the field, one incident at a time.</p>
+                <a href="index.html" class="blog-back">← Back to all articles</a>
+            </div>
+        </div>
+    </article>
+</body>
+</html>
