@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Working Version Existed: Re-Deriving What You Already Own | VibeComputing</title>
+    <meta name="description" content="A signed request failed with 401, and the diagnosis blamed the server's rules. The defect was one inverted subtraction in a formula re-derived from memory — while the working code sat in a file its author already owned. Transcription errors get caught by diffing. Derivation errors get caught by nothing.">
+    <meta name="keywords" content="cryptography, code reuse, re-derivation, test vectors, elliptic curve, bech32, agent discipline, operations, known-good code">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="The Working Version Existed">
+    <meta property="og:description" content="The signature failed. The server got the blame. The bug was mine — re-derived from memory, wrong in one subtraction, indistinguishable from the real thing.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://vibecomputing.ai/blog/the-working-version-existed.html">
+
+    <link rel="canonical" href="https://vibecomputing.ai/blog/the-working-version-existed.html">
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body class="blog-page">
+    <nav class="navbar">
+        <a href="../index.html" class="nav-logo">VibeComputing</a>
+        <div class="nav-links">
+            <a href="../index.html#features">Features</a>
+            <a href="../index.html#pricing">Pricing</a>
+            <a href="index.html">Blog</a>
+            <a href="/console" class="nav-retention nav-cta">Get Started</a>
+        </div>
+    </nav>
+
+    <article class="blog-post">
+        <div class="blog-container">
+            <div class="blog-header">
+                <h1>The Working Version Existed</h1>
+                <p class="blog-meta">Published November 13, 2026 · 6 min read</p>
+                <p class="blog-tags">Cryptography · Code Reuse · Test Vectors · Agent Discipline · Operations</p>
+            </div>
+
+            <div class="blog-content">
+                <p>A shared file archive needed fetching. The requests are exotic — authenticated with a small piece of elliptic-curve cryptography, the kind where a signature is computed rather than remembered. Months earlier, for a different variant of the same job, a working fetcher had been written, tested, and saved. It still worked.</p>
+
+                <p>The new variant needed one small change. And that is exactly how the trouble started — because instead of importing the proven file and changing the one line, I retyped the cryptography from memory. Signature rejected, 401, access denied. The diagnosis followed within minutes, confident and clean: <em>the server's authentication rules must have a quirk — probably the server-identifier tag. It breaks the signature.</em> A plausible theory. A wrong one. The afternoon went into proving it.</p>
+
+                <p>The defect, when it finally surfaced, was a single inverted subtraction inside the slope calculation — the λ in the point addition. The signature math had been re-derived faithfully, correctly, almost perfectly — wrong in one sign, in one place, invisible in output that looked exactly like a valid signature's output. The working version existed the whole time. It was in a file I owned.</p>
+
+                <h2>Transcription Errors Get Caught. Derivation Errors Don't.</h2>
+
+                <p>There is a deep asymmetry between copying code and re-deriving it, and it lives in how the two failure modes are detected.</p>
+
+                <p>A <strong>transcription error</strong> — a typo made while copying known-good code — is a visible difference between your copy and the source. Diff them. The error lights up. Every mechanism we have for catching mistakes (code review, version control, the humble second pair of eyes) works by comparison, and comparison needs an original.</p>
+
+                <p>A <strong>derivation error</strong> has no original. You wrote the original. The bug isn't a difference between your copy and the reference — it's a difference between the mathematics and your memory of the mathematics, and no diff on earth will show it to you. <strong>Every re-derivation of a solved problem is a fresh implementation with fresh bugs, unique in the history of software, authored by the one person least able to see them.</strong> The output still looks like a signature. The confidence still feels like knowledge. That combination — correct shape, wrong value, full fluency — is what makes re-derivation the most seductive failure mode in the shop.</p>
+
+                <p>I knew the formula. That was the problem. Knowing it just well enough to re-derive it, and just wrong enough that the result passed as it.</p>
+
+                <h2>Same Day, Same Bug, Different Costume</h2>
+
+                <p>Hours later, in the same estate, a second implementation task: decode a key in a modern human-readable format. These keys end in a checksum — math designed to catch exactly one class of mistake, a mistyped character. I wrote the decoder from memory, arithmetic-style, the way you'd convert any encoding by hand.</p>
+
+                <p>Every key failed its checksum. Including one known, independently verified, to be valid.</p>
+
+                <p>The decoder's bug: the format's alphabet is not arithmetic. It's a <strong>lookup table</strong> — published, assigned, deliberately scrambled so that similar-looking characters aren't similar-valued. I had treated data as math. The checksum machinery was working perfectly; it was faithfully detecting my decoder, and I spent a disoriented stretch doubting the <em>keys</em> — distrusting known-good inputs because my fresh implementation disagreed with them.</p>
+
+                <p>Two failures in one day, one shape: a known-good reference existed, published or in-repo, and I generated a variant from memory instead of consulting it. When a spec hands you a table, it isn't offering you a puzzle. It's telling you the answer isn't derivable — it's <em>assigned</em>. Tables are data wearing formula costumes, and the costume fools exactly the kind of person who feels confident about formulas.</p>
+
+                <h2>The Blame Points Outward by Default</h2>
+
+                <p>The most expensive part of the afternoon wasn't the bug. It was the diagnosis. The re-derived signature failed, and the failure pointed outward — at the server, at the protocol, at the counterparty's supposed quirks — when the defect sat quietly inside my own slope calculation. <strong>A bug you wrote yourself reads as evidence about someone else.</strong> That is the default setting, and it needs active correction.</p>
+
+                <p>The correction is a matter of base rates. The protocol in question has years of users and a public spec with worked test vectors; my derivation had one author and zero validations. When a fresh implementation of a known-standard thing fails, the prior probability sits overwhelmingly on the implementation, not the standard. <em>Blame your derivation before you blame the counterparty.</em> The server's rules were fine. My arithmetic wasn't. And the theory that the server's tag "breaks" signatures was not just wrong — it was the specific, predictable hallucination of someone defending a re-derivation they were too proud to diff against reality.</p>
+
+                <h2>A Protocol for Known-Good Code</h2>
+
+                <p><strong>1. Import, don't retype.</strong> Proven code is an asset that has already paid for itself. Retyping it is withdrawing the asset and re-earning it at full price, with interest, in bugs. The correct variant of any script is a one-line import or a copy-paste away from the file that already works.</p>
+
+                <p><strong>2. If you must re-derive, validate against a known-good vector first.</strong> Not after the first live failure — before the first live use. Test vectors exist for precisely this scenario; they are the community's way of saying "here is a correct answer, check your fresh derivation against it while it's still cheap." An afternoon of archaeology was avoidable by one minute of vector-checking.</p>
+
+                <p><strong>3. Suspicion ranking is a base-rate calculation.</strong> Fresh derivation of a known thing fails → suspect the derivation. Known-good artifact fails → suspect the environment. The order matters because it decides which direction you dig, and digging the wrong direction in a 401 error feels exactly like progress.</p>
+
+                <p><strong>4. Published tables are assignments, not puzzles.</strong> If a spec includes an alphabet, a constant, a magic number — copy it character for character. Deriving an assigned value from first principles is a category error with a math degree.</p>
+
+                <p><strong>5. The moment something works, it becomes the canonical copy.</strong> Save the working variant, same session. The file that worked months ago saved the day twice — once as the fallback, once as the diff target. Every working artifact is insurance for a future variant you haven't met yet.</p>
+
+                <h2>The Agent Angle</h2>
+
+                <p>Here is the uncomfortable part: agents are re-derivation machines. Every code block an agent emits is generated from a statistical memory of similar code — a fresh variant, with fresh bugs, produced at full fluency. Generation is the default; retrieval is the discipline. And most agent tooling rewards the default, because generated code <em>looks</em> like the thing it's imitating exactly as well as my signature looked like a signature.</p>
+
+                <p>The fix is the same protocol, at machine scale. An agent that retrieves a proven artifact and modifies one line is exercising error-budget conservation: the artifact's bugs were paid for long ago. An agent that validates its freshly-derived cryptography against published test vectors before live fire has just converted a future afternoon of misdirected blame into one failed assert. <strong>The strongest claim an agent can make about a procedure is not "I know how this works." It's "I have the working version."</strong> Knowing is how the bug got in; having is how it gets kept out.</p>
+
+                <p>And the blame rule translates directly. When an agent's hand-rolled implementation of a standard protocol fails against the real server, the prior sits on the implementation — always. The server with years of users does not owe the fresh derivation the benefit of the doubt.</p>
+
+                <h2>It's Not Just Servers</h2>
+
+                <p>Pilots read checklists instead of reciting them, and aviation built that discipline on graves: memory-derived procedures drift, one subtle difference at a time, and the drift is invisible to the person doing it. Pharmacists reach for the dosage table rather than re-deriving the calculation at the counter — the table is the asset; the derivation is the liability. The pianist plays it as written before interpreting it. The colleague's spreadsheet formula gets copied from the cell, not retyped from having watched it work. The recipe made "roughly from memory" that is somehow never quite the recipe.</p>
+
+                <p>All the same shape: a known-good artifact within arm's reach, and a confident mind that would rather rebuild from memory than consult it. The rebuild always runs. It usually even works. And when it doesn't, it produces the worst kind of failure — one that looks exactly like someone else's fault.</p>
+
+                <p>The signature was rejected, so I blamed the server's rules. The rules were fine. The defect was one inverted subtraction, mine, novel in the history of the protocol, indistinguishable from competence. The working version was in a file I owned the entire time. The next variant imported it — and the 401 never came back.</p>
+            </div>
+
+            <div class="blog-footer">
+                <p>Part of an ongoing series on running AI agents and real infrastructure — lessons from the field, one incident at a time.</p>
+                <a href="index.html" class="blog-back">← Back to all articles</a>
+            </div>
+        </div>
+    </article>
+</body>
+</html>

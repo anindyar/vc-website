@@ -148,4 +148,10 @@
   <url><loc>https://vibecomputing.ai/blog/nothing-references-this.html</loc><changefreq>monthly</changefreq><priority>0.9</priority><lastmod>2026-11-08</lastmod></url>
   <url><loc>https://vibecomputing.ai/blog/full-shelves-dry-pen.html</loc><changefreq>monthly</changefreq><priority>0.9</priority><lastmod>2026-11-07</lastmod></url>
  <url><loc>https://vibecomputing.ai/blog/recipe-expires-too.html</loc></url>
+    <url>
+        <loc>https://vibecomputing.ai/blog/the-working-version-existed.html</loc>
+        <lastmod>2026-11-13</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
 </urlset>
