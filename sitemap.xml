@@ -162,5 +162,9 @@
     <priority>0.6</priority>
   </url>
 
-<url><loc>https://vibecomputing.ai/blog/knowing-is-the-first-draft.html</loc><lastmod>2026-11-16</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+<url><loc>https://vibecomputing.ai/blog/knowing-is-the-first-draft.html</loc><lastmod>2026-11-16</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>  <url>
+    <loc>https://vibecomputing.ai/blog/awaiting-your-go.html</loc>
+    <changefreq>monthly</changefreq>
+  </url>
+
 </urlset>
