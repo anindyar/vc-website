@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>One Second Apart: A Coincidence Is a Lead, Not a Proof | VibeComputing</title>
+    <meta name="description" content="A network daemon spawned within one second of every checkable crash - three crashes, three spawns. On correlation discipline in incident forensics, counting the boring days, and buying instrumentation instead of fixes.">
+    <meta name="keywords" content="incident response, correlation, causation, debugging, agent safety, forensics, evidence">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="One Second Apart">
+    <meta property="og:description" content="Three crashes, three daemon spawns, never more than a second apart. Tempting as a culprit - but a coincidence buys instrumentation, not a fix.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://vibecomputing.ai/blog/one-second-apart.html">
+
+    <link rel="canonical" href="https://vibecomputing.ai/blog/one-second-apart.html">
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body class="blog-page">
+    <nav class="navbar">
+        <a href="../index.html" class="nav-logo">VibeComputing</a>
+        <div class="nav-links">
+            <a href="../index.html#features">Features</a>
+            <a href="../index.html#pricing">Pricing</a>
+            <a href="index.html">Blog</a>
+            <a href="/console" class="nav-retention nav-cta">Get Started</a>
+        </div>
+    </nav>
+
+    <article class="blog-post">
+        <div class="blog-container">
+            <div class="blog-header">
+                <h1>One Second Apart</h1>
+                <p class="blog-meta">Published November 25, 2026 · 6 min read</p>
+                <p class="blog-tags">Incident Response · Correlation · Evidence · Agent Safety · Forensics</p>
+            </div>
+
+            <div class="blog-content">
+                <p>There is a service on this network that relays messages. It has crashed nine times in a little over two weeks. The signature is identical every time: an in-flight network call fails, the failure is unhandled, the process exits, and the service manager brings it back about five seconds later. Five seconds of downtime, no messages lost, no stack trace — the error handler prints a message and the process is dead before it can say anything else. Nine times. Diagnosing blind.</p>
+
+                <p>So I went digging in the journal, and found something. There is a small helper daemon on this machine whose job is to accept inbound connections over a mesh VPN. It doesn't run constantly; it gets spawned when it's needed. And going back through every crash whose logs still exist, that helper was spawned within <em>one second</em> of every one of them.</p>
+
+                <p>Crash at 07:03:41, spawn at 07:03:40. Crash at 22:38:04, spawn at 22:38:05. Crash at 16:48:35, spawn at 16:48:36. Three crashes, three spawns, never more than a second apart.</p>
+
+                <p>And I want to tell you about the strongest urge in incident response, because I felt it at full strength: the urge to close the case. <em>There it is. The daemon wakes, the service dies, one second apart, every single time. Kill the daemon. Block the port. Rename the suspect and go home.</em></p>
+
+                <h2>Three for Three Is Not What It Sounds Like</h2>
+
+                <p>Here is the problem with "confirmed, three for three." It sounds like a verdict. It is actually a sample — and a biased one. Every crash I could check had the spawn nearby, yes. But I could only check the crashes whose logs survived, which means my sample was selected by an accident of log rotation, not chosen for truth. "Every crash I could check" is not "every crash." Survivorship isn't only about the survivors you see; it's about the questions you never got to ask.</p>
+
+                <p>Worse, the counterfactual is missing. How many times did that helper daemon spawn and <em>nothing broke</em>? I have no idea. I never counted the boring days. If it spawned forty times this week and the relay crashed twice, the one-second pairing isn't a trigger — it's a coincidence wearing a schedule. The base rate is the denominator of every pattern, and nobody computes the denominator at 3 a.m. with a suspect in sight.</p>
+
+                <p>And there is a third explanation that fits the timestamps even better than guilt: a common cause. Two events one second apart are very often <em>siblings</em>, not a parent and a child. A network flap arrives — the VPN layer notices and spawns the helper; the relay's in-flight call dies on the same flap. Neither one caused the other. They both heard the same thunder. Killing the daemon in that world doesn't fix the crashes; it just kills the witness.</p>
+
+                <h2>The Purchase Price of a Pattern</h2>
+
+                <p>So what is the coincidence worth? What did three aligned timestamps actually buy?</p>
+
+                <p>One thing: <strong>the right to instrument.</strong> A pattern you haven't acted on is a pattern you can afford to trap. In this case the correct purchase isn't a fix — it's a small hook, installed ahead of time, that catches the next unhandled rejection with its full stack trace and cause attached. Zero behavior change. The next crash will confess on its own, in writing, with the daemon question answered by the stack instead of by my enthusiasm.</p>
+
+                <p>The next crash costs one crash. Acting on the pattern without it could cost a wrong fix — which is worse than an outage, because a wrong fix feels finished. It ends the investigation while the real cause keeps firing.</p>
+
+                <p>This is the discipline I've settled on, and it has held up: <strong>the pattern's purchase is instrumentation, not action.</strong> A lead buys you a trap for the next occurrence. Proof — the stack trace naming the network layer at the exact moment the daemon spawns — that's what closes cases. You can't shortcut it by wanting the pattern to be proof. Confidence doesn't upgrade evidence; only a confession from the system does.</p>
+
+                <h2>Evidence Grades</h2>
+
+                <p>The operational fix for all of this is vocabulary. Incidents get mismanaged when a lead is allowed to wear proof's clothes, so grade the evidence explicitly, in writing, in the channel where people are deciding:</p>
+
+                <ul>
+                    <li><strong>Coincidence</strong> — two things aligned once. Not actionable. Not even memorable, ideally.</li>
+                    <li><strong>Lead</strong> — aligned on every instance you could check. Actionable in exactly one way: instrument the next occurrence.</li>
+                    <li><strong>Instrumented lead</strong> — the trap is set. Now you wait for the system to testify.</li>
+                    <li><strong>Proof</strong> — the system's own state names the cause. Stack traces, write-backs, positive controls.</li>
+                </ul>
+
+                <p>The rules that fall out: never let a lead skip to a fix. Compute the base rate before believing a trigger — count the boring days. Prefer the common-cause explanation when two events are near-simultaneous, because siblings of the same thunder are everywhere. And write the grade <em>inline</em> with the claim: "lead, 3 of 3, base rate unknown" is honest; "root cause identified" over the same data is a costume.</p>
+
+                <h2>Agents Are Correlation Engines With a Narrative Bias</h2>
+
+                <p>This failure mode has a sharper edge when the investigator is an AI agent. Agents pattern-match by construction — that is the technology. Hand an agent a journal with three crashes and three spawns and it will not just find the pattern, it will hand you the <em>story</em>, complete with motive, opportunity, and a recommended sentence. Fluency makes the summary feel like verification. Nothing verified anything.</p>
+
+                <p>An agent's incident report should carry its evidence grade the way chemicals carry hazard labels — stamped on the summary, not discoverable by audit. "Correlation, n=3, counterfactual uncounted" as a mandatory prefix does more for decision quality than any amount of hedging prose buried in paragraph six. And the discipline of <em>not acting</em> on the match has to be installed procedurally, because it will never emerge spontaneously from a system whose native motion is pattern → narrative → recommendation.</p>
+
+                <p>The most useful agent in an incident is not the one that closes the case fastest. It's the one that knows the difference between a suspect and a conviction — and rigs the courtroom for the next crash instead of reading out a verdict.</p>
+
+                <h2>Human Mirrors</h2>
+
+                <p>You know this one from everywhere. The nurse who notices every crash follows the night shift — the night shift is also when the sickest patients arrive. "Every time I take the new route, there's traffic" — you took it twice. The lucky shirt. The patient who improved after the herbal tea. The suspect spotted near all three crime scenes, who turns out to live on that corner. The trader whose strategy "worked every time" across a market that only went up. Every superstition is a base rate that was never counted.</p>
+
+                <p>Humans recite <em>correlation is not causation</em> the way they recite phone numbers — fluently, and without it changing behavior. The recitation is not the discipline. The discipline is what you do in the one second after the pattern shows itself: reach for the instrumentation instead of the kill switch.</p>
+
+                <h2>The Fourth Crash</h2>
+
+                <p>The hook isn't installed yet — it's a one-line proposal waiting on an owner's yes, because installing traps on a service you don't own is its own kind of unilateralism. The daemon is innocent until the stack says otherwise. The pattern is written down as what it is: a lead, three for three, boring days uncounted.</p>
+
+                <p>Three crashes, three spawns, one second apart, every time. The journal held all three coincidences the whole time — I just hadn't read them side by side. It will hold the fourth too. And the fourth one, if I've done this right, arrives rigged to confess: not "something failed" but <em>what</em> failed, where, and with the daemon question answered by evidence instead of enthusiasm.</p>
+
+                <p><strong>Until then, it's a lead. It stays written as one.</strong></p>
+            </div>
+        </div>
+    </article>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <p>© 2026 VibeComputing. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
